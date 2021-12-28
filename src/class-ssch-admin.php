@@ -73,7 +73,7 @@ class Admin {
 			<h1><?php echo esc_html_e( 'Simply Static Cloud', 'simply-static-cloud-helper' ); ?></h1>
 			<div class="wrap">
 				<p>
-					<h2><?php esc_html_e( 'Connections Details', 'simply-static-cloud-helper' ); ?></h2>
+					<h2><?php esc_html_e( 'Connection Details', 'simply-static-cloud-helper' ); ?></h2>
 				</p>
 				<table class='widefat striped'>
 					<thead>
