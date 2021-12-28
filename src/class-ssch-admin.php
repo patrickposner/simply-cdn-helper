@@ -68,6 +68,7 @@ class Admin {
 	 * @return void
 	 */
 	public function render_options() {
+		$data = Api::get_site_data();
 		?>
 		<div class="scch-container">
 			<h1><?php echo esc_html_e( 'Simply Static Cloud', 'simply-static-cloud-helper' ); ?></h1>
@@ -75,6 +76,7 @@ class Admin {
 				<p>
 					<h2><?php esc_html_e( 'Connection Details', 'simply-static-cloud-helper' ); ?></h2>
 				</p>
+				<?php if ( $data ) : ?>
 				<table class='widefat striped'>
 					<thead>
 						<tr>
@@ -84,47 +86,46 @@ class Admin {
 					</thead>
 					<tbody>
 						<tr>
-							<td>Site-ID</td>
-							<td>123</td>
+							<td><?php esc_html_e( 'Site-ID', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->site->id ); ?></td>
 						</tr>
 						<tr>
-							<td>Username</td>
-							<td>patrickposner</td>
+							<td><?php esc_html_e( 'Username', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->site->site_user ); ?></td>
 						</tr>
 						<tr>
-							<td>App-Password</td>
-							<td>123 - 44bghg - 132123</td>
+							<td><?php esc_html_e( 'Region', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->server->region ); ?></td>
 						</tr>
 						<tr>
-							<td>Region</td>
-							<td>Germany</td>
+							<td><?php esc_html_e( 'Server (Host)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->server->ip_address ); ?></td>
 						</tr>
 						<tr>
-							<td>Server (Host)</td>
-							<td>164.90.211.119</td>
+							<td><?php esc_html_e( 'Server (User)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->site->site_user ); ?></td>
 						</tr>
 						<tr>
-							<td>Server (User)</td>
-							<td>udagblog</td>
+							<td><?php esc_html_e( 'Server (Password)', 'simply-static-cloud-helper' ); ?></td>
+							<td><a href="#" target="_blank"><?php esc_html_e( 'Your SSH-Key', 'simply-static-cloud-helper' ); ?></a></td>
 						</tr>
 						<tr>
-							<td>Server (Password)</td>
-							<td><a href="#" target="_blank">Your SSH-Key</a></td>
+							<td><?php esc_html_e( 'Database (Host)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->server->ip_address ); ?></td>
 						</tr>
 						<tr>
-							<td>Database (Host)</td>
-							<td>164.90.211.119</td>
+							<td><?php esc_html_e( 'Database (User)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->site->site_user ); ?></td>
 						</tr>
 						<tr>
-							<td>Database (User)</td>
-							<td>udagblog</td>
-						</tr>
-						<tr>
-							<td>Database (Password)</td>
-							<td><a href="#" target="_blank">Your SSH-Key</a></td>
+							<td><?php esc_html_e( 'Database (Password)', 'simply-static-cloud-helper' ); ?></td>
+							<td><a href="#" target="_blank"><?php esc_html_e( 'Your SSH-Key', 'simply-static-cloud-helper' ); ?></a></td>
 						</tr>
 					</tbody>
 				</table>
+				<?php else : ?>
+					<p><?php esc_html_e( 'Please connect your site to the simplystatic.io plattform to get access to your server data.', 'simply-static-cloud-helper' ); ?></p>
+				<?php endif; ?>
 			</div>
 			<div class="wrap">
 				<div>

@@ -85,7 +85,8 @@ class Api {
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$result = json_decode( $response['body'] );
-				return $result->data->site;
+
+				return $result->data;
 			} else {
 				return false;
 			}
