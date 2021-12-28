@@ -90,10 +90,6 @@ class Admin {
 							<td><?php echo esc_html( $data->site->id ); ?></td>
 						</tr>
 						<tr>
-							<td><?php esc_html_e( 'Username', 'simply-static-cloud-helper' ); ?></td>
-							<td><?php echo esc_html( $data->site->site_user ); ?></td>
-						</tr>
-						<tr>
 							<td><?php esc_html_e( 'Region', 'simply-static-cloud-helper' ); ?></td>
 							<td><?php echo esc_html( $data->server->region ); ?></td>
 						</tr>
@@ -121,6 +117,22 @@ class Admin {
 							<td><?php esc_html_e( 'Database (Password)', 'simply-static-cloud-helper' ); ?></td>
 							<td><a href="#" target="_blank"><?php esc_html_e( 'Your SSH-Key', 'simply-static-cloud-helper' ); ?></a></td>
 						</tr>
+						<tr>
+							<td><?php esc_html_e( 'CDN (Storage Zone)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->cdn->storage_zone ); ?></td>
+						</tr>
+						<tr>
+							<td><?php esc_html_e( 'CDN (Pull Zone)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->cdn->pull_zone ); ?></td>
+						</tr>
+						<tr>
+							<td><?php esc_html_e( 'CDN (CNAME)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->cdn->url ); ?></td>
+						</tr>
+						<tr>
+							<td><?php esc_html_e( 'CDN (Subdirectory)', 'simply-static-cloud-helper' ); ?></td>
+							<td><?php echo esc_html( $data->cdn->sub_directory ); ?></td>
+						</tr>
 					</tbody>
 				</table>
 				<?php else : ?>
@@ -146,7 +158,7 @@ class Admin {
 					</p>
 					<p>
 						<label for="ssch_app_password"><?php echo esc_html_e( 'Application Password', 'simply-static-cloud-helper' ); ?></label></br>
-						<input type="text" id="ssch_app_password" name="ssch_app_password" value="<?php echo esc_html( get_option( 'ssch_app_password' ) ); ?>" />
+						<input type="password" id="ssch_app_password" name="ssch_app_password" value="<?php echo esc_html( get_option( 'ssch_app_password' ) ); ?>" />
 					</p>
 					<p>
 						<label for="ssch_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-static-cloud-helper' ); ?></label></br>
@@ -205,7 +217,7 @@ class Admin {
 			box-sizing: border-box;
 			width: 45%;
 			float: left;
-			min-height: 520px;
+			min-height: 580px;
 			margin-bottom:15px;
 		}
 

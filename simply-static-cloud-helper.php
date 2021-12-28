@@ -49,5 +49,8 @@ if ( ! function_exists( 'ssch_run_plugin' ) ) {
 
 		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-api.php';
 		ssch\Api::get_instance();
+
+		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-simply-static.php';
+		ssch\Simply_Static::get_instance();
 	}
 }
