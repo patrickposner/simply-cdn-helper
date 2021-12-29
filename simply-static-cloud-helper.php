@@ -27,12 +27,6 @@ load_plugin_textdomain( 'simply-static-cloud-helper', false, $textdomain_dir );
 
 // Bootmanager for Simply Static Cloud plugin.
 if ( ! function_exists( 'ssch_run_plugin' ) ) {
-
-	// autoload files.
-	if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-		require __DIR__ . '/vendor/autoload.php';
-	}
-
 	add_action( 'plugins_loaded', 'ssch_run_plugin' );
 
 	/**
@@ -41,16 +35,38 @@ if ( ! function_exists( 'ssch_run_plugin' ) ) {
 	 * @return void
 	 */
 	function ssch_run_plugin() {
+		// We need the task class from Simply Static to integrate our job.
+		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
+		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
+		require_once SIMPLY_STATIC_PATH . 'src/class-ss-plugin.php';
+		require_once SIMPLY_STATIC_PATH . 'src/class-ss-util.php';
+
+		// Admin settings.
 		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-admin.php';
 		ssch\Admin::get_instance();
 
-		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-mailer.php';
-		ssch\Mailer::get_instance();
-
+		// Api.
 		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-api.php';
 		ssch\Api::get_instance();
 
-		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/class-ssch-simply-static.php';
+		// Utils.
+		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/utils/class-ssch-simply-static.php';
 		ssch\Simply_Static::get_instance();
+
+		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/utils/class-ssch-mailer.php';
+		ssch\Mailer::get_instance();
+
+		// Deployment.
+		if ( ! class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
+			// autoload files.
+			if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+				require __DIR__ . '/vendor/autoload.php';
+			}
+
+			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-cdn-deploy-task.php';
+			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-cdn.php';
+			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-deployment-settings.php';
+			ssch\Deployment_Settings::get_instance();
+		}
 	}
 }

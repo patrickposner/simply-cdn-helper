@@ -1,0 +1,50 @@
+{
+    "packages": [
+        {
+            "name": "corbpie/bunny-cdn-api",
+            "version": "v1.5",
+            "version_normalized": "1.5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cp6/BunnyCDN-API.git",
+                "reference": "c3a2fbda479cf55f4a71aa99fce484b73bc69eed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cp6/BunnyCDN-API/zipball/c3a2fbda479cf55f4a71aa99fce484b73bc69eed",
+                "reference": "c3a2fbda479cf55f4a71aa99fce484b73bc69eed",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ftp": "*",
+                "php": ">=7.4"
+            },
+            "time": "2021-06-06T01:44:27+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Corbpie\\BunnyCdn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "corbpie",
+                    "email": "contact@corbpie.com"
+                }
+            ],
+            "description": "Bunny CDN API class for pull and storage zones",
+            "support": {
+                "issues": "https://github.com/cp6/BunnyCDN-API/issues",
+                "source": "https://github.com/cp6/BunnyCDN-API/tree/v1.5"
+            },
+            "install-path": "../corbpie/bunny-cdn-api"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

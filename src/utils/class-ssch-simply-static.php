@@ -75,9 +75,11 @@ class Simply_Static {
 		.url-dest-option.active {
 			display: block !important;
 		}
+		<?php if ( class_exists( 'simply_static_pro\Deployment_Settings' ) ) : ?>
 		#sistContainer .nav-tab {
 			width: 12.5% !important;
 		}
+		<?php endif; ?>
 		</style>
 		<script>
 			jQuery(document).ready(function( $ ) {

@@ -1,0 +1,28 @@
+{
+  "name": "corbpie/bunny-cdn-api",
+  "description": "Bunny CDN API class for pull and storage zones",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    {
+      "name": "corbpie",
+      "email": "contact@corbpie.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/cp6/BunnyCDN-API"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "ext-ftp": "*"
+  },
+  "autoload": {
+      "psr-4": {
+          "Corbpie\\BunnyCdn\\": "src/"
+      }
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "patrickposner/simply-static-cloud-helper",
+    "description": "A helper plugin for the cloud solution to Simply Static.",
+    "type": "wordpress-plugin",
+    "require": {
+        "corbpie/bunny-cdn-api": "^1.5"
+    },
+    "license": "gpl",
+    "authors": [
+      {
+        "name": "Patrick Posner",
+        "email": "hello@patrickposner.de"
+      }
+    ],
+    "support": {
+        "issues": "https://github.com/patrickposner/simply-static/issues",
+        "source": "https://github.com/patrickposner/simply-static/"
+    }
+}

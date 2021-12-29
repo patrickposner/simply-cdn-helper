@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "af9d3d407e148e8b3cd925591190bfc2",
+    "packages": [
+        {
+            "name": "corbpie/bunny-cdn-api",
+            "version": "v1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cp6/BunnyCDN-API.git",
+                "reference": "c3a2fbda479cf55f4a71aa99fce484b73bc69eed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cp6/BunnyCDN-API/zipball/c3a2fbda479cf55f4a71aa99fce484b73bc69eed",
+                "reference": "c3a2fbda479cf55f4a71aa99fce484b73bc69eed",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ftp": "*",
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Corbpie\\BunnyCdn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "corbpie",
+                    "email": "contact@corbpie.com"
+                }
+            ],
+            "description": "Bunny CDN API class for pull and storage zones",
+            "support": {
+                "issues": "https://github.com/cp6/BunnyCDN-API/issues",
+                "source": "https://github.com/cp6/BunnyCDN-API/tree/v1.5"
+            },
+            "time": "2021-06-06T01:44:27+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
