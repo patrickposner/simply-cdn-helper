@@ -7,13 +7,13 @@ use Simply_Static;
 /**
  * Class which handles GitHub commits.
  */
-class CDN_Deploy_Task extends Simply_Static\Task {
+class CDN_Task extends Simply_Static\Task {
 	/**
 	 * The task name.
 	 *
 	 * @var string
 	 */
-	protected static $task_name = 'bunny_deploy';
+	protected static $task_name = 'cdn';
 
 	/**
 	 * Constructor

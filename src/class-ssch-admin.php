@@ -120,15 +120,15 @@ class Admin {
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Storage Zone)', 'simply-static-cloud-helper' ); ?></td>
-							<td><?php echo esc_html( $data->cdn->storage_zone ); ?></td>
+							<td>ssc-<?php echo esc_html( $data->cdn->storage_zone ); ?></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Pull Zone)', 'simply-static-cloud-helper' ); ?></td>
-							<td><?php echo esc_html( $data->cdn->pull_zone ); ?></td>
+							<td>ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (CNAME)', 'simply-static-cloud-helper' ); ?></td>
-							<td><?php echo esc_html( $data->cdn->url ); ?></td>
+							<td><a href="https://ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net" target="_blank">ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net</a></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Subdirectory)', 'simply-static-cloud-helper' ); ?></td>

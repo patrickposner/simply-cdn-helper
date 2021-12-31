@@ -76,7 +76,7 @@ class Deployment_Settings {
 	 */
 	public function modify_task_list( $task_list, $delivery_method ) {
 		if ( 'cdn' === $delivery_method ) {
-			$task_list = array( 'setup', 'fetch_urls', 'bunny_deploy', 'wrapup' );
+			$task_list = array( 'setup', 'fetch_urls', 'cdn', 'wrapup' );
 			return $task_list;
 		}
 		return $task_list;
@@ -90,7 +90,7 @@ class Deployment_Settings {
 	 * @return string
 	 */
 	public function check_class_name( $class_name, $task_name ) {
-		if ( 'bunny_deploy' === $task_name ) {
+		if ( 'cdn' === $task_name ) {
 			return 'simply_static_pro\\' . ucwords( $task_name ) . '_Task';
 		}
 		return $class_name;

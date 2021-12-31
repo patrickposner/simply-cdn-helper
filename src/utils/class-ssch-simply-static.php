@@ -43,23 +43,10 @@ class Simply_Static {
 			// Set CDN credentials.
 			add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
 		}
-
-		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
 		add_action( 'admin_footer', array( $this, 'cleanup_ui' ) );
 	}
 
 
-	/**
-	 * Set delivery method in Simply Static.
-	 *
-	 * @return void
-	 */
-	public function set_delivery_method() {
-		$options = get_option( 'simply-static' );
-
-		$options['delivery_method'] = 'cdn';
-		update_option( 'simply-static', $options );
-	}
 
 	/**
 	 * Clean up Simply Static UI.
@@ -83,6 +70,7 @@ class Simply_Static {
 		</style>
 		<script>
 			jQuery(document).ready(function( $ ) {
+				$( "#deliveryMethod" ).val("cdn").change();
 				$( "#deliveryMethod" ).prop( "disabled", true );
 			});
 		</script>
@@ -95,6 +83,12 @@ class Simply_Static {
 	 * @return void
 	 */
 	public function set_deployment_filters() {
+		$options = get_option( 'simply-static' );
+
+		$options['delivery_method'] = 'cdn';
+		update_option( 'simply-static', $options );
+
+
 		add_filter( 'ssp_cdn_key', function() {
 			$api_key = Api::get_cdn_key();
 
@@ -107,7 +101,7 @@ class Simply_Static {
 			$data = Api::get_site_data();
 
 			if ( ! empty( $data->cdn->pull_zone ) ) {
-				return $data->cdn->pull_zone;
+				return 'ssc-' . $data->cdn->pull_zone;
 			}
 		});
 
@@ -115,7 +109,7 @@ class Simply_Static {
 			$data = Api::get_site_data();
 
 			if ( ! empty( $data->cdn->storage_zone ) ) {
-				return $data->cdn->storage_zone;
+				return 'ssc-' . $data->cdn->storage_zone;
 			}
 		});
 
