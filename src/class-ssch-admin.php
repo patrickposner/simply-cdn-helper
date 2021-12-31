@@ -69,6 +69,7 @@ class Admin {
 	 */
 	public function render_options() {
 		$data = Api::get_site_data();
+
 		?>
 		<div class="scch-container">
 			<h1><?php echo esc_html_e( 'Simply Static Cloud', 'simply-static-cloud-helper' ); ?></h1>
