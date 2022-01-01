@@ -63,7 +63,7 @@ if ( ! function_exists( 'ssch_run_plugin' ) ) {
 				require __DIR__ . '/vendor/autoload.php';
 			}
 
-			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-cdn-deploy-task.php';
+			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-cdn-task.php';
 			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-cdn.php';
 			require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/deployment/class-ssch-deployment-settings.php';
 			ssch\Deployment_Settings::get_instance();

@@ -39,14 +39,13 @@ class Simply_Static {
 
 			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
 			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
-
-			// Set CDN credentials.
-			add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
 		}
+
+		// Set CDN credentials.
+		add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
+		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
 		add_action( 'admin_footer', array( $this, 'cleanup_ui' ) );
 	}
-
-
 
 	/**
 	 * Clean up Simply Static UI.
@@ -77,17 +76,19 @@ class Simply_Static {
 		<?php
 	}
 
+	public function set_delivery_method() {
+		$options = get_option( 'simply-static' );
+
+		$options['delivery_method'] = 'cdn';
+		update_option( 'simply-static', $options );
+	}
+
 	/**
 	 * Set filter to deploy to simplystatic.io CDN.
 	 *
 	 * @return void
 	 */
 	public function set_deployment_filters() {
-		$options = get_option( 'simply-static' );
-
-		$options['delivery_method'] = 'cdn';
-		update_option( 'simply-static', $options );
-
 
 		add_filter( 'ssp_cdn_key', function() {
 			$api_key = Api::get_cdn_key();

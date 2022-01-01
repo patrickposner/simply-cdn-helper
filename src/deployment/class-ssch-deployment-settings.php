@@ -33,7 +33,7 @@ class Deployment_Settings {
 	 * Constructor for Deployment_Settings.
 	 */
 	public function __construct() {
-		add_filter( 'simplystatic.archive_creation_job.task_list', array( $this, 'modify_task_list' ), 20, 2 );
+		add_filter( 'simplystatic.archive_creation_job.task_list', array( $this, 'modify_task_list' ), 99, 2 );
 		add_filter( 'simply_static_class_name', array( $this, 'check_class_name' ), 10, 2 );
 		add_action( 'simply_static_delivery_methods', array( $this, 'add_delivery_method' ) );
 		add_action( 'simply_static_delivery_method_description', array( $this, 'add_delivery_method_description' ) );
@@ -77,6 +77,7 @@ class Deployment_Settings {
 	public function modify_task_list( $task_list, $delivery_method ) {
 		if ( 'cdn' === $delivery_method ) {
 			$task_list = array( 'setup', 'fetch_urls', 'cdn', 'wrapup' );
+
 			return $task_list;
 		}
 		return $task_list;
@@ -91,7 +92,7 @@ class Deployment_Settings {
 	 */
 	public function check_class_name( $class_name, $task_name ) {
 		if ( 'cdn' === $task_name ) {
-			return 'simply_static_pro\\' . ucwords( $task_name ) . '_Task';
+			return 'ssch\\' . strtoupper( $task_name ) . '_Task';
 		}
 		return $class_name;
 	}

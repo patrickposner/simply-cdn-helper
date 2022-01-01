@@ -58,15 +58,6 @@ class CDN {
 		$zone_config = array();
 		$options     = get_option( 'simply-static' );
 
-		// Get static URL.
-		$static_url = get_bloginfo( 'url' );
-
-		if ( ! empty( $options['static-search-url'] ) ) {
-			$static_url = untrailingslashit( $options['static-search-url'] );
-		} elseif ( ! empty( $options['static-url'] ) ) {
-			$static_url = untrailingslashit( $options['static-url'] );
-		}
-
 		// Handling Pull zone.
 		$pull_zones = json_decode( $this->client->listPullZones() );
 

@@ -44,10 +44,6 @@ class CDN_Task extends Simply_Static\Task {
 		$options  = get_option( 'simply-static' );
 		$cdn_path = apply_filters( 'ssp_cdn_path', '' );
 
-		if ( ! empty( $options['cdn-directory'] ) ) {
-			$cdn_path = $options['cdn-directory'];
-		}
-
 		// Upload directory.
 		$iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $this->temp_dir, \RecursiveDirectoryIterator::SKIP_DOTS ) );
 		$counter  = 0;
