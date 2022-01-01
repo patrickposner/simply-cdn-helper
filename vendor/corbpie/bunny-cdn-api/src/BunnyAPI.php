@@ -291,7 +291,7 @@ class BunnyAPI
         return $this->APIcall('POST', 'purge', array("url" => $url));
     }
 
-    public function convertBytes(int $bytes, string $convert_to = 'GB', bool $format = true, int $decimals = 2): float|int|string
+    public function convertBytes(int $bytes, string $convert_to = 'GB', bool $format = true, int $decimals = 2)
     {
         if ($convert_to === 'GB') {
             $value = ($bytes / 1073741824);

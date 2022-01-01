@@ -39,10 +39,11 @@ class Simply_Static {
 
 			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
 			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
+
+			// Set CDN credentials.
+			add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
 		}
 
-		// Set CDN credentials.
-		add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
 		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
 		add_action( 'admin_footer', array( $this, 'cleanup_ui' ) );
 	}

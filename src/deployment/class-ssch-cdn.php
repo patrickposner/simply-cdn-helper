@@ -44,7 +44,8 @@ class CDN {
 		$client  = new \Corbpie\BunnyCdn\BunnyAPI( 0 );
 
 		// Authenticate.
-		$client->apiKey( apply_filters( 'ssp_cdn_key', $options['cdn-api-key'] ) );
+		$api_key = Api::get_cdn_key();
+		$client->apiKey( $api_key );
 
 		$this->client = $client;
 	}
@@ -57,12 +58,18 @@ class CDN {
 	public function configure_zones() {
 		$zone_config = array();
 		$options     = get_option( 'simply-static' );
+		$data        = Api::get_site_data();
+
 
 		// Handling Pull zone.
 		$pull_zones = json_decode( $this->client->listPullZones() );
 
+		// Get data from API.
+		$api_pull_zone    = 'ssc-' . $data->cdn->pull_zone;
+		$api_storage_zone = 'ssc-' . $data->cdn->storage_zone;
+
 		foreach ( $pull_zones as $pull_zone ) {
-			if ( $pull_zone->Name === apply_filters( 'ssp_cdn_pull_zone', $options['cdn-pull-zone'] ) ) {
+			if ( $pull_zone->Name === $api_pull_zone ) {
 				$zone_config['pull_zone'] = array(
 					'name'       => $pull_zone->Name,
 					'zone_id'    => $pull_zone->Id,
@@ -75,7 +82,7 @@ class CDN {
 		$storage_zones = json_decode( $this->client->listStorageZones() );
 
 		foreach ( $storage_zones as $storage_zone ) {
-			if ( $storage_zone->Name === apply_filters( 'ssp_cdn_storage_zone', $options['cdn-storage-zone'] ) ) {
+			if ( $storage_zone->Name === $api_storage_zone ) {
 				$zone_config['storage_zone'] = array(
 					'name'       => $storage_zone->Name,
 					'storage_id' => $storage_zone->Id,
@@ -86,7 +93,7 @@ class CDN {
 
 		// If there was no storage zone we create one and configure it.
 		if ( empty( $zone_config['storage_zone'] ) ) {
-			$storage_zone = $this->client->addStorageZone( apply_filters( 'ssp_cdn_storage_zone', $options['cdn-storage-zone'] ) );
+			$storage_zone = $this->client->addStorageZone( $api_storage_zone );
 		}
 
 		return $zone_config;
