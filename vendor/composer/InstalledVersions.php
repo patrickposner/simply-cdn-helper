@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '4cd34466c3a28e1dc527d368f7fefcf2b7b8b337',
+    'reference' => 'df7130dca5ca585709c427a9a762e40eecde6a45',
     'name' => 'patrickposner/simply-static-cloud-helper',
   ),
   'versions' => 
@@ -51,7 +51,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '4cd34466c3a28e1dc527d368f7fefcf2b7b8b337',
+      'reference' => 'df7130dca5ca585709c427a9a762e40eecde6a45',
     ),
   ),
 );
