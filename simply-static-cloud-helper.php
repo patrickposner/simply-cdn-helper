@@ -56,6 +56,9 @@ if ( ! function_exists( 'ssch_run_plugin' ) ) {
 		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/utils/class-ssch-mailer.php';
 		ssch\Mailer::get_instance();
 
+		require_once SIMPLY_STATIC_CLOUD_HELPER_PATH . 'src/utils/class-ssch-restriction.php';
+		ssch\Restriction::get_instance();
+
 		// Deployment.
 		if ( ! class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
 			// autoload files.

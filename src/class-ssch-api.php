@@ -71,7 +71,7 @@ class Api {
 				'Authorization' => 'Basic ' . base64_encode( $username . ':' . $password ),
 			),
 		);
-		
+
 		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/ssc/v1/site/' . $site_id, $args );
 
 		if ( ! is_wp_error( $response ) ) {
