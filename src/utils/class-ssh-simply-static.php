@@ -39,6 +39,8 @@ class Simply_Static {
 
 			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
 			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
+		} else {
+			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
 		}
 
 		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
@@ -83,5 +85,63 @@ class Simply_Static {
 
 		$options['delivery_method'] = 'cdn';
 		update_option( 'simply-static', $options );
+	}
+
+		/**
+	 * Add admin bar menu to visit static website.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
+	 * @return void
+	 */
+	public function add_admin_bar_menu( \WP_Admin_Bar $admin_bar ) {
+		global $post;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$options = get_option( 'simply-static' );
+
+		// If static URL is set.
+		if ( ! empty( $options['static-search-url'] ) ) {
+			$static_url = untrailingslashit( $options['static-search-url'] );
+		} elseif ( ! empty( $options['static-url'] ) ) {
+			$static_url = untrailingslashit( $options['static-url'] );
+		} else {
+			$static_url = '';
+		}
+
+		// Check if static URL is set in hosting options.
+		$static_hosting_url = get_option( 'ssh_static_url' );
+
+		if ( ! empty( $static_hosting_url ) ) {
+			$static_url = $static_hosting_url;
+		}
+
+		// Additional Path set?
+		if ( ! empty( $options['relative_path'] ) ) {
+			$static_url = $static_url . $options['relative_path'];
+		}
+
+		// If the current page has an post id we get the permalink and replace it.
+		if ( ! empty( $post ) && ! empty( $static_url ) ) {
+			$permalink  = get_permalink( $post->ID );
+			$static_url = str_replace( untrailingslashit( get_bloginfo( 'url' ) ), untrailingslashit( $static_url ), $permalink );
+		}
+
+		if ( ! empty( $static_url ) ) {
+			$admin_bar->add_menu(
+				array(
+					'id'     => 'static-site',
+					'parent' => null,
+					'group'  => null,
+					'title'  => __( 'View static URL', 'simply-static-pro' ),
+					'href'   => $static_url,
+					'meta' => array(
+						'title' => __( 'View static URL', 'simply-static-pro' ),
+					),
+				)
+			);
+		}
 	}
 }

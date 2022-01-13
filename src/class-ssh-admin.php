@@ -44,6 +44,7 @@ class Admin {
 		register_setting( 'ssh_options_group', 'ssh_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_options_group', 'ssh_app_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_options_group', 'ssh_app_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'ssh_options_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );	
 
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_user', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
@@ -71,8 +72,43 @@ class Admin {
 		$data = Api::get_site_data();
 
 		?>
-		<div class="scch-container">
+		<div class="ssh-container">
 			<h1><?php echo esc_html_e( 'Simply Static Hosting', 'simply-static-hosting' ); ?></h1>
+			<div class="wrap">
+				<div>
+					<p>
+						<h2><?php echo esc_html_e( 'Connect your website', 'simply-static-hosting' ); ?></h2>
+					</p>
+					<p>
+						<?php echo esc_html_e( 'Add the credentials that was send to you by e-mail after you made you purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
+					</p>
+					<p style="margin-bottom: 50px;">
+						<?php echo esc_html_e( 'You need an active connection to get your access credentials to your server and to automatically deploy your site to the CDN.', 'simply-static-hosting' ); ?>
+					</p>
+					<form method="post" action="options.php">
+					<?php settings_fields( 'ssh_options_group' ); ?>
+					<p>
+						<label for="ssh_username"><?php echo esc_html_e( 'Username', 'simply-static-hosting' ); ?></label></br>
+						<input type="text" id="ssh_username" name="ssh_username" value="<?php echo esc_html( get_option( 'ssh_username' ) ); ?>" />
+					</p>
+					<p>
+						<label for="ssh_app_password"><?php echo esc_html_e( 'Application Password', 'simply-static-hosting' ); ?></label></br>
+						<input type="password" id="ssh_app_password" name="ssh_app_password" value="<?php echo esc_html( get_option( 'ssh_app_password' ) ); ?>" />
+					</p>
+					<p>
+						<label for="ssh_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-static-hosting' ); ?></label></br>
+						<input type="text" id="ssh_app_site_id" name="ssh_app_site_id" value="<?php echo esc_html( get_option( 'ssh_app_site_id' ) ); ?>" />
+					</p>
+					<p>
+						<label for="ssh_static_url"><?php echo esc_html_e( 'Static URL (optional)', 'simply-static-hosting' ); ?></label></br>
+						<input type="url" id="ssh_static_url" name="ssh_static_url" value="<?php echo esc_html( get_option( 'ssh_static_url' ) ); ?>" />
+					</p>
+					<?php submit_button(); ?>
+					</form>
+				</div>
+				<div>
+				</div>
+			</div>
 			<div class="wrap">
 				<p>
 					<h2><?php esc_html_e( 'Connection Details', 'simply-static-hosting' ); ?></h2>
@@ -141,37 +177,6 @@ class Admin {
 				<?php endif; ?>
 			</div>
 			<div class="wrap">
-				<div>
-					<p>
-						<h2><?php echo esc_html_e( 'Connect your website', 'simply-static-hosting' ); ?></h2>
-					</p>
-					<p>
-						<?php echo esc_html_e( 'Add the credentials that was send to you by e-mail after you made you purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
-					</p>
-					<p style="margin-bottom: 50px;">
-						<?php echo esc_html_e( 'You need an active connection to get your access credentials to your server and to automatically deploy your site to the CDN.', 'simply-static-hosting' ); ?>
-					</p>
-					<form method="post" action="options.php">
-					<?php settings_fields( 'ssh_options_group' ); ?>
-					<p>
-						<label for="ssh_username"><?php echo esc_html_e( 'Username', 'simply-static-hosting' ); ?></label></br>
-						<input type="text" id="ssh_username" name="ssh_username" value="<?php echo esc_html( get_option( 'ssh_username' ) ); ?>" />
-					</p>
-					<p>
-						<label for="ssh_app_password"><?php echo esc_html_e( 'Application Password', 'simply-static-hosting' ); ?></label></br>
-						<input type="password" id="ssh_app_password" name="ssh_app_password" value="<?php echo esc_html( get_option( 'ssh_app_password' ) ); ?>" />
-					</p>
-					<p>
-						<label for="ssh_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-static-hosting' ); ?></label></br>
-						<input type="text" id="ssh_app_site_id" name="ssh_app_site_id" value="<?php echo esc_html( get_option( 'ssh_app_site_id' ) ); ?>" />
-					</p>
-					<?php submit_button(); ?>
-					</form>
-				</div>
-				<div>
-				</div>
-			</div>
-			<div class="wrap">
 				<p>
 					<h2><?php echo esc_html_e( 'Setup SMTP', 'simply-static-hosting' ); ?></h2>
 				</p>
@@ -212,7 +217,7 @@ class Admin {
 			</div>
 		</div>
 		<style>
-		.scch-container .wrap {
+		.ssh-container .wrap {
 			background: #fafafa;
 			padding: 30px;
 			box-sizing: border-box;
@@ -222,7 +227,7 @@ class Admin {
 			margin-bottom:15px;
 		}
 
-		.scch-container #submit {
+		.ssh-container #submit {
 			background: #7200e5;
 				background-color: rgb(114, 0, 229);
 			background-color: #7200e5;
@@ -244,13 +249,13 @@ class Admin {
 			border-radius: 5px;
 			background-origin: border-box;
 		}
-		.scch-container #submit:hover {
+		.ssh-container #submit:hover {
 			background-color: #6500cc;
 			color: #fff;
 			border-color: transparent;
 			box-shadow: 0 0 30px 0 rgba(114,0,229,.4);
 		}
-		.scch-container input {
+		.ssh-container input {
 			width: 100%;
 		}
 		</style>
