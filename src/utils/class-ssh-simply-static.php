@@ -87,7 +87,7 @@ class Simply_Static {
 		update_option( 'simply-static', $options );
 	}
 
-		/**
+	/**
 	 * Add admin bar menu to visit static website.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
