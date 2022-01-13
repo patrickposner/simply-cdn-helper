@@ -71,7 +71,6 @@ class Simply_Static {
 		<script>
 			jQuery(document).ready(function( $ ) {
 				$( "#deliveryMethod" ).val("cdn").change();
-				$( "#deliveryMethod" ).prop( "disabled", true );
 			});
 		</script>
 		<?php
