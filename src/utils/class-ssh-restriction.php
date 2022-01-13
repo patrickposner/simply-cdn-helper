@@ -45,7 +45,7 @@ class Restriction {
 	 * @return void
 	 */
 	public function allow_access_static() {
-		update_option( 'ssc_restrict_access', 'no' );
+		update_option( 'ssh_restrict_access', 'no' );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Restriction {
 	 * @return void
 	 */
 	public function restrict_access_static() {
-		update_option( 'ssc_restrict_access', 'yes' );
+		update_option( 'ssh_restrict_access', 'yes' );
 	}
 
 
@@ -66,7 +66,7 @@ class Restriction {
 	public function restrict_access() {
 		global $pagenow;
 
-		$restrict_access = get_option( 'ssc_restrict_access' );
+		$restrict_access = get_option( 'ssh_restrict_access' );
 
 		if ( 'yes' === $restrict_access ) {
 			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' ) {

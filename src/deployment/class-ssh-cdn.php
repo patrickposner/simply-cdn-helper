@@ -65,8 +65,8 @@ class CDN {
 		$pull_zones = json_decode( $this->client->listPullZones() );
 
 		// Get data from API.
-		$api_pull_zone    = 'ssc-' . $data->cdn->pull_zone;
-		$api_storage_zone = 'ssc-' . $data->cdn->storage_zone;
+		$api_pull_zone    = 'sshm-' . $data->cdn->pull_zone;
+		$api_storage_zone = 'sshm-' . $data->cdn->storage_zone;
 
 		foreach ( $pull_zones as $pull_zone ) {
 			if ( $pull_zone->Name === $api_pull_zone ) {

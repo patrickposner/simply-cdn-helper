@@ -41,7 +41,7 @@ class Api {
 			),
 		);
 
-		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/ssc/v1/cdn', $args );
+		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/sshm/v1/cdn', $args );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
@@ -72,7 +72,7 @@ class Api {
 			),
 		);
 
-		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/ssc/v1/site/' . $site_id, $args );
+		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/sshm/v1/site/' . $site_id, $args );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {

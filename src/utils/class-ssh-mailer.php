@@ -42,14 +42,14 @@ class Mailer {
 	 */
 	public function set_smtp_delivery( $phpmailer ) {
 		$phpmailer->isSMTP();
-		$phpmailer->Host       = get_option( 'ssch_smtp_host' );
+		$phpmailer->Host       = get_option( 'ssh_smtp_host' );
 		$phpmailer->SMTPAuth   = true;
-		$phpmailer->Port       = get_option( 'ssch_smtp_mail_port' );
-		$phpmailer->Username   = get_option( 'ssch_smtp_user' );
-		$phpmailer->Password   = get_option( 'ssch_smtp_password' );
+		$phpmailer->Port       = get_option( 'ssh_smtp_mail_port' );
+		$phpmailer->Username   = get_option( 'ssh_smtp_user' );
+		$phpmailer->Password   = get_option( 'ssh_smtp_password' );
 		$phpmailer->SMTPSecure = 'tls';
-		$phpmailer->From       = get_option( 'ssch_smtp_mail_from' );
-		$phpmailer->FromName   = get_option( 'ssch_smtp_name_from' );
+		$phpmailer->From       = get_option( 'ssh_smtp_mail_from' );
+		$phpmailer->FromName   = get_option( 'ssh_smtp_name_from' );
 
 		return $phpmailer;
 	}

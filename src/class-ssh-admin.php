@@ -156,15 +156,15 @@ class Admin {
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Storage Zone)', 'simply-static-hosting' ); ?></td>
-							<td>ssc-<?php echo esc_html( $data->cdn->storage_zone ); ?></td>
+							<td>sshm-<?php echo esc_html( $data->cdn->storage_zone ); ?></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Pull Zone)', 'simply-static-hosting' ); ?></td>
-							<td>ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?></td>
+							<td>sshm-<?php echo esc_html( $data->cdn->pull_zone ); ?></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (CNAME)', 'simply-static-hosting' ); ?></td>
-							<td><a href="https://ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net" target="_blank">ssc-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net</a></td>
+							<td><a href="https://sshm-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net" target="_blank">sshm-<?php echo esc_html( $data->cdn->pull_zone ); ?>.b-cdn.net</a></td>
 						</tr>
 						<tr>
 							<td><?php esc_html_e( 'CDN (Subdirectory)', 'simply-static-hosting' ); ?></td>
