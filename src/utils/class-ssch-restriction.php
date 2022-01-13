@@ -35,6 +35,26 @@ class Restriction {
 		add_filter( 'allow_password_reset', array( $this, 'disable_password_reset' ) );
 		add_filter( 'gettext', array( $this, 'remove_lostpassword_text' ) );
 		add_action( 'login_head', array( $this, 'add_login_logo' ) );
+		add_action( 'ss_before_static_export', array( $this, 'allow_access_static' ) );
+		add_action( 'ss_after_cleanup', array( $this, 'restrict_access_static' ) );
+	}
+
+	/**
+	 * Enable website access for static export.
+	 *
+	 * @return void
+	 */
+	public function allow_access_static() {
+		update_option( 'ssc_restrict_access', 'no' );
+	}
+
+	/**
+	 * Disable website access after static export.
+	 *
+	 * @return void
+	 */
+	public function restrict_access_static() {
+		update_option( 'ssc_restrict_access', 'yes' );
 	}
 
 
@@ -46,8 +66,12 @@ class Restriction {
 	public function restrict_access() {
 		global $pagenow;
 
-		if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' ) {
-			auth_redirect();
+		$restrict_access = get_option( 'ssc_restrict_access' );
+
+		if ( 'yes' === $restrict_access ) {
+			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' ) {
+				auth_redirect();
+			}
 		}
 	}
 
