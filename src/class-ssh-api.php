@@ -1,6 +1,6 @@
 <?php
 
-namespace ssch;
+namespace ssh;
 
 /**
  * Class to handle Api settings
@@ -32,8 +32,8 @@ class Api {
 	 * @return string|bool
 	 */
 	public static function get_cdn_key() {
-		$username = get_option( 'ssch_username' );
-		$password = get_option( 'ssch_app_password' );
+		$username = get_option( 'ssh_username' );
+		$password = get_option( 'ssh_app_password' );
 
 		$args = array(
 			'headers' => array(
@@ -62,9 +62,9 @@ class Api {
 	 * @return object|bool
 	 */
 	public static function get_site_data() {
-		$username = get_option( 'ssch_username' );
-		$password = get_option( 'ssch_app_password' );
-		$site_id  = get_option( 'ssch_app_site_id' );
+		$username = get_option( 'ssh_username' );
+		$password = get_option( 'ssh_app_password' );
+		$site_id  = get_option( 'ssh_app_site_id' );
 
 		$args = array(
 			'headers' => array(

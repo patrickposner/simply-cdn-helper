@@ -1,6 +1,6 @@
 <?php
 
-namespace ssch;
+namespace ssh;
 
 use simply_static_pro;
 
@@ -39,9 +39,6 @@ class Simply_Static {
 
 			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
 			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
-
-			// Set CDN credentials.
-			add_action( 'plugins_loaded', array( $this, 'set_deployment_filters' ) );
 		}
 
 		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
@@ -86,45 +83,5 @@ class Simply_Static {
 
 		$options['delivery_method'] = 'cdn';
 		update_option( 'simply-static', $options );
-	}
-
-	/**
-	 * Set filter to deploy to simplystatic.io CDN.
-	 *
-	 * @return void
-	 */
-	public function set_deployment_filters() {
-
-		add_filter( 'ssp_cdn_key', function() {
-			$api_key = Api::get_cdn_key();
-
-			if ( ! empty( $api_key ) ) {
-				return $api_key;
-			}
-		});
-
-		add_filter( 'ssp_cdn_pull_zone', function() {
-			$data = Api::get_site_data();
-
-			if ( ! empty( $data->cdn->pull_zone ) ) {
-				return 'ssc-' . $data->cdn->pull_zone;
-			}
-		});
-
-		add_filter( 'ssp_cdn_storage_zone', function() {
-			$data = Api::get_site_data();
-
-			if ( ! empty( $data->cdn->storage_zone ) ) {
-				return 'ssc-' . $data->cdn->storage_zone;
-			}
-		});
-
-		add_filter( 'ssp_cdn_path', function() {
-			$data = Api::get_site_data();
-
-			if ( ! empty( $data->cdn->sub_directory ) ) {
-				return $data->cdn->sub_directory;
-			}
-		});
 	}
 }

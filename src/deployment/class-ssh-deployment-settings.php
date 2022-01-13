@@ -1,6 +1,6 @@
 <?php
 
-namespace ssch;
+namespace ssh;
 
 use Simply_Static;
 
@@ -92,7 +92,7 @@ class Deployment_Settings {
 	 */
 	public function check_class_name( $class_name, $task_name ) {
 		if ( 'cdn' === $task_name ) {
-			return 'ssch\\' . strtoupper( $task_name ) . '_Task';
+			return 'ssh\\' . strtoupper( $task_name ) . '_Task';
 		}
 		return $class_name;
 	}

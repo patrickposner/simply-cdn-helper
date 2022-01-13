@@ -1,6 +1,6 @@
 <?php
 
-namespace ssch;
+namespace ssh;
 
 /**
  * Class to handle SMTP delivery

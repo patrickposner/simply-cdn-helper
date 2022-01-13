@@ -1,6 +1,6 @@
 <?php
 
-namespace ssch;
+namespace ssh;
 
 use Simply_Static;
 
@@ -41,7 +41,6 @@ class CDN_Task extends Simply_Static\Task {
 		$bunny_updater->client->zoneConnect( $zones['storage_zone']['name'], $zones['storage_zone']['password'] );
 
 		// Sub directory?
-		$options  = get_option( 'simply-static' );
 		$data     = Api::get_site_data();
 		$cdn_path = '';
 
