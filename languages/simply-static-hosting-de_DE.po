@@ -1,0 +1,220 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simply Static Hosting\n"
+"POT-Creation-Date: 2022-01-13 11:56+0100\n"
+"PO-Revision-Date: 2022-01-13 12:02+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: simply-static-hosting.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: src/class-ssh-admin.php:63
+msgid "Hosting"
+msgstr "Hosting"
+
+#. Plugin Name of the plugin/theme
+#: src/class-ssh-admin.php:76
+msgid "Simply Static Hosting"
+msgstr "Simply Static Hosting"
+
+#: src/class-ssh-admin.php:80
+msgid "Connect your website"
+msgstr "Verbinde deine Website"
+
+#: src/class-ssh-admin.php:83
+msgid ""
+"Add the credentials that was send to you by e-mail after you made you "
+"purchase on simplystatic.io."
+msgstr ""
+"Trage die Zugangsdaten ein, welche dir via E-mail nach deinem Kauf auf "
+"simplystatic.io übermittelt wurden."
+
+#: src/class-ssh-admin.php:86
+msgid ""
+"You need an active connection to get your access credentials to your server "
+"and to automatically deploy your site to the CDN."
+msgstr ""
+"Du benötigst eine aktive Verbindung um auf deine Serverdaten wie SFTP, "
+"Datenbank usw. zugreifen zu können. Auch die Übertragung aufs CDN ist nur "
+"mit einer aktiven Verbindung möglich."
+
+#: src/class-ssh-admin.php:91
+msgid "Username"
+msgstr "Nutzername"
+
+#: src/class-ssh-admin.php:95
+msgid "Application Password"
+msgstr "Applikations-Passwort"
+
+#: src/class-ssh-admin.php:99 src/class-ssh-admin.php:126
+msgid "Site-ID"
+msgstr "Seiten-ID"
+
+#: src/class-ssh-admin.php:103
+msgid "Static URL (optional)"
+msgstr "Statische URL (optional)"
+
+#: src/class-ssh-admin.php:114
+msgid "Connection Details"
+msgstr "Verbindungs-Details"
+
+#: src/class-ssh-admin.php:120
+msgid "Connection"
+msgstr "Verbindung"
+
+#: src/class-ssh-admin.php:121
+msgid "Your data"
+msgstr "Deine Daten"
+
+#: src/class-ssh-admin.php:130
+msgid "Region"
+msgstr "Region"
+
+#: src/class-ssh-admin.php:134
+msgid "Server (Host)"
+msgstr "Server (Host)"
+
+#: src/class-ssh-admin.php:138
+msgid "Server (User)"
+msgstr "Server (Benutzer)"
+
+#: src/class-ssh-admin.php:142
+msgid "Server (Password)"
+msgstr "Server (Passwort)"
+
+#: src/class-ssh-admin.php:143 src/class-ssh-admin.php:155
+msgid "Your SSH-Key"
+msgstr "Dein SSH-Schlüssel"
+
+#: src/class-ssh-admin.php:146
+msgid "Database (Host)"
+msgstr "Datenbank (Host)"
+
+#: src/class-ssh-admin.php:150
+msgid "Database (User)"
+msgstr "Database (Benutzer)"
+
+#: src/class-ssh-admin.php:154
+msgid "Database (Password)"
+msgstr "Datenbank (Passwort)"
+
+#: src/class-ssh-admin.php:158
+msgid "CDN (Storage Zone)"
+msgstr "CDN (Storage Zone)"
+
+#: src/class-ssh-admin.php:162
+msgid "CDN (Pull Zone)"
+msgstr "CDN (Pull Zone)"
+
+#: src/class-ssh-admin.php:166
+msgid "CDN (CNAME)"
+msgstr "CDN (CNAME)"
+
+#: src/class-ssh-admin.php:170
+msgid "CDN (Subdirectory)"
+msgstr "CDN (Unterverzeichnis)"
+
+#: src/class-ssh-admin.php:176
+msgid ""
+"Please connect your site to the simplystatic.io plattform to get access to "
+"your server data."
+msgstr ""
+"Bitte verbinde deine Website mit simplystatic.io um Zugang zu deinen "
+"Serverdaten zu erhalten."
+
+#: src/class-ssh-admin.php:181
+msgid "Setup SMTP"
+msgstr "SMTP einrichten"
+
+#: src/class-ssh-admin.php:184
+msgid ""
+"The native PHP Mailer is deactivated on the Simply Static plattform for "
+"security reasons."
+msgstr ""
+"Der native PHP-Mailer ist auf der Simply Static Hosting Plattform aus "
+"Sicherheitsgründen deaktiviert."
+
+#: src/class-ssh-admin.php:187
+msgid ""
+"Please add your SMTP credentials from your mail server if you want to send e-"
+"mails."
+msgstr ""
+"Bitte füge deine SMTP-Zugangsdaten deines E-Mail-Servers hinzu wenn du E-"
+"Mails versenden möchtest."
+
+#: src/class-ssh-admin.php:192
+msgid "SMTP User"
+msgstr "SMTP Nutzer"
+
+#: src/class-ssh-admin.php:196
+msgid "SMTP Password"
+msgstr "SMTP Passwort"
+
+#: src/class-ssh-admin.php:200
+msgid "SMTP Host"
+msgstr "SMTP Host"
+
+#: src/class-ssh-admin.php:204
+msgid "E-Mail (from)"
+msgstr "E-Mail (von)"
+
+#: src/class-ssh-admin.php:208
+msgid "Name (from)"
+msgstr "Name (von)"
+
+#: src/class-ssh-admin.php:212
+msgid "SMTP Port"
+msgstr "SMTP Port"
+
+#: src/deployment/class-ssh-cdn-task.php:66
+#, php-format
+msgid "Pushed %d pages/files to CDN"
+msgstr " %d Seiten/Dateien zu CDN übertragen"
+
+#: src/deployment/class-ssh-deployment-settings.php:50
+msgid "CDN"
+msgstr "CDN"
+
+#: src/deployment/class-ssh-deployment-settings.php:64
+msgid ""
+"When using CDN please make sure you are using relative URLs and that you "
+"have configured the necessary settings in Simply Static -> Settings -> "
+"Deployment"
+msgstr ""
+"Bei Benutzung des CDNs stelle sicher, dass du relative URLs benutzt. Dies "
+"kannst du in Simply Static - Einstellungen konfigurieren."
+
+#: src/utils/class-ssh-simply-static.php:138
+#: src/utils/class-ssh-simply-static.php:141
+msgid "View static URL"
+msgstr "Statische URL ansehen"
+
+#. Plugin URI of the plugin/theme
+msgid "https://patrickposner.dev"
+msgstr "https://patrickposner.dev"
+
+#. Description of the plugin/theme
+msgid "A little helper plugin to connect to simplystatic.io"
+msgstr "Ein Hilfsplugin zum Verbinden mit simplystatic.io"
+
+#. Author of the plugin/theme
+msgid "Patrick Posner"
+msgstr "Patrick Posner"
+
+#. Author URI of the plugin/theme
+msgid "https://simplystatic.io"
+msgstr "https://simplystatic.io"

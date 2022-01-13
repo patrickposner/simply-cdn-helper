@@ -94,6 +94,10 @@ class Restriction {
 		if ( 'Lost your password?' == $text ) {
 			$text = '';
 		}
+
+		if ( 'Passwort vergessen?' == $text ) {
+			$text = '';
+		}
 		return $text;
 	}
 
