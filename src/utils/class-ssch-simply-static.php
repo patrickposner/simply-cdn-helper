@@ -76,6 +76,11 @@ class Simply_Static {
 		<?php
 	}
 
+	/**
+	 * Filter delivery methods.
+	 *
+	 * @return void
+	 */
 	public function set_delivery_method() {
 		$options = get_option( 'simply-static' );
 
