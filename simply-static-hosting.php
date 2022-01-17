@@ -67,11 +67,25 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 			if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 				require __DIR__ . '/vendor/autoload.php';
 			}
-
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn.php';
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-deployment-settings.php';
-			ssh\Deployment_Settings::get_instance();
 		}
+
+		// CDN Deployment.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-deployment-settings.php';
+		ssh\Deployment_Settings::get_instance();
+
+		// Set default options on activation.
+		register_activation_hook(
+			__FILE__,
+			function() {
+				$ss_options                    = get_option( 'simply-static' );
+				$ss_options['delivery_method'] = 'cdn';
+				$ss_options['use_cron']        = 'on';
+
+				update_option( 'simply-static', $ss_options );
+				update_option( 'ssh_restrict_access', 'yes' );
+			}
+		);
 	}
 }
