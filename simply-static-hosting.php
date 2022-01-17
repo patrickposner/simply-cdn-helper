@@ -25,6 +25,19 @@ define( 'SIMPLY_STATIC_HOSTING_URL', untrailingslashit( plugin_dir_url( __FILE__
 $textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
 load_plugin_textdomain( 'simply-static-hosting', false, $textdomain_dir );
 
+// Set default options on activation.
+register_activation_hook(
+	__FILE__,
+	function() {
+		$ss_options                    = get_option( 'simply-static' );
+		$ss_options['delivery_method'] = 'cdn';
+		$ss_options['use_cron']        = 'on';
+
+		update_option( 'simply-static', $ss_options );
+		update_option( 'ssh_restrict_access', 'yes' );
+	}
+);
+
 // Bootup plugin.
 if ( ! function_exists( 'ssh_run_plugin' ) ) {
 	add_action( 'plugins_loaded', 'ssh_run_plugin' );
@@ -74,18 +87,5 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-deployment-settings.php';
 		ssh\Deployment_Settings::get_instance();
-
-		// Set default options on activation.
-		register_activation_hook(
-			__FILE__,
-			function() {
-				$ss_options                    = get_option( 'simply-static' );
-				$ss_options['delivery_method'] = 'cdn';
-				$ss_options['use_cron']        = 'on';
-
-				update_option( 'simply-static', $ss_options );
-				update_option( 'ssh_restrict_access', 'yes' );
-			}
-		);
 	}
 }
