@@ -78,7 +78,7 @@ class Admin {
 						<h2><?php echo esc_html_e( 'Connect your website', 'simply-static-hosting' ); ?></h2>
 					</p>
 					<p>
-						<?php echo esc_html_e( 'Add the site id that was send to you by e-mail after you made you purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
+						<?php echo esc_html_e( 'Add the site id that was sent to you by e-mail after you made your purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
 					</p>
 					<p style="margin-bottom: 50px;">
 						<?php echo esc_html_e( 'You need an active connection to get your access credentials to your server and to automatically deploy your site to the CDN.', 'simply-static-hosting' ); ?>
