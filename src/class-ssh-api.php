@@ -32,22 +32,13 @@ class Api {
 	 * @return string|bool
 	 */
 	public static function get_cdn_key() {
-		$username = get_option( 'ssh_username' );
-		$password = get_option( 'ssh_app_password' );
-
-		$args = array(
-			'headers' => array(
-				'Authorization' => 'Basic ' . base64_encode( $username . ':' . $password ),
-			),
-		);
-
-		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/sshm/v1/cdn', $args );
+		$response = wp_remote_get( 'https://manage.simplystatic.io?cdn-key=get', array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$result = json_decode( $response['body'] );
 
-				return $result->data->key;
+				return $result;
 			} else {
 				return false;
 			}
@@ -62,23 +53,13 @@ class Api {
 	 * @return object|bool
 	 */
 	public static function get_site_data() {
-		$username = get_option( 'ssh_username' );
-		$password = get_option( 'ssh_app_password' );
 		$site_id  = get_option( 'ssh_app_site_id' );
-
-		$args = array(
-			'headers' => array(
-				'Authorization' => 'Basic ' . base64_encode( $username . ':' . $password ),
-			),
-		);
-
-		$response = wp_remote_get( 'https://manage.simplystatic.io/wp-json/sshm/v1/site/' . $site_id, $args );
+		$response = wp_remote_get( 'https://manage.simplystatic.io?site-id=' . $site_id, array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$result = json_decode( $response['body'] );
-
-				return $result->data;
+				return $result;
 			} else {
 				return false;
 			}

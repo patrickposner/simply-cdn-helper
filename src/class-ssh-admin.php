@@ -41,8 +41,6 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		register_setting( 'ssh_options_group', 'ssh_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'ssh_options_group', 'ssh_app_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_options_group', 'ssh_app_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_options_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );	
 
@@ -80,21 +78,13 @@ class Admin {
 						<h2><?php echo esc_html_e( 'Connect your website', 'simply-static-hosting' ); ?></h2>
 					</p>
 					<p>
-						<?php echo esc_html_e( 'Add the credentials that was send to you by e-mail after you made you purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
+						<?php echo esc_html_e( 'Add the site id that was send to you by e-mail after you made you purchase on simplystatic.io.', 'simply-static-hosting' ); ?>
 					</p>
 					<p style="margin-bottom: 50px;">
 						<?php echo esc_html_e( 'You need an active connection to get your access credentials to your server and to automatically deploy your site to the CDN.', 'simply-static-hosting' ); ?>
 					</p>
 					<form method="post" action="options.php">
 					<?php settings_fields( 'ssh_options_group' ); ?>
-					<p>
-						<label for="ssh_username"><?php echo esc_html_e( 'Username', 'simply-static-hosting' ); ?></label></br>
-						<input type="text" id="ssh_username" name="ssh_username" value="<?php echo esc_html( get_option( 'ssh_username' ) ); ?>" />
-					</p>
-					<p>
-						<label for="ssh_app_password"><?php echo esc_html_e( 'Application Password', 'simply-static-hosting' ); ?></label></br>
-						<input type="password" id="ssh_app_password" name="ssh_app_password" value="<?php echo esc_html( get_option( 'ssh_app_password' ) ); ?>" />
-					</p>
 					<p>
 						<label for="ssh_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-static-hosting' ); ?></label></br>
 						<input type="text" id="ssh_app_site_id" name="ssh_app_site_id" value="<?php echo esc_html( get_option( 'ssh_app_site_id' ) ); ?>" />
