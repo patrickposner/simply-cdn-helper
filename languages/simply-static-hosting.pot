@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-01-23 14:53+0100\n"
+"POT-Creation-Date: 2022-01-24 14:28+0100\n"
 "PO-Revision-Date: 2022-01-13 11:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,143 +22,158 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: src/class-ssh-admin.php:61
+#: src/class-ssh-admin.php:63
 msgid "Hosting"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: src/class-ssh-admin.php:74
+#: src/class-ssh-admin.php:76
 msgid "Simply Static Hosting"
 msgstr ""
 
-#: src/class-ssh-admin.php:78
+#: src/class-ssh-admin.php:80
 msgid "Connect your website"
 msgstr ""
 
-#: src/class-ssh-admin.php:81
+#: src/class-ssh-admin.php:83
 msgid ""
 "Add the site id that was sent to you by e-mail after you made your purchase "
 "on simplystatic.io."
 msgstr ""
 
-#: src/class-ssh-admin.php:84
+#: src/class-ssh-admin.php:86
 msgid ""
 "You need an active connection to get your access credentials to your server "
 "and to automatically deploy your site to the CDN."
 msgstr ""
 
-#: src/class-ssh-admin.php:89 src/class-ssh-admin.php:116
+#: src/class-ssh-admin.php:91 src/class-ssh-admin.php:114
 msgid "Site-ID"
 msgstr ""
 
-#: src/class-ssh-admin.php:93
-msgid "Static URL (optional)"
-msgstr ""
-
-#: src/class-ssh-admin.php:104
+#: src/class-ssh-admin.php:102
 msgid "Connection Details"
 msgstr ""
 
-#: src/class-ssh-admin.php:110
+#: src/class-ssh-admin.php:108
 msgid "Connection"
 msgstr ""
 
-#: src/class-ssh-admin.php:111
+#: src/class-ssh-admin.php:109
 msgid "Your data"
 msgstr ""
 
-#: src/class-ssh-admin.php:120
+#: src/class-ssh-admin.php:118
 msgid "Region"
 msgstr ""
 
-#: src/class-ssh-admin.php:124
+#: src/class-ssh-admin.php:122
 msgid "Server (Host)"
 msgstr ""
 
-#: src/class-ssh-admin.php:128
+#: src/class-ssh-admin.php:126
 msgid "Server (User)"
 msgstr ""
 
-#: src/class-ssh-admin.php:132
+#: src/class-ssh-admin.php:130
 msgid "Server (Password)"
 msgstr ""
 
-#: src/class-ssh-admin.php:133 src/class-ssh-admin.php:145
+#: src/class-ssh-admin.php:131 src/class-ssh-admin.php:143
 msgid "Your SSH-Key"
 msgstr ""
 
-#: src/class-ssh-admin.php:136
+#: src/class-ssh-admin.php:134
 msgid "Database (Host)"
 msgstr ""
 
-#: src/class-ssh-admin.php:140
+#: src/class-ssh-admin.php:138
 msgid "Database (User)"
 msgstr ""
 
-#: src/class-ssh-admin.php:144
+#: src/class-ssh-admin.php:142
 msgid "Database (Password)"
 msgstr ""
 
-#: src/class-ssh-admin.php:148
+#: src/class-ssh-admin.php:146
 msgid "CDN (Storage Zone)"
 msgstr ""
 
-#: src/class-ssh-admin.php:152
+#: src/class-ssh-admin.php:150
 msgid "CDN (Pull Zone)"
 msgstr ""
 
-#: src/class-ssh-admin.php:156
+#: src/class-ssh-admin.php:154
 msgid "CDN (CNAME)"
 msgstr ""
 
-#: src/class-ssh-admin.php:160
+#: src/class-ssh-admin.php:158
 msgid "CDN (Subdirectory)"
 msgstr ""
 
-#: src/class-ssh-admin.php:166
+#: src/class-ssh-admin.php:164
 msgid ""
 "Please connect your site to the simplystatic.io plattform to get access to "
 "your server data."
 msgstr ""
 
-#: src/class-ssh-admin.php:171
+#: src/class-ssh-admin.php:169
 msgid "Setup SMTP"
 msgstr ""
 
-#: src/class-ssh-admin.php:174
+#: src/class-ssh-admin.php:172
 msgid ""
 "The native PHP Mailer is deactivated on the Simply Static plattform for "
 "security reasons."
 msgstr ""
 
-#: src/class-ssh-admin.php:177
+#: src/class-ssh-admin.php:175
 msgid ""
 "Please add your SMTP credentials from your mail server if you want to send e-"
 "mails."
 msgstr ""
 
-#: src/class-ssh-admin.php:182
+#: src/class-ssh-admin.php:180
 msgid "SMTP User"
 msgstr ""
 
-#: src/class-ssh-admin.php:186
+#: src/class-ssh-admin.php:184
 msgid "SMTP Password"
 msgstr ""
 
-#: src/class-ssh-admin.php:190
+#: src/class-ssh-admin.php:188
 msgid "SMTP Host"
 msgstr ""
 
-#: src/class-ssh-admin.php:194
+#: src/class-ssh-admin.php:192
 msgid "E-Mail (from)"
 msgstr ""
 
-#: src/class-ssh-admin.php:198
+#: src/class-ssh-admin.php:196
 msgid "Name (from)"
 msgstr ""
 
-#: src/class-ssh-admin.php:202
+#: src/class-ssh-admin.php:200
 msgid "SMTP Port"
+msgstr ""
+
+#: src/class-ssh-admin.php:209
+msgid "Configure your static website"
+msgstr ""
+
+#: src/class-ssh-admin.php:212
+msgid ""
+"Once your website is connected you can configure all settings related to the "
+"CDN here. This includes settings up redirects, proxy URLs and setting up a "
+"custom 404 error page."
+msgstr ""
+
+#: src/class-ssh-admin.php:217
+msgid "Static URL (optional)"
+msgstr ""
+
+#: src/class-ssh-admin.php:221
+msgid "Relative path to your 404 page"
 msgstr ""
 
 #: src/deployment/class-ssh-cdn-task.php:66

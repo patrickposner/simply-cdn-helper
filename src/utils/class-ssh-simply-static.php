@@ -135,10 +135,10 @@ class Simply_Static {
 					'id'     => 'static-site',
 					'parent' => null,
 					'group'  => null,
-					'title'  => __( 'View static URL', 'simply-static-pro' ),
+					'title'  => __( 'View static URL', 'simply-static-hosting' ),
 					'href'   => $static_url,
 					'meta' => array(
-						'title' => __( 'View static URL', 'simply-static-pro' ),
+						'title' => __( 'View static URL', 'simply-static-hosting' ),
 					),
 				)
 			);
