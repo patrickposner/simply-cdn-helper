@@ -31,9 +31,7 @@ class Simply_Static {
 	 * Constructor for Simply_Static.
 	 */
 	public function __construct() {
-	
 		if ( class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
-
 			// Remove deployment settings.
 			$deploy_settings = \simply_static_pro\Deployment_Settings::get_instance();
 

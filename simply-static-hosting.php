@@ -64,7 +64,9 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 
 		// Utils.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-simply-static.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-cors.php';
 		ssh\Simply_Static::get_instance();
+		ssh\Cors_Settings::get_instance();
 
 		// SMTP.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-mailer.php';
