@@ -66,6 +66,27 @@ class CDN_Task extends Simply_Static\Task {
 		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-static-pro' ), $counter );
 		$this->save_status_message( $message );
 
+		// Maybe add 404.
+		$cdn_404_path = get_option( 'ssh_404_path' );
+
+		if ( ! empty( $cdn_404_path ) && realpath( $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html' ) ) {
+
+			// Rename and copy file.
+			$src_error_file = $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html';
+			$dst_error_file = $this->temp_dir . 'bunnycdn_errors/404.html';
+
+			mkdir( dirname( $dst_error_file ), 0777, true );
+			copy( $src_error_file, $dst_error_file );
+
+			// Upload 404 template file.
+			$error_file_path     = realpath( $this->temp_dir . 'bunnycdn_errors/404.html' );
+			$error_relative_path = str_replace( $this->temp_dir, '', $error_file_path );
+
+			if ( $error_file_path ) {
+				$bunny_updater->upload_file( $error_file_path, $error_relative_path );
+			}
+		}
+
 		// Clear Pull zone cache.
 		$bunny_updater->purge_cache();
 		return true;

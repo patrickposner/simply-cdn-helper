@@ -42,7 +42,9 @@ class Admin {
 	 */
 	public function register_settings() {
 		register_setting( 'ssh_options_group', 'ssh_app_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'ssh_options_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );	
+		register_setting( 'ssh_options_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+
+		register_setting( 'ssh_cdn_group', 'ssh_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_user', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
@@ -88,10 +90,6 @@ class Admin {
 					<p>
 						<label for="ssh_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-static-hosting' ); ?></label></br>
 						<input type="text" id="ssh_app_site_id" name="ssh_app_site_id" value="<?php echo esc_html( get_option( 'ssh_app_site_id' ) ); ?>" />
-					</p>
-					<p>
-						<label for="ssh_static_url"><?php echo esc_html_e( 'Static URL (optional)', 'simply-static-hosting' ); ?></label></br>
-						<input type="url" id="ssh_static_url" name="ssh_static_url" value="<?php echo esc_html( get_option( 'ssh_static_url' ) ); ?>" />
 					</p>
 					<?php submit_button(); ?>
 					</form>
@@ -204,6 +202,30 @@ class Admin {
 				</p>
 				<?php submit_button(); ?>
 				</form>
+			</div>
+			<div class="wrap">
+				<div>
+					<p>
+						<h2><?php echo esc_html_e( 'Configure your static website', 'simply-static-hosting' ); ?></h2>
+					</p>
+					<p>
+						<?php echo esc_html_e( 'Once your website is connected you can configure all settings related to the CDN here. This includes settings up redirects, proxy URLs and setting up a custom 404 error page.', 'simply-static-hosting' ); ?>
+					</p>
+					<form method="post" action="options.php">
+					<?php settings_fields( 'ssh_cdn_group' ); ?>
+					<p>
+						<label for="ssh_static_url"><?php echo esc_html_e( 'Static URL (optional)', 'simply-static-hosting' ); ?></label></br>
+						<input type="url" id="ssh_static_url" name="ssh_static_url" value="<?php echo esc_html( get_option( 'ssh_static_url' ) ); ?>" />
+					</p>
+					<p>
+						<label for="ssh_404_path"><?php echo esc_html_e( 'Relative path to your 404 page', 'simply-static-hosting' ); ?></label></br>
+						<input type="text" id="ssh_404_path" name="ssh_404_path" value="<?php echo esc_html( get_option( 'ssh_404_path' ) ); ?>" />
+					</p>
+					<?php submit_button(); ?>
+					</form>
+				</div>
+				<div>
+				</div>
 			</div>
 		</div>
 		<style>
