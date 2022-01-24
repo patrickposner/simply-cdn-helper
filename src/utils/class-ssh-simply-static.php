@@ -2,8 +2,6 @@
 
 namespace ssh;
 
-use simply_static_pro;
-
 /**
  * Class to handle Simply_Static settings
  */
@@ -33,9 +31,11 @@ class Simply_Static {
 	 * Constructor for Simply_Static.
 	 */
 	public function __construct() {
+	
 		if ( class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
+
 			// Remove deployment settings.
-			$deploy_settings = simply_static_pro\Deployment_Settings::get_instance();
+			$deploy_settings = \simply_static_pro\Deployment_Settings::get_instance();
 
 			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
 			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
