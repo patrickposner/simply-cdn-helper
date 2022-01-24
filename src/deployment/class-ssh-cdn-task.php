@@ -45,7 +45,7 @@ class CDN_Task extends Simply_Static\Task {
 		$cdn_path = '';
 
 		if ( ! empty( $data->cdn->sub_directory ) ) {
-			$cdn_path = $data->cdn->sub_directory;
+			$cdn_path = $data->cdn->sub_directory . '/';
 		}
 
 		// Upload directory.
