@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'b5720e3d2838734b9cecb116d7878c0860ba8ddd',
+    'reference' => 'dbcbef031ed24c68087c153e318deadd5922f885',
     'name' => 'patrickposner/simply-static-cloud-helper',
   ),
   'versions' => 
@@ -27,7 +27,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b5720e3d2838734b9cecb116d7878c0860ba8ddd',
+      'reference' => 'dbcbef031ed24c68087c153e318deadd5922f885',
     ),
   ),
 );

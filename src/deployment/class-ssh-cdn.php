@@ -2,6 +2,8 @@
 
 namespace ssh;
 
+use Exception;
+
 /**
  * Class to handle CDN updates.
  */
@@ -60,7 +62,6 @@ class CDN {
 		$options     = get_option( 'simply-static' );
 		$data        = Api::get_site_data();
 
-
 		// Handling Pull zone.
 		$pull_zones = json_decode( $this->client->listPullZones() );
 
@@ -110,11 +111,43 @@ class CDN {
 		if ( ! empty( $current_file_path ) ) {
 			try {
 				$this->client->uploadFile( $current_file_path, $cdn_path );
-			} catch ( Exception $e ) {
+			} catch ( \Exception $e ) {
 				return $e->getMessage();
-			} catch ( Error $e ) {
+			} catch ( \Error $e ) {
 				return $e->getMessage();
 			}
+		}
+	}
+
+	/**
+	 * Delete file from BunnyCDN storage.
+	 *
+	 * @return string
+	 */
+	public function delete_file( $path ) {
+		$zones   = $this->configure_zones();
+		$options = get_option( 'simply-static' );
+
+		$response = wp_remote_request(
+			'https://storage.bunnycdn.com/' . $zones['storage_zone']['name'] . '/' . $path . '/',
+			array(
+				'method' => 'DELETE',
+				'headers' => array( 'AccessKey' => $options['cdn-access-key'] ),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				return true;
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+				error_log( $error_message );
+				return false;
+			}
+		} else {
+			$error_message = $response->get_error_message();
+			error_log( $error_message );
+			return false;
 		}
 	}
 
