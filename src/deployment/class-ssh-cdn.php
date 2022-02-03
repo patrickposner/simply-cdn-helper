@@ -125,14 +125,14 @@ class CDN {
 	 * @return string
 	 */
 	public function delete_file( $path ) {
-		$zones   = $this->configure_zones();
-		$options = get_option( 'simply-static' );
+		$zones = $this->configure_zones();
+		$data  = Api::get_site_data();
 
 		$response = wp_remote_request(
 			'https://storage.bunnycdn.com/' . $zones['storage_zone']['name'] . '/' . $path . '/',
 			array(
 				'method' => 'DELETE',
-				'headers' => array( 'AccessKey' => $options['cdn-access-key'] ),
+				'headers' => array( 'AccessKey' => $data->cdn->access_key ),
 			)
 		);
 
