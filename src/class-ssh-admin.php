@@ -42,10 +42,8 @@ class Admin {
 	 */
 	public function register_settings() {
 		register_setting( 'ssh_options_group', 'ssh_app_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'ssh_options_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-
+		register_setting( 'ssh_cdn_group', 'ssh_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_cdn_group', 'ssh_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_user', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_host', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
