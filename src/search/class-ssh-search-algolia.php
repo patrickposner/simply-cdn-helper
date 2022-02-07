@@ -269,8 +269,6 @@ class Search_Algolia {
 			wp_mkdir_p( $config_dir );
 		}
 
-		$options = Simply_Static\Options::instance();
-
 		// Save Algolia settings to config file.
 		$algolia_config = array(
 			'app_id'      => $options['algolia-app-id'],
