@@ -1,4 +1,15 @@
 jQuery(document).ready(function( $ ) {
+
+    // Check if the export was an single export.
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+
+    if( 'single_export' === urlParams.get('type') ) {
+       $('#generate').hide();
+       $('.actions').hide();
+    }
+
+
     // Start generation of single.
     $('#generate-single').on('click', function(){
 
@@ -11,7 +22,7 @@ jQuery(document).ready(function( $ ) {
             dataType: 'json',
             success: function(response) {
                 if ( response.success ) {
-                    window.location.replace( ssh_ajax.redirect_url );
+                    window.location.replace( ssh_ajax.redirect_url + '&type=single_export' );
                 }
             },
         });		
