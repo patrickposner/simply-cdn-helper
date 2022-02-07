@@ -1,0 +1,61 @@
+{
+  "name": "voku/httpful",
+  "description": "A Readable, Chainable, REST friendly, PHP HTTP Client",
+  "keywords": [
+    "http",
+    "curl",
+    "rest",
+    "restful",
+    "api",
+    "requests"
+  ],
+  "homepage": "https://github.com/voku/httpful",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nate Good",
+      "email": "me@nategood.com",
+      "homepage": "http://nategood.com"
+    },
+    {
+      "name": "Lars Moelleken",
+      "email": "lars@moelleken.org",
+      "homepage": "https://moelleken.org/"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "ext-curl": "*",
+    "ext-dom": "*",
+    "ext-fileinfo": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*",
+    "ext-xmlwriter": "*",
+    "php-http/httplug": "2.2.* || 2.1.*",
+    "php-http/promise": "1.1.* || 1.0.*",
+    "psr/http-client": "1.0.*",
+    "psr/http-factory": "1.0.*",
+    "psr/http-message": "1.0.*",
+    "psr/log": "1.1.*",
+    "voku/portable-utf8": "~6.0",
+    "voku/simple_html_dom": "~4.7"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+  },
+  "provide": {
+    "php-http/async-client-implementation": "1.0",
+    "php-http/client-implementation": "1.0",
+    "psr/http-client-implementation": "1.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Httpful": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Httpful\\tests\\": "tests/Httpful/"
+    }
+  }
+}

@@ -41,6 +41,11 @@ class Simply_Static {
 			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
 		}
 
+		if ( class_exists( 'simply_static_pro\Single' ) ) {
+			$single_exort_settings = \simply_static_pro\Single::get_instance();
+			remove_action( 'trash_post', array( $single_exort_settings, 'delete_single' ) );
+		}
+
 		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
 		add_action( 'admin_footer', array( $this, 'cleanup_ui' ) );
 	}
@@ -53,6 +58,9 @@ class Simply_Static {
 	public function cleanup_ui() {
 		?>
 		<style>
+		#sistContainer .nav-tab {
+			width: 20%;
+		}
 		.url-dest-option {
 			display: none !important;
 		}
@@ -98,16 +106,8 @@ class Simply_Static {
 			return;
 		}
 
-		$options = get_option( 'simply-static' );
-
-		// If static URL is set.
-		if ( ! empty( $options['static-search-url'] ) ) {
-			$static_url = untrailingslashit( $options['static-search-url'] );
-		} elseif ( ! empty( $options['static-url'] ) ) {
-			$static_url = untrailingslashit( $options['static-url'] );
-		} else {
-			$static_url = '';
-		}
+		$options    = get_option( 'simply-static' );
+		$static_url = '';
 
 		// Check if static URL is set in hosting options.
 		$static_hosting_url = get_option( 'ssh_static_url' );
