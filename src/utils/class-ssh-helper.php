@@ -82,6 +82,7 @@ class Helper {
 
 		$config_path = $additional_path . apply_filters( 'ssh_static_config_path', '/wp-content/plugins/simply-static-hosting/configs/' );
 		?>
+		<meta name="ssh-url" content="<?php echo esc_url( $static_url ); ?>">
 		<?php if ( defined( 'SSH_DEV_MODE' ) && true === SSH_DEV_MODE ) : ?>
 		<meta name="ssh-config-url" content="<?php echo esc_url( $origin_url . apply_filters( 'ssh_static_config_path', '/wp-content/plugins/simply-static-hosting/configs/' ) ); ?>">
 		<?php else : ?>

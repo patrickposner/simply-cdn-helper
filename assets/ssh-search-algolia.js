@@ -1,9 +1,9 @@
 // Check if we are on the static site.
 var current_url = window.location.origin;
-var static_url = document.querySelector("meta[name='ssp-url']").getAttribute("content");
+var static_url = document.querySelector("meta[name='ssh-url']").getAttribute("content");
 
 if ( static_url.includes(current_url ) ) {
-  var baseurl = document.querySelector("meta[name='ssp-config-url']").getAttribute("content");
+  var baseurl = document.querySelector("meta[name='ssh-config-url']").getAttribute("content");
   var host_name = window.location.hostname;
 
   let algolia_config_url = baseurl + host_name.split('.').join('-') + '-algolia.json';
