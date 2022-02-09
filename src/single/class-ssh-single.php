@@ -43,6 +43,7 @@ class Single {
 		add_action( 'wp_ajax_nopriv_apply_single', array( $this, 'apply_single' ) );
 		add_action( 'ss_after_cleanup', array( $this, 'clear_single' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
+		add_action( 'before_delete_post', array( $this, 'delete_single' ) );
 	}
 
 	/**
@@ -304,5 +305,40 @@ class Single {
 			->offset( $offset )
 			->order( 'http_status_code' )
 			->find();
+	}
+
+	/**
+	 * Delete single post/page.
+	 *
+	 * @param  int $post_id given post id.
+	 * @return void
+	 */
+	public function delete_single( $post_id ) {
+		$options      = get_option( 'simply-static' );
+		$trashed_post = get_post( $post_id );
+
+		$additional_path = '';
+
+		if ( ! empty( $options['relative_path'] ) ) {
+			$additional_path = $options['relative_path'];
+		}
+
+		// Build path.
+		$path = $additional_path . str_replace( '__trashed', '', $trashed_post->post_name );
+
+		// Delete item from Algolia.
+
+		// Setup Algolia.
+		$client = \Algolia\AlgoliaSearch\SearchClient::create( $options['algolia-app-id'], $options['algolia-admin-api-key'] );
+		$index  = $client->initIndex( $options['algolia-index'] );
+
+		// Get row by post_id and grab ID.
+		global $wpdb;
+		$item = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d", $post_id ) );
+
+		// Delete index item.
+		if ( ! is_null( $item ) ) {
+			$index->deleteObject( $item->id );
+		}
 	}
 }
