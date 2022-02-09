@@ -326,6 +326,13 @@ class Single {
 		// Build path.
 		$path = $additional_path . str_replace( '__trashed', '', $trashed_post->post_name );
 
+		// Delete files from BunnyCDN.
+		if ( 'cdn' === $options['delivery_method'] ) {
+			$cdn = CDN::get_instance();
+			$cdn->delete_file( $path );
+			$cdn->purge_cache();
+		}
+
 		// Delete item from Algolia.
 
 		// Setup Algolia.
