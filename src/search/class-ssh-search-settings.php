@@ -67,13 +67,13 @@ class Search_Settings {
 		// Replacing placeholders with values from options.
 		if ( ! empty( $options['use-search'] ) ) {
 			if ( 'no' === $options['use-search'] ) {
-				$select_options = '<option selected value="no">no</option><option value="yes">yes</option>';
+				$select_options = '<option selected value="no">' . __( 'no', 'simply-static-hosting' ) . '</option><option value="yes">' . __( 'yes', 'simply-static-hosting' ) . '</option>';
 			} else {
-				$select_options = '<option selected value="yes">yes</option><option value="no">no</option>';
+				$select_options = '<option selected value="yes">' . __( 'yes', 'simply-static-hosting' ) . '</option><option value="no">' . __( 'no', 'simply-static-hosting' ) . '</option>';
 			}
 			$settings = str_replace( '[USE_SEARCH]', $select_options, $settings );
 		} else {
-			$select_options = '<option value="no">no</option><option value="yes">yes</option>';
+			$select_options = '<option value="no">' . __( 'no', 'simply-static-hosting' ) . '</option><option value="yes">' . __( 'yes', 'simply-static-hosting' ) . '</option>';
 			$settings       = str_replace( '[USE_SEARCH]', $select_options, $settings );
 		}
 

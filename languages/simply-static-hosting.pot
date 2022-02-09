@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-01-24 14:28+0100\n"
+"POT-Creation-Date: 2022-02-09 12:53+0100\n"
 "PO-Revision-Date: 2022-01-13 11:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,157 +22,157 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: src/class-ssh-admin.php:63
+#: src/class-ssh-admin.php:61
 msgid "Hosting"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-#: src/class-ssh-admin.php:76
+#: src/class-ssh-admin.php:74
 msgid "Simply Static Hosting"
 msgstr ""
 
-#: src/class-ssh-admin.php:80
+#: src/class-ssh-admin.php:78
 msgid "Connect your website"
 msgstr ""
 
-#: src/class-ssh-admin.php:83
+#: src/class-ssh-admin.php:81
 msgid ""
 "Add the site id that was sent to you by e-mail after you made your purchase "
 "on simplystatic.io."
 msgstr ""
 
-#: src/class-ssh-admin.php:86
+#: src/class-ssh-admin.php:84
 msgid ""
 "You need an active connection to get your access credentials to your server "
 "and to automatically deploy your site to the CDN."
 msgstr ""
 
-#: src/class-ssh-admin.php:91 src/class-ssh-admin.php:114
+#: src/class-ssh-admin.php:89 src/class-ssh-admin.php:112
 msgid "Site-ID"
 msgstr ""
 
-#: src/class-ssh-admin.php:102
+#: src/class-ssh-admin.php:100
 msgid "Connection Details"
 msgstr ""
 
-#: src/class-ssh-admin.php:108
+#: src/class-ssh-admin.php:106
 msgid "Connection"
 msgstr ""
 
-#: src/class-ssh-admin.php:109
+#: src/class-ssh-admin.php:107
 msgid "Your data"
 msgstr ""
 
-#: src/class-ssh-admin.php:118
+#: src/class-ssh-admin.php:116
 msgid "Region"
 msgstr ""
 
-#: src/class-ssh-admin.php:122
+#: src/class-ssh-admin.php:120
 msgid "Server (Host)"
 msgstr ""
 
-#: src/class-ssh-admin.php:126
+#: src/class-ssh-admin.php:124
 msgid "Server (User)"
 msgstr ""
 
-#: src/class-ssh-admin.php:130
+#: src/class-ssh-admin.php:128
 msgid "Server (Password)"
 msgstr ""
 
-#: src/class-ssh-admin.php:131 src/class-ssh-admin.php:143
+#: src/class-ssh-admin.php:129 src/class-ssh-admin.php:141
 msgid "Your SSH-Key"
 msgstr ""
 
-#: src/class-ssh-admin.php:134
+#: src/class-ssh-admin.php:132
 msgid "Database (Host)"
 msgstr ""
 
-#: src/class-ssh-admin.php:138
+#: src/class-ssh-admin.php:136
 msgid "Database (User)"
 msgstr ""
 
-#: src/class-ssh-admin.php:142
+#: src/class-ssh-admin.php:140
 msgid "Database (Password)"
 msgstr ""
 
-#: src/class-ssh-admin.php:146
+#: src/class-ssh-admin.php:144
 msgid "CDN (Storage Zone)"
 msgstr ""
 
-#: src/class-ssh-admin.php:150
+#: src/class-ssh-admin.php:148
 msgid "CDN (Pull Zone)"
 msgstr ""
 
-#: src/class-ssh-admin.php:154
+#: src/class-ssh-admin.php:152
 msgid "CDN (CNAME)"
 msgstr ""
 
-#: src/class-ssh-admin.php:158
+#: src/class-ssh-admin.php:156
 msgid "CDN (Subdirectory)"
 msgstr ""
 
-#: src/class-ssh-admin.php:164
+#: src/class-ssh-admin.php:162
 msgid ""
 "Please connect your site to the simplystatic.io plattform to get access to "
 "your server data."
 msgstr ""
 
-#: src/class-ssh-admin.php:169
+#: src/class-ssh-admin.php:167
 msgid "Setup SMTP"
 msgstr ""
 
-#: src/class-ssh-admin.php:172
+#: src/class-ssh-admin.php:170
 msgid ""
 "The native PHP Mailer is deactivated on the Simply Static plattform for "
 "security reasons."
 msgstr ""
 
-#: src/class-ssh-admin.php:175
+#: src/class-ssh-admin.php:173
 msgid ""
 "Please add your SMTP credentials from your mail server if you want to send e-"
 "mails."
 msgstr ""
 
-#: src/class-ssh-admin.php:180
+#: src/class-ssh-admin.php:178
 msgid "SMTP User"
 msgstr ""
 
-#: src/class-ssh-admin.php:184
+#: src/class-ssh-admin.php:182
 msgid "SMTP Password"
 msgstr ""
 
-#: src/class-ssh-admin.php:188
+#: src/class-ssh-admin.php:186
 msgid "SMTP Host"
 msgstr ""
 
-#: src/class-ssh-admin.php:192
+#: src/class-ssh-admin.php:190
 msgid "E-Mail (from)"
 msgstr ""
 
-#: src/class-ssh-admin.php:196
+#: src/class-ssh-admin.php:194
 msgid "Name (from)"
 msgstr ""
 
-#: src/class-ssh-admin.php:200
+#: src/class-ssh-admin.php:198
 msgid "SMTP Port"
 msgstr ""
 
-#: src/class-ssh-admin.php:209
+#: src/class-ssh-admin.php:207
 msgid "Configure your static website"
 msgstr ""
 
-#: src/class-ssh-admin.php:212
+#: src/class-ssh-admin.php:210
 msgid ""
 "Once your website is connected you can configure all settings related to the "
 "CDN here. This includes settings up redirects, proxy URLs and setting up a "
 "custom 404 error page."
 msgstr ""
 
-#: src/class-ssh-admin.php:217
+#: src/class-ssh-admin.php:215
 msgid "Static URL (optional)"
 msgstr ""
 
-#: src/class-ssh-admin.php:221
+#: src/class-ssh-admin.php:219
 msgid "Relative path to your 404 page"
 msgstr ""
 
@@ -192,8 +192,182 @@ msgid ""
 "Deployment"
 msgstr ""
 
-#: src/utils/class-ssh-simply-static.php:138
-#: src/utils/class-ssh-simply-static.php:141
+#: src/search/class-ssh-search-algolia.php:225
+msgid "There was an connection error with Algolia. Please check your settings."
+msgstr ""
+
+#: src/search/class-ssh-search-algolia.php:228
+msgid "Added the following URL to search index"
+msgstr ""
+
+#: src/search/class-ssh-search-algolia.php:230
+msgid ""
+"You need to add the static URL in your search settings before you can create "
+"an index."
+msgstr ""
+
+#: src/search/class-ssh-search-settings.php:49 src/search/views/search.php:2
+msgid "Search"
+msgstr ""
+
+#: src/search/class-ssh-search-settings.php:70
+#: src/search/class-ssh-search-settings.php:72
+#: src/search/class-ssh-search-settings.php:76
+msgid "no"
+msgstr ""
+
+#: src/search/class-ssh-search-settings.php:70
+#: src/search/class-ssh-search-settings.php:72
+#: src/search/class-ssh-search-settings.php:76
+msgid "yes"
+msgstr ""
+
+#: src/search/views/search.php:4
+msgid ""
+"Activate the usage of static search. It uses the Algolia API and creates an "
+"complete index to search by title and content of each page."
+msgstr ""
+
+#: src/search/views/search.php:10
+msgid "Use search?"
+msgstr ""
+
+#: src/search/views/search.php:17
+msgid "Decide whether or not you want to use search on your static site."
+msgstr ""
+
+#: src/search/views/search.php:23
+msgid "Indexing"
+msgstr ""
+
+#: src/search/views/search.php:28
+msgid "CSS-Selector for Title"
+msgstr ""
+
+#: src/search/views/search.php:33
+msgid "Add the CSS selector which contains the title of the page/post"
+msgstr ""
+
+#: src/search/views/search.php:39
+msgid "CSS-Selector for Content"
+msgstr ""
+
+#: src/search/views/search.php:44
+msgid "Add the CSS selector which contains the content of the page/post."
+msgstr ""
+
+#: src/search/views/search.php:50
+msgid "CSS-Selector for Excerpt"
+msgstr ""
+
+#: src/search/views/search.php:55
+msgid "Add the CSS selector which contains the excerpt of the page/post."
+msgstr ""
+
+#: src/search/views/search.php:61
+msgid "Exclude URLs"
+msgstr ""
+
+#: src/search/views/search.php:76
+msgid "Remove"
+msgstr ""
+
+#: src/search/views/search.php:82
+msgid "Add URL to Exclude"
+msgstr ""
+
+#: src/search/views/search.php:85
+msgid ""
+"Exclude URLs from indexing. You can use full URLs, parts of an URL or plain "
+"words (like stop words)."
+msgstr ""
+
+#: src/search/views/search.php:91
+msgid "Algolia"
+msgstr ""
+
+#: src/search/views/search.php:96
+msgid "Application ID"
+msgstr ""
+
+#: src/search/views/search.php:101
+msgid "Add your Algolia App ID here."
+msgstr ""
+
+#: src/search/views/search.php:107
+msgid "Admin API Key"
+msgstr ""
+
+#: src/search/views/search.php:112
+msgid "Add your Algolia Admin API Key here."
+msgstr ""
+
+#: src/search/views/search.php:118
+msgid "Search-Only API Key"
+msgstr ""
+
+#: src/search/views/search.php:123
+msgid ""
+"Add your Algolia Search-Only API Key here. This is the only key that will be "
+"visible on your static site."
+msgstr ""
+
+#: src/search/views/search.php:129
+msgid "Name for your index"
+msgstr ""
+
+#: src/search/views/search.php:134
+msgid "Add your Algolia index name here. Default is simply_static"
+msgstr ""
+
+#: src/search/views/search.php:140
+msgid "CSS-Selector"
+msgstr ""
+
+#: src/search/views/search.php:145
+msgid ""
+"Add the CSS selector of your search element here. The default value is ."
+"search-field"
+msgstr ""
+
+#: src/search/views/search.php:157
+msgid "Save Changes"
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:50
+msgid "Generate Static"
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:51
+msgid "Publish"
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:66
+msgid "Simply Static"
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:78
+msgid "Generate static"
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:79
+msgid ""
+"Use this to generate a static version of the current page you are editing."
+msgstr ""
+
+#: src/single/class-ssh-single.php:185 src/single/class-ssh-single.php:203
+msgid "Additional URL"
+msgstr ""
+
+#: src/utils/class-ssh-helper.php:55
+msgid ""
+"Warning, you are currently running in development mode. Make sure to remove "
+"define( 'SSH_DEV_MODE', true ); from your wp-config.php before you run a new "
+"static export."
+msgstr ""
+
+#: src/utils/class-ssh-simply-static.php:136
+#: src/utils/class-ssh-simply-static.php:139
 msgid "View static URL"
 msgstr ""
 

@@ -1,7 +1,7 @@
 <div id='search' class='tab-pane'>
 	<h2 class="title"><?php esc_html_e( 'Search', 'simply-static-hosting' ); ?></h2>
 	<p>
-	<?php esc_html_e( 'Activate the usage of static search. It uses fuse.js or the Algolia API and creates an complete index to search by title and content of each page.', 'simply-static-hosting' ); ?>
+	<?php esc_html_e( 'Activate the usage of static search. It uses the Algolia API and creates an complete index to search by title and content of each page.', 'simply-static-hosting' ); ?>
 	</p>
 	<table class='form-table'>
 		<tbody>
