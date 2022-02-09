@@ -63,7 +63,7 @@ class CDN_Task extends Simply_Static\Task {
 			$counter++;
 		}
 
-		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-static-pro' ), $counter );
+		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-static-hosting' ), $counter );
 		$this->save_status_message( $message );
 
 		// Maybe add 404.

@@ -47,7 +47,7 @@ class Deployment_Settings {
 	public function add_delivery_method() {
 		$options = get_option( 'simply-static' );
 		?>
-		<option value='cdn' <?php Simply_Static\Util::selected_if( 'cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'CDN', 'simply-static-pro' ); ?></option>
+		<option value='cdn' <?php Simply_Static\Util::selected_if( 'cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'CDN', 'simply-static-hosting' ); ?></option>
 		<?php
 	}
 
@@ -61,7 +61,7 @@ class Deployment_Settings {
 		<tr class="delivery-method cdn-deploy" style="display:none">
 			<th></th>
 			<td>
-				<p><?php esc_html_e( 'When using CDN please make sure you are using relative URLs and that you have configured the necessary settings in Simply Static -> Settings -> Deployment', 'simply-static-pro' ); ?></p>
+				<p><?php esc_html_e( 'When using CDN please make sure you are using relative URLs and that you have configured the necessary settings in Simply Static -> Settings -> Deployment', 'simply-static-hosting' ); ?></p>
 			</td>
 		</tr>
 		<?php

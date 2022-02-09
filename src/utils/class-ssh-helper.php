@@ -52,7 +52,7 @@ class Helper {
 			<?php if ( defined( 'SSH_DEV_MODE' ) && true === SSH_DEV_MODE ) : ?>
 			<script>
 			jQuery(document).ready(function( $ ) {
-				$('.actions').append('<span style="float:left;width:100%;padding: 5px 0;color:red;"><?php echo esc_html_e( "Warning, you are currently running in development mode. Make sure to remove define( 'SSH_DEV_MODE', true ); from your wp-config.php before you run a new static export.", 'simply-static-pro' ); ?></span>');
+				$('.actions').append('<span style="float:left;width:100%;padding: 5px 0;color:red;"><?php echo esc_html_e( "Warning, you are currently running in development mode. Make sure to remove define( 'SSH_DEV_MODE', true ); from your wp-config.php before you run a new static export.", 'simply-static-hosting' ); ?></span>');
 			});
 			</script>
 			<?php endif; ?>

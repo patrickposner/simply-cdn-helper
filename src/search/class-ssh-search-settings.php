@@ -46,7 +46,7 @@ class Search_Settings {
 	 */
 	public function output_settings_tab() {
 		?>
-		<a class='nav-tab' id='search-tab' href='#tab-search'><?php esc_html_e( 'Algolia', 'simply-static-hosting' ); ?></a>
+		<a class='nav-tab' id='search-tab' href='#tab-search'><?php esc_html_e( 'Search', 'simply-static-hosting' ); ?></a>
 		<?php
 	}
 
@@ -160,7 +160,7 @@ class Search_Settings {
 	 */
 	public function check_class_name( $class_name, $task_name ) {
 		if ( 'search_index' === $task_name ) {
-			return 'simply_static_pro\\' . ucwords( $task_name ) . '_Task';
+			return 'ssh\\' . ucwords( $task_name ) . '_Task';
 		}
 		return $class_name;
 	}
