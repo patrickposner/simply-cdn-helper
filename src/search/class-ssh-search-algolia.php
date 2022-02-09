@@ -93,12 +93,12 @@ class Search_Algolia {
 			wp_enqueue_script( 'ssh-algolia-autocomplete', 'https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js', array(), null, true );
 
 			if ( defined( 'SSH_DEV_MODE' ) && true === SSH_DEV_MODE ) {
-				wp_enqueue_script( 'ssh-algolia-script-dev', SIMPLY_STATIC_PRO_URL . '/assets/dev/ssh-search-algolia-dev.js', array( 'ssh-algolia-autocomplete', 'ssh-algolia' ), '1.1.1', true );
+				wp_enqueue_script( 'ssh-algolia-script-dev', SIMPLY_STATIC_HOSTING_URL . '/assets/dev/ssh-search-algolia-dev.js', array( 'ssh-algolia-autocomplete', 'ssh-algolia' ), '1.1.1', true );
 			} else {
-				wp_enqueue_script( 'ssh-algolia-script', SIMPLY_STATIC_PRO_URL . '/assets/ssh-search-algolia.js', array( 'ssh-algolia-autocomplete', 'ssh-algolia' ), '1.1.1', true );
+				wp_enqueue_script( 'ssh-algolia-script', SIMPLY_STATIC_HOSTING_URL . '/assets/ssh-search-algolia.js', array( 'ssh-algolia-autocomplete', 'ssh-algolia' ), '1.1.1', true );
 			}
 
-			wp_enqueue_style( 'ssh-search-algolia', SIMPLY_STATIC_PRO_URL . '/assets/ssh-search-algolia.css', array(), '1.1.1', 'all' );
+			wp_enqueue_style( 'ssh-search-algolia', SIMPLY_STATIC_HOSTING_URL . '/assets/ssh-search-algolia.css', array(), '1.1.1', 'all' );
 		}
 	}
 
@@ -155,6 +155,11 @@ class Search_Algolia {
 			$dom = $response->getRawBody();
 
 			if ( is_null( $dom ) ) {
+				return $static_page;
+			}
+
+			// Skip if it's home.
+			if ( untrailingslashit( get_bloginfo( 'url' ) ) === untrailingslashit( $static_page->url ) ) {
 				return $static_page;
 			}
 
@@ -217,12 +222,12 @@ class Search_Algolia {
 						// Create a new index item.
 						$this->index->saveObject( $index_item );
 					} catch ( Exception $e ) {
-						Simply_Static\Util::debug_log( __( 'There was an connection error with Algolia. Please check your settings.', 'simply-static-pro' ) );
+						Simply_Static\Util::debug_log( __( 'There was an connection error with Algolia. Please check your settings.', 'simply-static-hosting' ) );
 					}
 
-					Simply_Static\Util::debug_log( __( 'Added the following URL to search index', 'simply-static-pro' ) . ': ' . $static_page->url );
+					Simply_Static\Util::debug_log( __( 'Added the following URL to search index', 'simply-static-hosting' ) . ': ' . $static_page->url );
 				} else {
-					Simply_Static\Util::debug_log( __( 'You need to add the static URL in your search settings before you can create an index.', 'simply-static-pro' ) );
+					Simply_Static\Util::debug_log( __( 'You need to add the static URL in your search settings before you can create an index.', 'simply-static-hosting' ) );
 				}
 			}
 		}
