@@ -202,7 +202,7 @@ class Single {
 				$static_page = Simply_Static\Page::query()->find_or_initialize_by( 'url', $url );
 				$static_page->set_status_message( __( "Additional URL", 'simply-static' ) );
 				$static_page->post_id     = $single_id;
-				$static_page->found_on_id = 0;
+				$static_page->found_on_id = $single_id;
 				$static_page->save();
 			}
 		}
@@ -311,20 +311,32 @@ class Single {
 	 * Delete single post/page.
 	 *
 	 * @param  int $post_id given post id.
-	 * @return void
+	 * @return int
 	 */
 	public function delete_single( $post_id ) {
-		$options      = get_option( 'simply-static' );
-		$trashed_post = get_post( $post_id );
+		global $wpdb;
 
-		$additional_path = '';
+		$options = get_option( 'simply-static' );
+		$item    = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d AND found_on_id = 0", $post_id ) );
 
-		if ( ! empty( $options['relative_path'] ) ) {
-			$additional_path = $options['relative_path'];
+		if ( ! is_object( $item ) ) {
+			return $post_id;
 		}
 
-		// Build path.
-		$path = $additional_path . str_replace( '__trashed', '', $trashed_post->post_name );
+		// Get path.
+		$path = str_replace( untrailingslashit( get_bloginfo('url') ), '', $item->url );
+
+		// Check if trashed post.
+		$post = get_post( $post_id );
+
+		if ( $post->post_status !== 'trash' ) {
+			return $post_id;
+		}
+
+		// Check if additional path is set.
+		if ( ! empty( $options['relative_path'] ) ) {
+			$path = $options['relative_path'] . $path;
+		}
 
 		// Delete files from BunnyCDN.
 		if ( 'cdn' === $options['delivery_method'] ) {
@@ -334,18 +346,10 @@ class Single {
 		}
 
 		// Delete item from Algolia.
-
-		// Setup Algolia.
 		$client = \Algolia\AlgoliaSearch\SearchClient::create( $options['algolia-app-id'], $options['algolia-admin-api-key'] );
 		$index  = $client->initIndex( $options['algolia-index'] );
 
-		// Get row by post_id and grab ID.
-		global $wpdb;
-		$item = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d", $post_id ) );
-
 		// Delete index item.
-		if ( ! is_null( $item ) ) {
-			$index->deleteObject( $item->id );
-		}
+		$index->deleteObject( $item->id );
 	}
 }
