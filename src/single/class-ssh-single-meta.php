@@ -74,10 +74,16 @@ class Single_Meta {
 	 */
 	public function render_simply_static( $post ) {
 		?>
+		<?php if ( 'publish' === $post->post_status ) : ?>
 		<p>
 			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-hosting' ); ?></a><br>
 			<small><?php esc_html_e( 'Use this to generate a static version of the current page you are editing.', 'simply-static-hosting' ); ?></small>
 		</p>
+		<?php else : ?>
+		<p>
+			<small><?php esc_html_e( 'You have to publish your post before you can create a static version of it.', 'simply-static-hosting' ); ?></small>
+		</p>
+		<?php endif; ?>
 		<?php
 	}
 }

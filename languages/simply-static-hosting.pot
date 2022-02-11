@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-02-09 12:53+0100\n"
+"POT-Creation-Date: 2022-02-11 09:37+0100\n"
 "PO-Revision-Date: 2022-01-13 11:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -346,13 +346,18 @@ msgstr ""
 msgid "Simply Static"
 msgstr ""
 
-#: src/single/class-ssh-single-meta.php:78
+#: src/single/class-ssh-single-meta.php:79
 msgid "Generate static"
 msgstr ""
 
-#: src/single/class-ssh-single-meta.php:79
+#: src/single/class-ssh-single-meta.php:80
 msgid ""
 "Use this to generate a static version of the current page you are editing."
+msgstr ""
+
+#: src/single/class-ssh-single-meta.php:84
+msgid ""
+"You have to publish your post before you can create a static version of it."
 msgstr ""
 
 #: src/single/class-ssh-single.php:185 src/single/class-ssh-single.php:203

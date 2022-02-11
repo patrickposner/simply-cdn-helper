@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-02-09 12:53+0100\n"
-"PO-Revision-Date: 2022-02-09 12:54+0100\n"
+"POT-Creation-Date: 2022-02-11 09:37+0100\n"
+"PO-Revision-Date: 2022-02-11 09:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -179,7 +179,7 @@ msgid ""
 "custom 404 error page."
 msgstr ""
 "Sobald deine Website mit der Plattform verbunden ist, kannst du hier deine "
-"CDN-Einstellungen überarbeiten. Setze Weiterleitungen, richte Prox-URLs ein "
+"CDN-Einstellungen überarbeiten. Setze Weiterleitungen, richte Proxy-URLs ein "
 "und konfiguriere eine eigene 404-Fehlerseite."
 
 #: src/class-ssh-admin.php:215
@@ -383,14 +383,21 @@ msgstr "Veröffentlichen"
 msgid "Simply Static"
 msgstr "Simply Static"
 
-#: src/single/class-ssh-single-meta.php:78
+#: src/single/class-ssh-single-meta.php:79
 msgid "Generate static"
 msgstr "Statisch generieren"
 
-#: src/single/class-ssh-single-meta.php:79
+#: src/single/class-ssh-single-meta.php:80
 msgid ""
 "Use this to generate a static version of the current page you are editing."
 msgstr "Nutze dies um eine statische Version der aktuellen Seite zu erstellen."
+
+#: src/single/class-ssh-single-meta.php:84
+msgid ""
+"You have to publish your post before you can create a static version of it."
+msgstr ""
+"Du musst deinen Beitrag erst veröffentlichen, bevor du ihn statisch "
+"exportieren kannst."
 
 #: src/single/class-ssh-single.php:185 src/single/class-ssh-single.php:203
 msgid "Additional URL"
