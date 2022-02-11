@@ -73,8 +73,9 @@ class Single_Meta {
 	 * @return void
 	 */
 	public function render_simply_static( $post ) {
+		$current_screen = get_current_screen();
 		?>
-		<?php if ( 'publish' === $post->post_status ) : ?>
+		<?php if ( 'publish' === $post->post_status || method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) : ?>
 		<p>
 			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-hosting' ); ?></a><br>
 			<small><?php esc_html_e( 'Use this to generate a static version of the current page you are editing.', 'simply-static-hosting' ); ?></small>
