@@ -63,10 +63,10 @@
 				<td>
 					<?php
 					$options             = get_option( 'simply-static' );
-					$urls_search_exclude = array();
+					$urls_search_exclude = $options['search-excludable'];
 
-					if ( ! empty( $options['search-excludable'] ) ) {
-						$urls_search_exclude = $options['search-excludable'];
+					if ( empty( $options['search-excludable'] ) ) {
+						$urls_search_exclude = array();
 					}
 					?>
 					<div id="excludable-search-url-rows">
