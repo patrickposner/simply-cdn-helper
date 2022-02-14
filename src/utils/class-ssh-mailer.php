@@ -53,7 +53,7 @@ class Mailer {
 
 		$url        = wp_parse_url( untrailingslashit( get_bloginfo( 'url' ) ) );
 		$mail_parts = explode( '.', $url['host'] );
-		$mail       = $mail_parts[0] . '@' . $mail_parts[1];
+		$mail       = $mail_parts[0] . '@' . $mail_parts[1] . '.io';
 
 		return $mail;
 	}

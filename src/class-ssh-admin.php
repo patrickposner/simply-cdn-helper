@@ -234,7 +234,7 @@ class Admin {
 					<?php
 					$url        = wp_parse_url( untrailingslashit( get_bloginfo( 'url' ) ) );
 					$mail_parts = explode( '.', $url['host'] );
-					$mail       = $mail_parts[0] . '@' . $mail_parts[1];
+					$mail       = $mail_parts[0] . '@' . $mail_parts[1] . '.io';
 
 					printf( __( 'Your default e-mail address is %s, and we use %s as the from name to send e-mails from your website.', 'simply-static-hosting' ), '<b>' . esc_html( $mail ) . '</b>', '<b>' . esc_html( get_bloginfo( 'name' ) ) . '</b>' );
 					?>
