@@ -31,7 +31,47 @@ class Mailer {
 	 * Constructor for Admin.
 	 */
 	public function __construct() {
+		add_filter( 'wp_mail_from', array( $this, 'set_from_email' ) );
+		add_filter( 'wp_mail_from_name', array( $this, 'set_from_name' ) );
 		add_action( 'phpmailer_init', array( $this, 'set_smtp_delivery' ) );
+		add_action( 'wp_ajax_send_test_mail', array( $this, 'send_test_mail' ) );
+	}
+
+	/**
+	 * Set from e-mail address.
+	 *
+	 * @param  string $origin_email current from email.
+	 * @return string
+	 */
+	public function set_from_email( $origin_email ) {
+
+		$smtp_host = get_option( 'ssh_smtp_host' );
+
+		if ( ! empty( $smtp_host ) ) {
+			return $origin_email;
+		}
+
+		$url        = wp_parse_url( untrailingslashit( get_bloginfo( 'url' ) ) );
+		$mail_parts = explode( '.', $url['host'] );
+		$mail       = $mail_parts[0] . '@' . $mail_parts[1];
+
+		return $mail;
+	}
+
+	/**
+	 * Set from name
+	 *
+	 * @param string $origin_name current from name.
+	 * @return string
+	 */
+	public function set_from_name( $origin_name ) {
+		$smtp_host = get_option( 'ssh_smtp_host' );
+
+		if ( ! empty( $smtp_host ) ) {
+			return $origin_name;
+		}
+
+		return esc_html( get_bloginfo( 'name' ) );
 	}
 
 	/**
@@ -52,5 +92,32 @@ class Mailer {
 		$phpmailer->FromName   = get_option( 'ssh_smtp_name_from' );
 
 		return $phpmailer;
+	}
+
+	/**
+	 * Send a test e-mail via ajax.
+	 *
+	 * @return void
+	 */
+	public function send_test_mail() {
+		$nonce = esc_html( $_POST['nonce'] );
+
+		if ( ! wp_verify_nonce( $nonce, 'ssh-mailer-nonce' ) ) {
+			die();
+		}
+
+		$to      =  esc_html( $_POST['email'] );
+		$subject = __( 'Test E-Mail', 'simply-static-hosting' );
+		$body    = __( 'This is the Test E-Mail you have triggered from ', 'simply-static-hosting' ) . get_bloginfo( 'url' );
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
+		$response = array( 'success' => true );
+
+		wp_mail( $to, $subject, $body, $headers );
+
+		$response = array( 'success' => true );
+
+		print wp_json_encode( $response );
+		exit;
 	}
 }

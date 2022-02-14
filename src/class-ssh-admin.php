@@ -33,6 +33,28 @@ class Admin {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'register_menu_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
+		add_action( 'updated_option', array( $this, 'update_host_name' ), 10, 3 );
+	}
+
+	/**
+	 * Enqueue admin scripts
+	 *
+	 * @return void
+	 */
+	public function add_admin_scripts() {
+		wp_enqueue_script( 'ssh-admin', SIMPLY_STATIC_HOSTING_URL . '/assets/ssh-admin.js', array( 'jquery' ), '1.0', true );
+
+		$args = array(
+			'ajax_url'      => admin_url( 'admin-ajax.php' ),
+			'mailer_nonce'  => wp_create_nonce( 'ssh-mailer-nonce' ),
+			'cache_nonce'   => wp_create_nonce( 'ssh-cache-nonce' ),
+			'mail_sent'     => __( 'Test E-Mail sent successfully.', 'simply-static-hosting' ),
+			'cache_cleared' => __( 'Cache cleared successfully.', 'simply-static-hosting' ),
+		);
+
+		wp_localize_script( 'ssh-admin', 'ssh_ajax', $args );
+
 	}
 
 	/**
@@ -46,10 +68,12 @@ class Admin {
 		register_setting( 'ssh_cdn_group', 'ssh_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_user', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_password', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_connection', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_host', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_mail_from', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_name_from', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'ssh_smtp_options_group', 'ssh_smtp_mail_port', array( 'type' => 'number', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'ssh_branding_group', 'ssh_admin_logo', array( 'type' => 'number', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 	}
 
 	/**
@@ -71,7 +95,7 @@ class Admin {
 
 		?>
 		<div class="ssh-container">
-			<h1><?php echo esc_html_e( 'Simply Static Hosting', 'simply-static-hosting' ); ?></h1>
+			<h1 style="text-align:center"><?php echo esc_html_e( 'Simply Static Hosting', 'simply-static-hosting' ); ?></h1>
 			<div class="wrap">
 				<div>
 					<p>
@@ -90,6 +114,9 @@ class Admin {
 						<input type="text" id="ssh_app_site_id" name="ssh_app_site_id" value="<?php echo esc_html( get_option( 'ssh_app_site_id' ) ); ?>" />
 					</p>
 					<?php submit_button(); ?>
+					<?php if ( ! empty( $data ) ) : ?>
+					<p class="success"><?php echo esc_html_e( 'Your site is successfully connected to the platform.', 'simply-static-hosting' ); ?></p>
+					<?php endif; ?>
 					</form>
 				</div>
 				<div>
@@ -163,18 +190,55 @@ class Admin {
 				<?php endif; ?>
 			</div>
 			<div class="wrap">
+				<div>
+					<p>
+						<h2><?php echo esc_html_e( 'Configure your static website', 'simply-static-hosting' ); ?></h2>
+					</p>
+					<p>
+						<?php echo esc_html_e( 'Once your website is connected you can configure all settings related to the CDN here. This includes settings up redirects, proxy URLs and setting up a custom 404 error page.', 'simply-static-hosting' ); ?>
+					</p>
+					<form method="post" action="options.php">
+					<?php settings_fields( 'ssh_cdn_group' ); ?>
+					<p>
+						<label for="ssh_static_url"><?php echo esc_html_e( 'Static URL', 'simply-static-hosting' ); ?></label></br>
+						<input type="url" id="ssh_static_url" name="ssh_static_url" value="<?php echo esc_html( get_option( 'ssh_static_url' ) ); ?>" />
+						<small><?php echo esc_html_e( 'Once you change this setting, your static website will be available under the new domain. Make sure you set your CNAME record before you change this setting.', 'simply-static-hosting' ); ?></small>
+					</p>
+					<p>
+						<label for="ssh_404_path"><?php echo esc_html_e( 'Relative path to your 404 page', 'simply-static-hosting' ); ?></label></br>
+						<input type="text" id="ssh_404_path" name="ssh_404_path" value="<?php echo esc_html( get_option( 'ssh_404_path' ) ); ?>" />
+					</p>
+					<?php submit_button(); ?>
+					</form>
+					<p>
+					<h2><?php echo esc_html_e( 'Caching', 'simply-static-hosting' ); ?></h2>
+						<?php echo esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-static-hosting' ); ?>
+					</p>
+					<p>
+					<span class="button-secondary button ssh-secondary-button" id="ssh-clear-cache"><?php echo esc_html_e( 'Clear Cache', 'simply-static-hosting' ); ?></span>
+					</p>
+				</div>
+				<div>
+				</div>
+			</div>
+			<div class="wrap">
 				<p>
 					<h2><?php echo esc_html_e( 'Setup SMTP', 'simply-static-hosting' ); ?></h2>
 				</p>
 				<p>
-						<?php echo esc_html_e( 'The native PHP Mailer is deactivated on the Simply Static plattform for security reasons.', 'simply-static-hosting' ); ?>
-				</p>
-				<p style="margin-bottom: 50px;">
-				<?php echo esc_html_e( 'Please add your SMTP credentials from your mail server if you want to send e-mails.', 'simply-static-hosting' ); ?>
+					<?php echo esc_html_e( 'We provide you with a ready-to-go e-mail address and a from-name to receive e-mails from your website. If you like to use your own e-mail, please provide the SMTP credentials below.', 'simply-static-hosting' ); ?>
 				</p>
 				<form method="post" action="options.php">
 				<?php settings_fields( 'ssh_smtp_options_group' ); ?>
 				<p>
+					<?php
+					$url        = wp_parse_url( untrailingslashit( get_bloginfo( 'url' ) ) );
+					$mail_parts = explode( '.', $url['host'] );
+					$mail       = $mail_parts[0] . '@' . $mail_parts[1];
+
+					printf( __( 'Your default e-mail address is %s, and we use %s as the from name to send e-mails from your website.', 'simply-static-hosting' ), '<b>' . esc_html( $mail ) . '</b>', '<b>' . esc_html( get_bloginfo( 'name' ) ) . '</b>' );
+					?>
+				</p>
 					<label for="ssh_smtp_user"><?php echo esc_html_e( 'SMTP User', 'simply-static-hosting' ); ?></label></br>
 					<input type="text" id="ssh_smtp_user" name="ssh_smtp_user" value="<?php echo esc_html( get_option( 'ssh_smtp_user' ) ); ?>" placeholder="user@example.com" />
 				</p>
@@ -185,6 +249,18 @@ class Admin {
 				<p>
 					<label for="ssh_smtp_host"><?php echo esc_html_e( 'SMTP Host', 'simply-static-hosting' ); ?></label></br>
 					<input type="text" id="ssh_smtp_host" name="ssh_smtp_host" value="<?php echo esc_html( get_option( 'ssh_smtp_host' ) ); ?>" placeholder="smtp.example.com" />
+				</p>
+				<p>
+				<label for="ssh_smtp_connection"><?php echo esc_html_e( 'SMTP Secure Connection', 'simply-static-hosting' ); ?></label></br>
+					<select name="ssh_smtp_connection">
+						<?php if ( 'tls' === get_option( 'ssh_smtp_connection' ) ) : ?>
+							<option value="tls" selected="selected"><?php echo esc_html_e( 'TLS', 'simply-static-hosting' ); ?></option>
+							<option value="ssl"><?php echo esc_html_e( 'SSL', 'simply-static-hosting' ); ?></option>
+						<?php else : ?>
+							<option value="tls"><?php echo esc_html_e( 'TLS', 'simply-static-hosting' ); ?></option>
+							<option value="ssl" selected="selected"><?php echo esc_html_e( 'SSL', 'simply-static-hosting' ); ?></option>
+						<?php endif; ?>
+					</select>					
 				</p>
 				<p>
 					<label for="ssh_smtp_mail_from"><?php echo esc_html_e( 'E-Mail (from)', 'simply-static-hosting' ); ?></label></br>
@@ -200,24 +276,34 @@ class Admin {
 				</p>
 				<?php submit_button(); ?>
 				</form>
+				<form method="post" action="options.php">
+				<p>
+				<h2><?php echo esc_html_e( 'Test E-Mail', 'simply-static-hosting' ); ?></h2>
+				<?php echo esc_html_e( 'Once you added and saved your SMTP settings, you can send a test e-mail to see if everything works correctly.', 'simply-static-hosting' ); ?>
+				</p>
+				<p>
+					<label for="ssh_test_mail"><?php echo esc_html_e( 'E-Mail', 'simply-static-hosting' ); ?></label></br>
+					<input type="text" id="ssh_test_mail" name="ssh_test_mail" value="" placeholder="john@doe.de" />
+				</p>
+				<p>
+					<span class="ssh-secondary-button button" id="ssh-send-test-email"><?php echo esc_html_e( 'Send E-Mail', 'simply-static-hosting' ); ?></span>
+				</p>
+				</form>
 			</div>
 			<div class="wrap">
 				<div>
 					<p>
-						<h2><?php echo esc_html_e( 'Configure your static website', 'simply-static-hosting' ); ?></h2>
+						<h2><?php echo esc_html_e( 'Branding', 'simply-static-hosting' ); ?></h2>
 					</p>
 					<p>
-						<?php echo esc_html_e( 'Once your website is connected you can configure all settings related to the CDN here. This includes settings up redirects, proxy URLs and setting up a custom 404 error page.', 'simply-static-hosting' ); ?>
+						<?php echo esc_html_e( "You may want to apply your corporate design to the client's admin area. We added a couple of settings to customize the appearance further.", 'simply-static-hosting' ); ?>
 					</p>
 					<form method="post" action="options.php">
-					<?php settings_fields( 'ssh_cdn_group' ); ?>
+					<?php settings_fields( 'ssh_branding_group' ); ?>
 					<p>
-						<label for="ssh_static_url"><?php echo esc_html_e( 'Static URL (optional)', 'simply-static-hosting' ); ?></label></br>
-						<input type="url" id="ssh_static_url" name="ssh_static_url" value="<?php echo esc_html( get_option( 'ssh_static_url' ) ); ?>" />
-					</p>
-					<p>
-						<label for="ssh_404_path"><?php echo esc_html_e( 'Relative path to your 404 page', 'simply-static-hosting' ); ?></label></br>
-						<input type="text" id="ssh_404_path" name="ssh_404_path" value="<?php echo esc_html( get_option( 'ssh_404_path' ) ); ?>" />
+						<label for="ssh_admin_logo"><?php echo esc_html_e( 'Add a URL to your logo here.', 'simply-static-hosting' ); ?></label></br>
+						<input type="url" id="ssh_admin_logo" name="ssh_admin_logo" value="<?php echo esc_html( get_option( 'ssh_admin_logo' ) ); ?>" />
+						<small><?php echo esc_html_e( 'This image will replace the Simply Static Hosting logo on the login page of your WordPress website.', 'simply-static-hosting' ); ?></small>
 					</p>
 					<?php submit_button(); ?>
 					</form>
@@ -231,15 +317,15 @@ class Admin {
 			background: #fafafa;
 			padding: 30px;
 			box-sizing: border-box;
-			width: 45%;
-			float: left;
-			min-height: 580px;
-			margin-bottom:15px;
+			min-height: auto;
+			margin-bottom: 15px;
+			max-width: 700px;
+			margin: 20px auto;
 		}
 
 		.ssh-container #submit {
 			background: #7200e5;
-				background-color: rgb(114, 0, 229);
+			background-color: rgb(114, 0, 229);
 			background-color: #7200e5;
 			color: #fff;
 			border: 2px solid transparent;
@@ -268,7 +354,61 @@ class Admin {
 		.ssh-container input {
 			width: 100%;
 		}
+		.ssh-container select {
+			width: 100%;
+			max-width: 100% !important;
+		}
+
+		.ssh-secondary-button  {
+			background-color: #959595 !important;
+			color: #fff;
+			border: 2px solid transparent !important;
+			box-shadow: 0 0 20px 0 rgba(114,0,229,.2);
+			margin: 0;
+			display: inline-block;
+			box-sizing: border-box;
+			padding: 0 30px;
+			vertical-align: middle;
+			font-size: 15px;
+			line-height: 36px;
+			text-align: center;
+			text-decoration: none;
+			transition: .3s ease-in-out;
+			transition-property: all;
+			transition-property: all;
+			transition-property: all;
+			transition-property: color,background-color,background-position,background-size,border-color,box-shadow;
+			border-radius: 5px;
+			background-origin: border-box;
+			width: 100%;
+			color:white !important;
+		}
+
+		.ssh-secondary-button:hover {
+			background-color: #626262;
+			color: #fff;
+			border-color: transparent;
+			box-shadow: 0 0 30px 0 rgba(98,98,98,.4);
+		}
+
+		.ssh-container .success {
+		color: #2aa42a;
+		}
 		</style>
 		<?php
+	}
+
+	/**
+	 * Update hostname if static URL changed.
+	 *
+	 * @param string $option_name current option name.
+	 * @param string $old_value old value opf the option.
+	 * @param string $option_value new value of the option.
+	 * @return void
+	 */
+	public function update_host_name( $option_name, $old_value, $option_value ) {
+		if ( 'ssh_static_url' === $option_name && $old_value !== $option_value ) {
+			// Send API request.
+		}
 	}
 }

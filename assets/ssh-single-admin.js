@@ -40,12 +40,12 @@ jQuery(document).ready(function( $ ) {
   
         $.ajax({
             type: 'POST',
-            url: ssh_ajax.ajax_url,
-            data: {'action' : 'apply_single', 'nonce' : ssh_ajax.run_single_nonce, 'single_id' : single_id },
+            url: ssh_single_ajax.ajax_url,
+            data: {'action' : 'apply_single', 'nonce' : ssh_single_ajax.run_single_nonce, 'single_id' : single_id },
             dataType: 'json',
             success: function(response) {
                 if ( response.success ) {
-                    window.location.replace( ssh_ajax.redirect_url + '&type=single_export' );
+                    window.location.replace( ssh_single_ajax.redirect_url + '&type=single_export' );
                 }
             },
         });		

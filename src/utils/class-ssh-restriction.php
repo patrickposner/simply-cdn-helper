@@ -107,10 +107,16 @@ class Restriction {
 	 * @return void
 	 */
 	public function add_login_logo() {
+		$admin_logo = get_option( 'ssh_admin_logo' );
+
+		if ( empty( $admin_logo ) ) {
+			$admin_logo = 'https://manage.simplystatic.io/wp-content/uploads/2021/12/simply-static-logo.svg';
+		}
+
 		?>
 		<style type="text/css">
 			h1 a {
-			background-image: url('https://manage.simplystatic.io/wp-content/uploads/2021/12/simply-static-logo.svg') !important;
+			background-image: url('<?php echo esc_url( $admin_logo ); ?>') !important;
 			min-width: 250px !important;
 			background-size: 100% !important;
 			}

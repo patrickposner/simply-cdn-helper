@@ -54,7 +54,7 @@ class Single {
 
 		wp_localize_script(
 			'ssh-single-admin',
-			'ssh_ajax',
+			'ssh_single_ajax',
 			array(
 				'ajax_url'         => admin_url() . 'admin-ajax.php',
 				'run_single_nonce' => wp_create_nonce( 'ssh-run-single' ),
