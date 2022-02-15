@@ -43,7 +43,7 @@ class CDN {
 	 */
 	public function __construct() {
 		$options = get_option( 'simply-static' );
-		$client  = new \Corbpie\BunnyCdn\BunnyAPI( 0 );
+		$client  = new \Corbpie\BunnyCdn\BunnyAPI( 99999999 );
 
 		// Authenticate.
 		$api_key = Api::get_cdn_key();
@@ -157,16 +157,14 @@ class CDN {
 	 * @return bool
 	 */
 	public function purge_cache() {
-		$zones = $this->configure_zones();
-		$data  = Api::get_site_data();
+		$zones   = $this->configure_zones();
+		$api_key = Api::get_cdn_key();
 
 		$response = wp_remote_post(
-			'https://api.bunny.net/pullzone/' . $zones['pull_zone']['name'] . '/purgeCache',
+			'https://api.bunny.net/pullzone/' . $zones['pull_zone']['zone_id'] . '/purgeCache',
 			array(
 				'headers' => array(
-					'Accept'       => 'application/json',
-					'AccessKey'    => $data->cdn->access_key,
-					'Content-Type' => 'application/json',
+					'AccessKey' => $api_key,
 				),
 			)
 		);
