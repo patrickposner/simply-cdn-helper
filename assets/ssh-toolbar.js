@@ -1,7 +1,7 @@
 // Took it from: https://stackoverflow.com/questions/62105561/adding-button-to-header-of-gutenberg-editor-in-wordpress-through-plugin
 (function (window, wp) {
     var link_id = 'ssh-trigger-static-export';
-    var link_html = '<a id="' + link_id + '" class="components-button is-secondary" href="#">' + ssht.button_label + '</a>';
+    var link_html = '<a id="' + link_id + '" class="components-button is-secondary" href="#">' + ssht.button_label + '</a><span class="spinner"></span>';
 
     // check if gutenberg's editor root element is present.
     var editorEl = document.getElementById('editor');

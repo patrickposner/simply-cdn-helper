@@ -37,6 +37,9 @@ jQuery(document).ready(function( $ ) {
     $('#generate-single').on('click', function(){
 
         var single_id = $(this).attr('data-id');
+
+        $( '#generate-single' ).attr( 'disabled', 'disabled' );
+        $( '.spinner' ).addClass( 'is-active' );
   
         $.ajax({
             type: 'POST',

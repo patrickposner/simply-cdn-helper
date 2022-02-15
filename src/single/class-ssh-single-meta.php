@@ -77,7 +77,9 @@ class Single_Meta {
 		?>
 		<?php if ( 'publish' === $post->post_status || method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) : ?>
 		<p>
-			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-hosting' ); ?></a><br>
+			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-hosting' ); ?></a>
+			<span class="spinner"></span>
+			<br>
 			<small><?php esc_html_e( 'Use this to generate a static version of the current page you are editing.', 'simply-static-hosting' ); ?></small>
 		</p>
 		<?php else : ?>
@@ -85,6 +87,23 @@ class Single_Meta {
 			<small><?php esc_html_e( 'You have to publish your post before you can create a static version of it.', 'simply-static-hosting' ); ?></small>
 		</p>
 		<?php endif; ?>
+		<style>
+		.spinner {
+			float: none;
+			margin: 0;
+			top: -2px;
+			position: relative;
+		}
+
+		.edit-post-header__toolbar .spinner {
+		float: none;
+		margin: 0;
+			margin-left: 0px;
+		top: 5px;
+		position: relative;
+		margin-left: 3px;
+		}
+		</style>
 		<?php
 	}
 }
