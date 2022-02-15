@@ -154,11 +154,31 @@ class CDN {
 	/**
 	 * Purge Zone Cache in BunnyCDN pull zone.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function purge_cache() {
 		$zones = $this->configure_zones();
+		$data  = Api::get_site_data();
 
-		$this->client->purgeCache( 'https://' . $zones['pull_zone']['name'] . '.b-cdn.net' );
+		$response = wp_remote_post(
+			'https://api.bunny.net/pullzone/' . $zones['pull_zone']['name'] . '/purgeCache',
+			array(
+				'headers' => array(
+					'Accept'       => 'application/json',
+					'AccessKey'    => $data->cdn->access_key,
+					'Content-Type' => 'application/json',
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 }
