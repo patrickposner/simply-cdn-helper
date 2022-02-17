@@ -409,6 +409,14 @@ class Admin {
 	public function update_host_name( $option_name, $old_value, $option_value ) {
 		if ( 'ssh_static_url' === $option_name && $old_value !== $option_value ) {
 			// Send API request.
+			Api::publish_website( $option_value );
+
+			// Send email.
+			$subject = __( 'Static URL changed for ', 'simply-static-hosting' ) . get_bloginfo( 'url' );
+			$body    = __( 'The static URL has changed to ', 'simply-static-hosting' ) . $option_name;
+			$headers = array( 'Content-Type: text/html;' );
+
+			wp_mail( 'support@simplystatic.io', $subject, $body, $headers );
 		}
 	}
 }
