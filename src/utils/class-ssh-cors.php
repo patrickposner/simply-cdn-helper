@@ -59,8 +59,15 @@ class Cors_Settings {
 		$origin     = get_http_origin();
 		$static_url = untrailingslashit( get_option( 'ssh_static_url' ) );
 
+		// If it's a temporary URL allow all CORS requests.
+		$temporary_url = strpos( $static_url, '.b-cdn.net' );
+
+		if ( false !== $temporary_url ) {
+			$static_url = '*';
+		}
+
 		if ( ! empty( $static_url ) ) {
-			if ( $origin === $static_url ) {
+			if ( $origin === $static_url || false !== $temporary_url ) {
 				header( 'Access-Control-Allow-Origin: ' . $static_url );
 				header( 'Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE' );
 				header( 'Access-Control-Allow-Credentials: true' );
