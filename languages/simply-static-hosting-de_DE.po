@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-02-14 14:10+0100\n"
-"PO-Revision-Date: 2022-02-14 14:16+0100\n"
+"POT-Creation-Date: 2022-02-18 11:41+0100\n"
+"PO-Revision-Date: 2022-02-18 11:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -291,10 +291,22 @@ msgstr ""
 "Dieses Bild wird das Simply Static Hosting Logo auf der Login-URL deiner "
 "WordPress Website ersetzen."
 
-#: src/deployment/class-ssh-cdn-task.php:66
+#: src/class-ssh-admin.php:415
+msgid "Static URL changed for "
+msgstr "Statische URL geändert zu "
+
+#: src/class-ssh-admin.php:416
+msgid "The static URL has changed to "
+msgstr "Die statische URL wurde geändert auf "
+
+#: src/deployment/class-ssh-cdn-task.php:51
+msgid "Starts to transfer of pages/files to CDN"
+msgstr "Beginne die Übertragung der Seiten/Dateien zum CDN"
+
+#: src/deployment/class-ssh-cdn-task.php:69
 #, php-format
 msgid "Pushed %d pages/files to CDN"
-msgstr " %d Seiten/Dateien zu CDN übertragen"
+msgstr "%d Seiten/Dateien zu CDN übertragen"
 
 #: src/deployment/class-ssh-deployment-settings.php:51
 msgid "CDN"
@@ -307,7 +319,7 @@ msgid ""
 "Deployment"
 msgstr ""
 "Bei Benutzung des CDNs stelle sicher, dass du relative URLs benutzt. Dies "
-"kannst du in Simply Static - Einstellungen konfigurieren."
+"kannst du in Simply Static - Einstellungen konfigurieren"
 
 #: src/search/class-ssh-search-algolia.php:225
 msgid "There was an connection error with Algolia. Please check your settings."
@@ -372,7 +384,7 @@ msgstr "CSS-Selektor für den Titel"
 msgid "Add the CSS selector which contains the title of the page/post"
 msgstr ""
 "Füge den CSS-Selektor hinzu, welcher den Titel deines Beitrags/deiner Seite "
-"enthält."
+"enthält"
 
 #: src/search/views/search.php:39
 msgid "CSS-Selector for Content"
@@ -454,7 +466,7 @@ msgstr "Gebe einen Namen für deinen Index an"
 msgid "Add your Algolia index name here. Default is simply_static"
 msgstr ""
 "Füge hier den Namen deines Algolia-Index ein. Standardmäßig ist dies "
-"simply_static."
+"simply_static"
 
 #: src/search/views/search.php:140
 msgid "CSS-Selector"
@@ -488,12 +500,12 @@ msgstr "Simply Static"
 msgid "Generate static"
 msgstr "Statisch generieren"
 
-#: src/single/class-ssh-single-meta.php:81
+#: src/single/class-ssh-single-meta.php:83
 msgid ""
 "Use this to generate a static version of the current page you are editing."
 msgstr "Nutze dies um eine statische Version der aktuellen Seite zu erstellen."
 
-#: src/single/class-ssh-single-meta.php:85
+#: src/single/class-ssh-single-meta.php:87
 msgid ""
 "You have to publish your post before you can create a static version of it."
 msgstr ""

@@ -48,6 +48,9 @@ class CDN_Task extends Simply_Static\Task {
 			$cdn_path = $data->cdn->sub_directory . '/';
 		}
 
+		$message = sprintf( __( 'Starts to transfer of pages/files to CDN', 'simply-static-hosting' ), $counter );
+		$this->save_status_message( $message );
+
 		// Upload directory.
 		$iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $this->temp_dir, \RecursiveDirectoryIterator::SKIP_DOTS ) );
 		$counter  = 0;
