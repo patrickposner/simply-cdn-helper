@@ -126,6 +126,14 @@ class Single {
 			}
 		}
 
+		// Add homepage.
+		$front_id       = get_option( 'page_on_front' );
+		$related_urls[] = get_permalink( $front_id );
+
+		// Add blog page.
+		$blog_id        = get_option( 'page_for_posts' );
+		$related_urls[] = get_permalink( $blog_id );
+
 		// Get archive URL.
 		$post_type      = get_post_type( $single_id );
 		$related_urls[] = get_post_type_archive_link( $post_type );
