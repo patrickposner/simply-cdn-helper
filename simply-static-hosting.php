@@ -48,6 +48,11 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 	 * @return void
 	 */
 	function ssh_run_plugin() {
+		// autoload files.
+		if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+			require __DIR__ . '/vendor/autoload.php';
+		}
+
 		// We need the task class from Simply Static to integrate our job.
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
@@ -80,31 +85,16 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-helper.php';
 		ssh\Helper::get_instance();
 
-		// Deployment.
-		if ( ! class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
-			// autoload files.
-			if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-				require __DIR__ . '/vendor/autoload.php';
-			}
-		}
+		// Single.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/single/class-ssh-single-meta.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/single/class-ssh-single.php';
 
-		if ( ! class_exists( 'simply_static_pro\Single' ) ) {
-			// Single.
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/single/class-ssh-single-meta.php';
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/single/class-ssh-single.php';
+		ssh\Single_Meta::get_instance();
+		ssh\Single::get_instance();
 
-			ssh\Single_Meta::get_instance();
-			ssh\Single::get_instance();
-		}
-
-		if ( ! class_exists( 'simply_static_pro\Search_Settings' ) ) {
-			// Search.
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-settings.php';
-			require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-algolia.php';
-
-			ssh\Search_Settings::get_instance();
-			ssh\Search_Algolia::get_instance();
-		}
+		// Search.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-settings.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-algolia.php';
 
 		// CDN Deployment.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
