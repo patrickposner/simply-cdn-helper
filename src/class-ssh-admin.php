@@ -44,6 +44,7 @@ class Admin {
 	 */
 	public function add_admin_scripts() {
 		wp_enqueue_script( 'ssh-admin', SIMPLY_STATIC_HOSTING_URL . '/assets/ssh-admin.js', array( 'jquery' ), '1.0', true );
+		wp_enqueue_style( 'ssh-admin-style', SIMPLY_STATIC_HOSTING_URL . '/assets/ssh-admin.css', array(), '1.1.1', 'all' );
 
 		$args = array(
 			'ajax_url'      => admin_url( 'admin-ajax.php' ),
@@ -312,89 +313,6 @@ class Admin {
 				</div>
 			</div>
 		</div>
-		<style>
-		.ssh-container .wrap {
-			background: #fafafa;
-			padding: 30px;
-			box-sizing: border-box;
-			min-height: auto;
-			margin-bottom: 15px;
-			max-width: 700px;
-			margin: 20px auto;
-		}
-
-		.ssh-container #submit {
-			background: #7200e5;
-			background-color: rgb(114, 0, 229);
-			background-color: #7200e5;
-			color: #fff;
-			border: 2px solid transparent;
-			box-shadow: 0 0 20px 0 rgba(114,0,229,.2);
-			margin: 0;
-			display: inline-block;
-			box-sizing: border-box;
-			padding: 0 30px;
-			vertical-align: middle;
-			font-size: 15px;
-			line-height: 36px;
-			text-align: center;
-			text-decoration: none;
-			transition: .3s ease-in-out;
-			transition-property: all;
-			transition-property: color,background-color,background-position,background-size,border-color,box-shadow;
-			border-radius: 5px;
-			background-origin: border-box;
-		}
-		.ssh-container #submit:hover {
-			background-color: #6500cc;
-			color: #fff;
-			border-color: transparent;
-			box-shadow: 0 0 30px 0 rgba(114,0,229,.4);
-		}
-		.ssh-container input {
-			width: 100%;
-		}
-		.ssh-container select {
-			width: 100%;
-			max-width: 100% !important;
-		}
-
-		.ssh-secondary-button  {
-			background-color: #959595 !important;
-			color: #fff;
-			border: 2px solid transparent !important;
-			box-shadow: 0 0 20px 0 rgba(114,0,229,.2);
-			margin: 0;
-			display: inline-block;
-			box-sizing: border-box;
-			padding: 0 30px;
-			vertical-align: middle;
-			font-size: 15px;
-			line-height: 36px;
-			text-align: center;
-			text-decoration: none;
-			transition: .3s ease-in-out;
-			transition-property: all;
-			transition-property: all;
-			transition-property: all;
-			transition-property: color,background-color,background-position,background-size,border-color,box-shadow;
-			border-radius: 5px;
-			background-origin: border-box;
-			width: 100%;
-			color:white !important;
-		}
-
-		.ssh-secondary-button:hover {
-			background-color: #626262;
-			color: #fff;
-			border-color: transparent;
-			box-shadow: 0 0 30px 0 rgba(98,98,98,.4);
-		}
-
-		.ssh-container .success {
-		color: #2aa42a;
-		}
-		</style>
 		<?php
 	}
 
