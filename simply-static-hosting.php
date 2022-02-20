@@ -68,22 +68,17 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		ssh\Api::get_instance();
 
 		// Utils.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-helper.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-simply-static.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-cors.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-mailer.php';
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-restriction.php';
+
+		ssh\Helper::get_instance();
 		ssh\Simply_Static::get_instance();
 		ssh\Cors_Settings::get_instance();
-
-		// SMTP.
-		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-mailer.php';
 		ssh\Mailer::get_instance();
-
-		// Restriction.
-		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-restriction.php';
 		ssh\Restriction::get_instance();
-
-		// Helper.
-		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-helper.php';
-		ssh\Helper::get_instance();
 
 		// Single.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/single/class-ssh-single-meta.php';
@@ -95,6 +90,9 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		// Search.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-settings.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/search/class-ssh-search-algolia.php';
+
+		ssh\Search_Settings::get_instance();
+		ssh\Search_Algolia::get_instance();
 
 		// CDN Deployment.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
