@@ -48,7 +48,7 @@ class CDN_Task extends Simply_Static\Task {
 			$cdn_path = $data->cdn->sub_directory . '/';
 		}
 
-		$message = sprintf( __( 'Starts to transfer of pages/files to CDN', 'simply-static-hosting' ), $counter );
+		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-static-hosting' );
 		$this->save_status_message( $message );
 
 		// Upload directory.
@@ -75,10 +75,15 @@ class CDN_Task extends Simply_Static\Task {
 		if ( ! empty( $cdn_404_path ) && realpath( $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html' ) ) {
 
 			// Rename and copy file.
-			$src_error_file = $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html';
-			$dst_error_file = $this->temp_dir . 'bunnycdn_errors/404.html';
+			$src_error_file  = $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html';
+			$dst_error_file  = $this->temp_dir . 'bunnycdn_errors/404.html';
+			$error_directory = dirname( $dst_error_file );
 
-			mkdir( dirname( $dst_error_file ), 0777, true );
+			if ( ! is_dir( $error_directory ) ) {
+				wp_mkdir_p( $error_directory );
+				chmod( $error_directory, 0777 );
+			}
+
 			copy( $src_error_file, $dst_error_file );
 
 			// Upload 404 template file.
