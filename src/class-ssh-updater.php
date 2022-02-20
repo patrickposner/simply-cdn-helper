@@ -129,7 +129,7 @@ class Updater {
 			return false;
 		}
 
-		$res = new stdClass();
+		$res = new \stdClass();
 
 		$res->name           = $remote->name;
 		$res->slug           = $remote->slug;
@@ -174,7 +174,7 @@ class Updater {
 		$remote = $this->request();
 
 		if ( $remote && version_compare( $this->version, $remote->version, '<' ) && version_compare( $remote->requires, get_bloginfo( 'version' ), '<' ) && version_compare( $remote->requires_php, PHP_VERSION, '<' ) ) {
-			$res = new stdClass();
+			$res = new \stdClass();
 
 			$res->slug        = $this->plugin_slug;
 			$res->plugin      = plugin_basename( __FILE__ );
