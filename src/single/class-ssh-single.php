@@ -130,10 +130,6 @@ class Single {
 		$front_id       = get_option( 'page_on_front' );
 		$related_urls[] = get_permalink( $front_id );
 
-		// Add blog page.
-		$blog_id        = get_option( 'page_for_posts' );
-		$related_urls[] = get_permalink( $blog_id );
-
 		// Get archive URL.
 		$post_type      = get_post_type( $single_id );
 		$related_urls[] = get_post_type_archive_link( $post_type );
@@ -209,7 +205,6 @@ class Single {
 				Simply_Static\Util::debug_log( 'Adding additional URL to queue: ' . $url );
 				$static_page = Simply_Static\Page::query()->find_or_initialize_by( 'url', $url );
 				$static_page->set_status_message( __( "Additional URL", 'simply-static' ) );
-				$static_page->post_id     = $single_id;
 				$static_page->found_on_id = $single_id;
 				$static_page->save();
 			}
@@ -332,7 +327,7 @@ class Single {
 		}
 
 		// Get path.
-		$path = str_replace( untrailingslashit( get_bloginfo('url') ), '', $item->url );
+		$path = str_replace( untrailingslashit( get_bloginfo( 'url' ) ), '', $item->url );
 
 		// Check if trashed post.
 		$post = get_post( $post_id );
