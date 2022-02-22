@@ -184,11 +184,12 @@ class Search_Algolia {
 			$title   = $dom->find( $title, 0 )->innertext;
 			$body    = wp_strip_all_tags( $dom->find( $body, 0 )->innertext );
 			$excerpt = wp_strip_all_tags( $dom->find( $excerpt, 0 )->innertext );
+			$post_id = wp_strip_all_tags( $dom->find( '.ssh-id', 0 )->innertext );
 
 			// Strip whitespace.
 			$body = preg_replace( '/\s+/', '', $body );
 
-			if ( '' !== $title ) {
+			if ( '' !== $title && '' !== $post_id ) {
 				// Maybe replace URL.
 				$static_url = '';
 				$origin_url = untrailingslashit( get_bloginfo( 'url' ) );
@@ -208,7 +209,7 @@ class Search_Algolia {
 					$index_item = apply_filters(
 						'ssh_search_index_item',
 						array(
-							'objectID' => $static_page->id,
+							'objectID' => $post_id,
 							'title'    => $title,
 							'content'  => $body,
 							'excerpt'  => wp_trim_words( $excerpt, '20', '..' ),
