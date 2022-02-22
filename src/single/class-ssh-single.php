@@ -43,7 +43,7 @@ class Single {
 		add_action( 'wp_ajax_nopriv_apply_single', array( $this, 'apply_single' ) );
 		add_action( 'ss_after_cleanup', array( $this, 'clear_single' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
-		add_action( 'before_delete_post', array( $this, 'delete_single' ) );
+		//add_action( 'before_delete_post', array( $this, 'delete_single' ) );
 	}
 
 	/**
@@ -82,6 +82,9 @@ class Single {
 
 		// Update option for using a single post.
 		update_option( 'simply-static-use-single', $single_id );
+
+		// Clear records before run the export.
+		Simply_Static\Page::query()->delete_all();
 
 		// Add URls for static export.
 		$this->add_url( $single_id );
@@ -126,7 +129,11 @@ class Single {
 			}
 		}
 
-		// Add homepage.
+		// Add blogpage.
+		$blog_id        = get_option( 'page_for_posts' );
+		$related_urls[] = get_permalink( $blog_id );
+
+		// Add frontpage.
 		$front_id       = get_option( 'page_on_front' );
 		$related_urls[] = get_permalink( $front_id );
 
@@ -206,6 +213,7 @@ class Single {
 				$static_page = Simply_Static\Page::query()->find_or_initialize_by( 'url', $url );
 				$static_page->set_status_message( __( "Additional URL", 'simply-static' ) );
 				$static_page->found_on_id = $single_id;
+				$static_page->post_id     = $single_id;
 				$static_page->save();
 			}
 		}
@@ -320,25 +328,22 @@ class Single {
 		global $wpdb;
 
 		$options = get_option( 'simply-static' );
-		$item    = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d AND found_on_id = 0", $post_id ) );
+		$item    = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d AND found_on_id = 0 AND file_path != %s", $post_id, 'index.html' ) );
 
 		if ( ! is_object( $item ) ) {
 			return $post_id;
 		}
 
-		// Get path.
-		$path = str_replace( untrailingslashit( get_bloginfo( 'url' ) ), '', $item->url );
-
-		// Check if trashed post.
-		$post = get_post( $post_id );
-
-		if ( $post->post_status !== 'trash' ) {
+		// Check if path exists.
+		if ( empty( $item->file_path ) ) {
 			return $post_id;
 		}
 
-		// Check if additional path is set.
+		// Get path.
 		if ( ! empty( $options['relative_path'] ) ) {
-			$path = $options['relative_path'] . $path;
+			$path = $options['relative_path'] . '/' . $item->file_path;
+		} else {
+			$path = '/' . $item->file_path;
 		}
 
 		// Delete files from BunnyCDN.
