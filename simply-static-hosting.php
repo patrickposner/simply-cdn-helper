@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Simply Static Hosting
  * Plugin URI:        https://patrickposner.dev
  * Description:       A little helper plugin to connect to simplystatic.io
- * Version:           1.1
+ * Version:           1.2
  * Author:            Patrick Posner
  * Author URI:        https://simplystatic.io
  * License:           GPL-2.0+
