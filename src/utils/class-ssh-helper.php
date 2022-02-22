@@ -37,6 +37,7 @@ class Helper {
 		add_action( 'wp_head', array( $this, 'add_config_meta_tag' ) );
 		add_action( 'init', array( $this, 'clean_head' ) );
 		add_action( 'admin_footer', array( $this, 'dev_mode_warning' ) );
+		add_action( 'wp_footer', array( $this, 'insert_post_id' ) );
 	}
 
 	/**
@@ -88,6 +89,17 @@ class Helper {
 		<?php else : ?>
 			<meta name="ssh-config-url" content="<?php echo esc_url( $static_url ) . esc_html( $config_path ); ?>">
 		<?php endif; ?>
+		<?php
+	}
+
+	/**
+	 * Add post id to each page.
+	 *
+	 * @return void
+	 */
+	public function insert_post_id() {
+		?>
+		<span class="ssh-id" style="display:none"><?php echo esc_html( get_the_id() ); ?></span>
 		<?php
 	}
 
