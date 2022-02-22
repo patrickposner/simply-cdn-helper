@@ -120,6 +120,37 @@ class CDN {
 	}
 
 	/**
+	 * Check if file exists.
+	 *
+	 * @return string
+	 */
+	public function file_exists( $file_path ) {
+		$zones = $this->configure_zones();
+		$data  = Api::get_site_data();
+
+		$response = wp_remote_get(
+			'https://storage.bunnycdn.com/' . $zones['storage_zone']['name'] . $file_path,
+			array(
+				'headers' => array( 'AccessKey' => $data->cdn->access_key ),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				return true;
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+				error_log( $error_message );
+				return false;
+			}
+		} else {
+			$error_message = $response->get_error_message();
+			error_log( $error_message );
+			return false;
+		}
+	}
+
+	/**
 	 * Delete file from BunnyCDN storage.
 	 *
 	 * @return string
