@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '19817385046ae076543fc23e168fd310b15ee7a2',
+    'reference' => '381463f15eb341cc6409cd487ac150d79eddc9d5',
     'name' => 'patrickposner/simply-static-cloud-helper',
   ),
   'versions' => 
@@ -72,7 +72,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '19817385046ae076543fc23e168fd310b15ee7a2',
+      'reference' => '381463f15eb341cc6409cd487ac150d79eddc9d5',
     ),
     'php-http/async-client-implementation' => 
     array (
@@ -283,12 +283,12 @@
     ),
     'voku/simple_html_dom' => 
     array (
-      'pretty_version' => '4.8.0',
-      'version' => '4.8.0.0',
+      'pretty_version' => '4.8.2',
+      'version' => '4.8.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'c06222c46c68b1fd5880e86cd23b2c2a5fdfef77',
+      'reference' => 'ad13ad8c0f9d333a5651726936c14cb7b1548844',
     ),
   ),
 );
