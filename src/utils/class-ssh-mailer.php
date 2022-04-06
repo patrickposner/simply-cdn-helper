@@ -81,15 +81,19 @@ class Mailer {
 	 * @return object
 	 */
 	public function set_smtp_delivery( $phpmailer ) {
-		$phpmailer->isSMTP();
-		$phpmailer->Host       = get_option( 'ssh_smtp_host' );
-		$phpmailer->SMTPAuth   = true;
-		$phpmailer->Port       = get_option( 'ssh_smtp_mail_port' );
-		$phpmailer->Username   = get_option( 'ssh_smtp_user' );
-		$phpmailer->Password   = get_option( 'ssh_smtp_password' );
-		$phpmailer->SMTPSecure = 'tls';
-		$phpmailer->From       = get_option( 'ssh_smtp_mail_from' );
-		$phpmailer->FromName   = get_option( 'ssh_smtp_name_from' );
+		$smtp_host = get_option( 'ssh_smtp_host' );
+
+		if ( ! empty( $smtp_host ) ) {
+			$phpmailer->isSMTP();
+			$phpmailer->Host       = get_option( 'ssh_smtp_host' );
+			$phpmailer->SMTPAuth   = true;
+			$phpmailer->Port       = get_option( 'ssh_smtp_mail_port' );
+			$phpmailer->Username   = get_option( 'ssh_smtp_user' );
+			$phpmailer->Password   = get_option( 'ssh_smtp_password' );
+			$phpmailer->SMTPSecure = 'tls';
+			$phpmailer->From       = get_option( 'ssh_smtp_mail_from' );
+			$phpmailer->FromName   = get_option( 'ssh_smtp_name_from' );
+		}
 
 		return $phpmailer;
 	}
