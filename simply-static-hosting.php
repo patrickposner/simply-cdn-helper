@@ -94,6 +94,11 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		ssh\Search_Settings::get_instance();
 		ssh\Search_Algolia::get_instance();
 
+		// Multilingual.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/multilingual/class-ssh-multilingual.php';
+
+		ssh\Multilingual::get_instance();
+
 		// CDN Deployment.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn.php';
