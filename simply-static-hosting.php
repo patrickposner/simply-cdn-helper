@@ -58,7 +58,9 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 
 		// Updater.
 		require SIMPLY_STATIC_HOSTING_PATH . 'inc/plugin-update-checker/plugin-update-checker.php';
-		$updater = Puc_v4_Factory::buildUpdateChecker( 'https://manage.simplystatic.io/details.json', __FILE__, 'simply-static-hosting' );
+		$updater = Puc_v4_Factory::buildUpdateChecker( 'https://github.com/patrickposner/simply-static-hosting/', __FILE__, 'simply-static-hosting' );
+		$updater->setBranch( 'master' );
+		$updater->setAuthentication( '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' );
 
 		// We need the task class from Simply Static to integrate our job.
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
