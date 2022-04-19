@@ -2,8 +2,6 @@
 
 namespace ssh;
 
-use Exception;
-
 /**
  * Class to handle CDN updates.
  */
@@ -37,107 +35,42 @@ class CDN {
 		return self::$instance;
 	}
 
-
 	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$options = get_option( 'simply-static' );
-		$client  = new \Corbpie\BunnyCdn\BunnyAPI( 99999999 );
-
-		// Authenticate.
-		$api_key = Api::get_cdn_key();
-		$client->apiKey( $api_key );
-
-		$this->client = $client;
-	}
-
-	/**
-	 * Configure BunnyCDN before adding files to it.
+	 * Get current pull zone.
 	 *
-	 * @return array
+	 * @return bool|array
 	 */
-	public function configure_zones() {
-		$zone_config = array();
-		$options     = get_option( 'simply-static' );
-		$data        = Api::get_site_data();
+	public function get_pull_zone() {
+		$data          = Api::get_site_data();
+		$api_key       = Api::get_cdn_key();
+		$api_pull_zone = 'sshm-' . $data->cdn->pull_zone;
 
-		// Handling Pull zone.
-		$pull_zones = json_decode( $this->client->listPullZones() );
-
-		// Get data from API.
-		$api_pull_zone    = 'sshm-' . $data->cdn->pull_zone;
-		$api_storage_zone = 'sshm-' . $data->cdn->storage_zone;
-
-		foreach ( $pull_zones as $pull_zone ) {
-			if ( $pull_zone->Name === $api_pull_zone ) {
-				$zone_config['pull_zone'] = array(
-					'name'       => $pull_zone->Name,
-					'zone_id'    => $pull_zone->Id,
-					'storage_id' => $pull_zone->StorageZoneId,
-				);
-			}
-		}
-
-		// Handling Storage Zone.
-		$storage_zones = json_decode( $this->client->listStorageZones() );
-
-		foreach ( $storage_zones as $storage_zone ) {
-			if ( $storage_zone->Name === $api_storage_zone ) {
-				$zone_config['storage_zone'] = array(
-					'name'       => $storage_zone->Name,
-					'storage_id' => $storage_zone->Id,
-					'password'   => $storage_zone->Password
-				);
-			}
-		}
-
-		// If there was no storage zone we create one and configure it.
-		if ( empty( $zone_config['storage_zone'] ) ) {
-			$storage_zone = $this->client->addStorageZone( $api_storage_zone );
-		}
-
-		return $zone_config;
-	}
-
-	/**
-	 * Upload file to BunnyCDN storage.
-	 *
-	 * @param string $current_file_path current local file path.
-	 * @param string $cdn_path file path in storage.
-	 * @return string
-	 */
-	public function upload_file( $current_file_path, $cdn_path ) {
-		if ( ! empty( $current_file_path ) ) {
-			try {
-				$this->client->uploadFile( $current_file_path, $cdn_path );
-			} catch ( \Exception $e ) {
-				return $e->getMessage();
-			} catch ( \Error $e ) {
-				return $e->getMessage();
-			}
-		}
-	}
-
-	/**
-	 * Check if file exists.
-	 *
-	 * @return string
-	 */
-	public function file_exists( $file_path ) {
-		$zones = $this->configure_zones();
-		$data  = Api::get_site_data();
-
+		// Get pullzones.
 		$response = wp_remote_get(
-			'https://storage.bunnycdn.com/' . $zones['storage_zone']['name'] . $file_path,
+			'https://api.bunny.net/pullzone',
 			array(
-				'headers' => array( 'AccessKey' => $data->cdn->access_key ),
+				'headers' => array(
+					'AccessKey'    => $api_key,
+					'Accept'       => 'application/json',
+					'Content-Type' => 'application/json; charset=utf-8',
+				),
 			)
 		);
 
 		if ( ! is_wp_error( $response ) ) {
-			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-				return true;
+			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
+				$body       = wp_remote_retrieve_body( $response );
+				$pull_zones = json_decode( $body );
+
+				foreach ( $pull_zones as $pull_zone ) {
+					if ( $pull_zone->Name === $api_pull_zone ) {
+						return array(
+							'name'       => $pull_zone->Name,
+							'zone_id'    => $pull_zone->Id,
+							'storage_id' => $pull_zone->StorageZoneId,
+						);
+					}
+				}
 			} else {
 				$error_message = wp_remote_retrieve_response_message( $response );
 				error_log( $error_message );
@@ -147,6 +80,84 @@ class CDN {
 			$error_message = $response->get_error_message();
 			error_log( $error_message );
 			return false;
+		}
+	}
+
+	/**
+	 * Get current storage zone.
+	 *
+	 * @return bool|array
+	 */
+	public function get_storage_zone() {
+		$data             = Api::get_site_data();
+		$api_key          = Api::get_cdn_key();
+		$api_storage_zone = 'sshm-' . $data->cdn->storage_zone;
+
+		// Get storage zones.
+		$response = wp_remote_get(
+			'https://api.bunny.net/storagezone',
+			array(
+				'headers' => array(
+					'AccessKey'    => $api_key,
+					'Accept'       => 'application/json',
+					'Content-Type' => 'application/json; charset=utf-8',
+				),
+			)
+		);
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
+				$body          = wp_remote_retrieve_body( $response );
+				$storage_zones = json_decode( $body );
+
+				foreach ( $storage_zones as $storage_zone ) {
+					if ( $storage_zone->Name === $api_storage_zone ) {
+						return array(
+							'name'       => $storage_zone->Name,
+							'storage_id' => $storage_zone->Id,
+							'password'   => $storage_zone->Password
+						);
+					}
+				}
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+				error_log( $error_message );
+				return false;
+			}
+		} else {
+			$error_message = $response->get_error_message();
+			error_log( $error_message );
+			return false;
+		}
+	}
+
+
+	/**
+	 * Upload file to BunnyCDN storage.
+	 *
+	 * @param string $current_file_path current local file path.
+	 * @param string $cdn_path file path in storage.
+	 * @return void
+	 */
+	public function upload_file( $current_file_path, $cdn_path ) {
+		$data         = Api::get_site_data();
+		$storage_zone = $this->get_storage_zone();
+
+		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
+		ftp_pasv( $ftp_connection, true );
+
+		if ( $ftp_connection ) {
+			ftp_login( $ftp_connection, $storage_zone['name'], $data->cdn->access_key );
+
+			// Upload files.
+			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_ASCII );
+
+			if ( ! $ftp_upload ) {
+				error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
+			}
+
+			// Close connection.
+			ftp_close( $ftp_connection );
 		}
 	}
 

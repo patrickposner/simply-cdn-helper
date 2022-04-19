@@ -36,9 +36,6 @@ class CDN_Task extends Simply_Static\Task {
 	public function perform() {
 		// Setup BunnyCDN client.
 		$bunny_updater = CDN::get_instance();
-		$zones         = $bunny_updater->configure_zones();
-
-		$bunny_updater->client->zoneConnect( $zones['storage_zone']['name'], $zones['storage_zone']['password'] );
 
 		// Sub directory?
 		$data     = Api::get_site_data();
