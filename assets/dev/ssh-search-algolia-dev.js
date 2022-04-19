@@ -1,9 +1,23 @@
 // Check if we are on the static site.
 var static_url = document.querySelector("meta[name='ssh-url']").getAttribute("content");
-
-
 var baseurl = document.querySelector("meta[name='ssh-config-url']").getAttribute("content");
 var host_name = get_hostname(static_url);
+
+// Multilingual?
+let language = document.documentElement.lang.substring(0, 2);
+let is_multilingual = false;
+
+if (document.getElementsByTagName("link").length) {
+  let links = document.getElementsByTagName("link");
+
+  for (const link of links) {
+    var language_tag = link.getAttribute("hreflang");
+
+    if ('' != language_tag && null !== language_tag) {
+      is_multilingual = true;
+    }
+  }
+}
 
 let algolia_config_url = baseurl + host_name.split('.').join('-') + '-algolia.json';
 let algolia_config = '';
@@ -34,6 +48,17 @@ var myAutocomplete = autocomplete(algolia_config.selector, { hint: false }, [
     displayKey: 'title',
     templates: {
       suggestion: function (suggestion) {
+
+        if ('' == suggestion.title) {
+          return;
+        }
+
+        if (is_multilingual) {
+          if (language != suggestion.language) {
+            return;
+          }
+        }
+
         if (algolia_config.use_excerpt) {
           var sugTemplate = '<a href="' + suggestion.url + '"><span class="search-result-title">' + suggestion.title + '</span><span class="search-result-excerpt">' + suggestion.excerpt + '</span></a>';
         } else {

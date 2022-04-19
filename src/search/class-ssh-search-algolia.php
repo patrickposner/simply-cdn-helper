@@ -186,6 +186,17 @@ class Search_Algolia {
 			$excerpt = wp_strip_all_tags( $dom->find( $excerpt, 0 )->innertext );
 			$post_id = wp_strip_all_tags( $dom->find( '.ssh-id', 0 )->innertext );
 
+			// Multilingual.
+			$language = '';
+
+			foreach ( $dom->find( 'link' ) as $link ) {
+				if ( $link->hasAttribute( 'hreflang' ) ) {
+					if ( $static_page->url == $link->getAttribute( 'href' ) && 'x-default' !== $link->getAttribute( 'hreflang' ) ) {
+						$language = $link->getAttribute( 'hreflang' );
+					}
+				}
+			}
+
 			// Strip whitespace.
 			$body = preg_replace( '/\s+/', '', $body );
 
@@ -210,13 +221,17 @@ class Search_Algolia {
 						'ssh_search_index_item',
 						array(
 							'objectID' => $post_id,
-							'title'    => $title,
+							'title'    => wp_strip_all_tags( $title ),
 							'content'  => $body,
 							'excerpt'  => wp_trim_words( $excerpt, '20', '..' ),
 							'url'      => str_replace( $origin_url, $static_url, $static_page->url )
 						),
 						$dom
 					);
+
+					if ( '' !== $language ) {
+						$index_item['language'] = $language;
+					}
 
 					// Add data to Algolia.
 					try {
