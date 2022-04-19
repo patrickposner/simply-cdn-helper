@@ -75,19 +75,19 @@ class Helper {
 			$static_url = get_option( 'ssh_static_url' );
 		}
 
-		$additional_path = '';
+		$upload_dir = wp_upload_dir();
+		$config_url = $upload_dir['baseurl'] . '/simply-static/configs/';
 
 		if ( ! empty( $options['relative_path'] ) ) {
-			$additional_path = $options['relative_path'];
+			$config_url = str_replace( $origin_url, $origin_url . $options['relative_path'], $config_url );
 		}
 
-		$config_path = $additional_path . apply_filters( 'ssh_static_config_path', '/wp-content/plugins/simply-static-hosting/configs/' );
 		?>
 		<meta name="ssh-url" content="<?php echo esc_url( $static_url ); ?>">
-		<?php if ( defined( 'SSH_DEV_MODE' ) && true === SSH_DEV_MODE ) : ?>
-		<meta name="ssh-config-url" content="<?php echo esc_url( $origin_url . apply_filters( 'ssh_static_config_path', '/wp-content/plugins/simply-static-hosting/configs/' ) ); ?>">
+		<?php if ( defined( 'SSP_DEV_MODE' ) && true === SSP_DEV_MODE ) : ?>
+		<meta name="ssh-config-url" content="<?php echo esc_url( $config_url ); ?>">
 		<?php else : ?>
-			<meta name="ssh-config-url" content="<?php echo esc_url( $static_url ) . esc_html( $config_path ); ?>">
+			<meta name="ssh-config-url" content="<?php echo esc_url( str_replace( $origin_url, $static_url, $config_url ) ); ?>">
 		<?php endif; ?>
 		<?php
 	}
@@ -110,13 +110,26 @@ class Helper {
 	 */
 	public function add_configs() {
 		$options    = Simply_Static\Options::instance();
+		$origin_url = untrailingslashit( get_bloginfo( 'url' ) );
+
+		// Get directories.
 		$temp_dir   = $options->get_archive_dir();
-		$config_dir = SIMPLY_STATIC_HOSTING_PATH . 'configs/';
+		$upload_dir = wp_upload_dir();
+		$config_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'simply-static' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR;
+
+		// Setup config URL.
+		$config_url = $upload_dir['baseurl'] . '/simply-static/configs/';
+
+		if ( ! empty( $options->get( 'relative_path' ) ) ) {
+			$config_url = str_replace( $origin_url, $origin_url . $options->get( 'relative_path' ), $config_url );
+		}
+
+		$config_url = str_replace( $origin_url, '', $config_url );
 
 		if ( 'local' === $options->get( 'delivery_method' ) ) {
-			$copy = $this->copy_directory( $config_dir, $options->get( 'local_dir' ) . apply_filters( 'ssh_configs_static_path', 'wp-content/plugins/simply-static-hosting/configs/' ) );
+			$copy = $this->copy_directory( $config_dir, $options->get( 'local_dir' ) . $config_url );
 		} else {
-			$copy = $this->copy_directory( $config_dir, $temp_dir . apply_filters( 'ssh_configs_static_path', 'wp-content/plugins/simply-static-hosting/configs/' ) );
+			$copy = $this->copy_directory( $config_dir, $temp_dir . $config_url );
 		}
 	}
 

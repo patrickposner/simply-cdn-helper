@@ -276,16 +276,16 @@ class Search_Algolia {
 
 		$domain      = wp_parse_url( $static_url );
 		$domain      = str_replace( '.', '-', $domain['host'] );
-		$config_path = SIMPLY_STATIC_HOSTING_PATH . 'configs/' . $domain . '-algolia.json';
+		$upload_dir  = wp_upload_dir();
+		$config_dir  = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'simply-static' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR;
+		$config_file = $config_dir . $domain . '-algolia.json';
 
 		// Delete old index.
-		if ( file_exists( $config_path ) ) {
-			wp_delete_file( $config_path, true );
+		if ( file_exists( $config_file ) ) {
+			wp_delete_file( $config_file, true );
 		}
 
 		// Check if directory exists.
-		$config_dir = SIMPLY_STATIC_HOSTING_PATH . 'configs/';
-
 		if ( ! is_dir( $config_dir ) ) {
 			wp_mkdir_p( $config_dir );
 		}
@@ -299,8 +299,8 @@ class Search_Algolia {
 			'use_excerpt' => apply_filters( 'ssh_algolia_use_excerpt', true ),
 		);
 
-		$wp_filesystem->put_contents( $config_path, json_encode( $algolia_config ) );
+		$wp_filesystem->put_contents( $config_file, json_encode( $algolia_config ) );
 
-		return $config_path;
+		return $config_file;
 	}
 }
