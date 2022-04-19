@@ -33,28 +33,7 @@ class Restriction {
 	public function __construct() {
 		add_action( 'wp', array( $this, 'restrict_access' ) );
 		add_action( 'login_head', array( $this, 'add_login_logo' ) );
-		//add_action( 'ss_before_static_export', array( $this, 'allow_access_static' ) );
-		//add_action( 'ss_after_cleanup', array( $this, 'restrict_access_static' ) );
 	}
-
-	/**
-	 * Enable website access for static export.
-	 *
-	 * @return void
-	 */
-	public function allow_access_static() {
-		update_option( 'ssh_restrict_access', 'no' );
-	}
-
-	/**
-	 * Disable website access after static export.
-	 *
-	 * @return void
-	 */
-	public function restrict_access_static() {
-		update_option( 'ssh_restrict_access', 'yes' );
-	}
-
 
 	/**
 	 * Only accessable as logged in user.

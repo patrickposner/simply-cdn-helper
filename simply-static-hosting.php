@@ -53,6 +53,9 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 			require __DIR__ . '/vendor/autoload.php';
 		}
 
+		// Restrict installation.
+		update_option( 'ssh_restrict_access', 'yes' );
+
 		// We need the task class from Simply Static to integrate our job.
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
