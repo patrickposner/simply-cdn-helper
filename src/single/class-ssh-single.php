@@ -43,7 +43,8 @@ class Single {
 		add_action( 'wp_ajax_nopriv_apply_single', array( $this, 'apply_single' ) );
 		add_action( 'ss_after_cleanup', array( $this, 'clear_single' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
-		//add_action( 'before_delete_post', array( $this, 'delete_single' ) );
+		add_action( 'wp_ajax_delete_single', array( $this, 'delete_single' ) );
+		add_action( 'wp_ajax_nopriv_delete_single', array( $this, 'delete_single' ) );
 	}
 
 	/**
@@ -56,9 +57,10 @@ class Single {
 			'ssh-single-admin',
 			'ssh_single_ajax',
 			array(
-				'ajax_url'         => admin_url() . 'admin-ajax.php',
-				'run_single_nonce' => wp_create_nonce( 'ssh-run-single' ),
-				'redirect_url'     => admin_url() . 'admin.php?page=simply-static',
+				'ajax_url'            => admin_url() . 'admin-ajax.php',
+				'run_single_nonce'    => wp_create_nonce( 'ssh-run-single' ),
+				'delete_single_nonce' => wp_create_nonce( 'ssh-delete-single' ),
+				'redirect_url'        => admin_url() . 'admin.php?page=simply-static',
 			)
 		);
 	}
@@ -176,6 +178,7 @@ class Single {
 
 		foreach ( $dom->find( 'img' ) as $img ) {
 			$related_files[] = $img->src;
+			$related_files[] = $img->srcset;
 		}
 		return $related_files;
 	}
@@ -319,45 +322,93 @@ class Single {
 	}
 
 	/**
-	 * Delete single post/page.
+	 * Delete file.
 	 *
-	 * @param  int $post_id given post id.
-	 * @return int
+	 * @return void
 	 */
-	public function delete_single( $post_id ) {
-		global $wpdb;
-
-		$options = get_option( 'simply-static' );
-		$item    = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}simply_static_pages WHERE post_id = %d AND found_on_id = 0 AND file_path != %s", $post_id, 'index.html' ) );
-
-		if ( ! is_object( $item ) ) {
-			return $post_id;
+	public function delete_single() {
+		// check nonce.
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'ssh-delete-single' ) ) {
+			$response = array( 'message' => 'Security check failed.' );
+			print wp_json_encode( $response );
+			exit;
 		}
 
-		// Check if path exists.
-		if ( empty( $item->file_path ) ) {
-			return $post_id;
+		$single_id = intval( $_POST['single_id'] );
+		$options   = get_option( 'simply-static' );
+
+		// Get Urls.
+		$urls   = $this->get_related_attachements( $single_id );
+		$urls[] = get_permalink( $single_id );
+
+		// Delete search results.
+		if ( ! empty( $options['use-search'] ) && 'no' !== $options['use-search'] && 'algolia' == $options['search-type'] ) {
+			if ( isset( $options['algolia-app-id'] ) && ! empty( $options['algolia-app-id'] ) && isset( $options['algolia-admin-api-key'] ) && ! empty( $options['algolia-admin-api-key'] ) ) {
+				$client = \Algolia\AlgoliaSearch\SearchClient::create( $options['algolia-app-id'], $options['algolia-admin-api-key'] );
+				$index  = $client->initIndex( $options['algolia-index'] );
+
+				// Now we can delete the search result.
+				$index->deleteObject( $single_id );
+			}
 		}
 
-		// Get path.
-		if ( ! empty( $options['relative_path'] ) ) {
-			$path = $options['relative_path'] . '/' . $item->file_path;
-		} else {
-			$path = '/' . $item->file_path;
+		// Check delivery method.
+		$delivery_method = $options['delivery_method'];
+
+		switch ( $delivery_method ) {
+			case 'local':
+				$relative_path = $options['local_dir'];
+
+				foreach ( $urls as $url ) {
+					// Build the path to delete.
+					$path = untrailingslashit( $relative_path ) . str_replace( get_bloginfo( 'url' ), '', $url );
+
+					// Delete direcory of file.
+					if ( is_dir( $path ) ) {
+						global $wp_filesystem;
+
+						// Initialize the WP filesystem.
+						if ( empty( $wp_filesystem ) ) {
+							require_once( ABSPATH . '/wp-admin/includes/file.php' );
+							WP_Filesystem();
+						}
+						$wp_filesystem->rmdir( $path, true );
+					} else {
+						// Delete directory.
+						if ( file_exists( $path ) ) {
+							wp_delete_file( $path, true );
+						}
+					}
+				}
+
+				break;
+			case 'cdn':
+				$data = Api::get_site_data();
+
+				if ( ! empty( $data->cdn->sub_directory ) ) {
+					$relative_path = $data->cdn->sub_directory;
+
+					foreach ( $urls as $url ) {
+						// Build the path to delete.
+						$path = untrailingslashit( $relative_path ) . str_replace( get_bloginfo( 'url' ), '', $url );
+
+						// Delete the file path.
+						$bunny   = CDN::get_instance();
+						$deleted = $bunny->delete_file( $path );
+
+						if ( ! $deleted ) {
+							$response = array( 'success' => false, 'error' => __( 'The file could not be deleted. Please check your access key in Simply Static -> Settings -> Deployment', 'simply-static-pro' ) );
+							print wp_json_encode( $response );
+							exit;
+						}
+					}
+				}
+			break;
 		}
 
-		// Delete files from BunnyCDN.
-		if ( 'cdn' === $options['delivery_method'] ) {
-			$cdn = CDN::get_instance();
-			$cdn->delete_file( $path );
-			$cdn->purge_cache();
-		}
-
-		// Delete item from Algolia.
-		$client = \Algolia\AlgoliaSearch\SearchClient::create( $options['algolia-app-id'], $options['algolia-admin-api-key'] );
-		$index  = $client->initIndex( $options['algolia-index'] );
-
-		// Delete index item.
-		$index->deleteObject( $item->id );
+		// Exit now.
+		$response = array( 'success' => true );
+		print wp_json_encode( $response );
+		exit;
 	}
 }
