@@ -31,21 +31,7 @@ class Simply_Static {
 	 * Constructor for Simply_Static.
 	 */
 	public function __construct() {
-		if ( class_exists( 'simply_static_pro\Deployment_Settings' ) ) {
-			// Remove deployment settings.
-			$deploy_settings = \simply_static_pro\Deployment_Settings::get_instance();
-
-			remove_action( 'simply_static_settings_view_tab', array( $deploy_settings, 'output_settings_tab' ), 10 );
-			remove_action( 'simply_static_settings_view_form', array( $deploy_settings, 'output_settings_form' ), 10 );
-		} else {
-			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
-		}
-
-		if ( class_exists( 'simply_static_pro\Single' ) ) {
-			$single_exort_settings = \simply_static_pro\Single::get_instance();
-			remove_action( 'trash_post', array( $single_exort_settings, 'delete_single' ) );
-		}
-
+		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
 		add_action( 'plugins_loaded', array( $this, 'set_delivery_method' ) );
 		add_action( 'admin_footer', array( $this, 'cleanup_ui' ) );
 	}
@@ -61,17 +47,6 @@ class Simply_Static {
 		#sistContainer .nav-tab {
 			width: 20%;
 		}
-		.url-dest-option {
-			display: none !important;
-		}
-		.url-dest-option.active {
-			display: block !important;
-		}
-		<?php if ( class_exists( 'simply_static_pro\Deployment_Settings' ) ) : ?>
-		#sistContainer .nav-tab {
-			width: 12.5% !important;
-		}
-		<?php endif; ?>
 		</style>
 		<script>
 			jQuery(document).ready(function( $ ) {
