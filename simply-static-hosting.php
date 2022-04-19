@@ -67,10 +67,6 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/class-ssh-api.php';
 		ssh\Api::get_instance();
 
-		// Updater.
-		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/class-ssh-updater.php';
-		ssh\Updater::get_instance();
-
 		// Utils.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-helper.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-simply-static.php';
