@@ -38,11 +38,10 @@ class CDN_Task extends Simply_Static\Task {
 		$bunny_updater = CDN::get_instance();
 
 		// Sub directory?
-		$data     = Api::get_site_data();
 		$cdn_path = '';
 
-		if ( ! empty( $data->cdn->sub_directory ) ) {
-			$cdn_path = $data->cdn->sub_directory . '/';
+		if ( ! empty( $bunny_updater->data->cdn->sub_directory ) ) {
+			$cdn_path = $bunny_updater->data->cdn->sub_directory . '/';
 		}
 
 		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-static-hosting' );

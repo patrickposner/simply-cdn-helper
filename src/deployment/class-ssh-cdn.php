@@ -14,11 +14,18 @@ class CDN {
 	private static $instance = null;
 
 	/**
-	 * Contains new BunnyAPI client.
+	 * Contains data array for the site.
 	 *
 	 * @var object
 	 */
-	public $client;
+	public $data;
+
+	/**
+	 * Contains the api key for the CDN.
+	 *
+	 * @var string
+	 */
+	public $api_key;
 
 
 	/**
@@ -36,21 +43,29 @@ class CDN {
 	}
 
 	/**
+	 * Constructor for CDN.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->data    = Api::get_site_data();
+		$this->api_key = Api::get_cdn_key();
+	}
+
+	/**
 	 * Get current pull zone.
 	 *
 	 * @return bool|array
 	 */
 	public function get_pull_zone() {
-		$data          = Api::get_site_data();
-		$api_key       = Api::get_cdn_key();
-		$api_pull_zone = 'sshm-' . $data->cdn->pull_zone;
+		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone;
 
 		// Get pullzones.
 		$response = wp_remote_get(
 			'https://api.bunny.net/pullzone',
 			array(
 				'headers' => array(
-					'AccessKey'    => $api_key,
+					'AccessKey'    => $this->api_key,
 					'Accept'       => 'application/json',
 					'Content-Type' => 'application/json; charset=utf-8',
 				),
@@ -89,16 +104,14 @@ class CDN {
 	 * @return bool|array
 	 */
 	public function get_storage_zone() {
-		$data             = Api::get_site_data();
-		$api_key          = Api::get_cdn_key();
-		$api_storage_zone = 'sshm-' . $data->cdn->storage_zone;
+		$api_storage_zone = 'sshm-' . $this->data->cdn->storage_zone;
 
 		// Get storage zones.
 		$response = wp_remote_get(
 			'https://api.bunny.net/storagezone',
 			array(
 				'headers' => array(
-					'AccessKey'    => $api_key,
+					'AccessKey'    => $this->api_key,
 					'Accept'       => 'application/json',
 					'Content-Type' => 'application/json; charset=utf-8',
 				),
@@ -140,14 +153,16 @@ class CDN {
 	 * @return void
 	 */
 	public function upload_file( $current_file_path, $cdn_path ) {
-		$data         = Api::get_site_data();
 		$storage_zone = $this->get_storage_zone();
 
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
 		ftp_pasv( $ftp_connection, true );
 
 		if ( $ftp_connection ) {
-			ftp_login( $ftp_connection, $storage_zone['name'], $data->cdn->access_key );
+			ftp_login( $ftp_connection, $storage_zone['name'], $this->data->cdn->access_key );
+
+			// Set execution time for transfer.
+			set_time_limit( 0 );
 
 			// Upload files.
 			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_ASCII );
@@ -167,14 +182,13 @@ class CDN {
 	 * @return string
 	 */
 	public function delete_file( $path ) {
-		$zones = $this->configure_zones();
-		$data  = Api::get_site_data();
+		$storage_zone = $this->get_storage_zone();
 
 		$response = wp_remote_request(
-			'https://storage.bunnycdn.com/' . $zones['storage_zone']['name'] . '/' . $path . '/',
+			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path . '/',
 			array(
 				'method' => 'DELETE',
-				'headers' => array( 'AccessKey' => $data->cdn->access_key ),
+				'headers' => array( 'AccessKey' => $this->data->cdn->access_key ),
 			)
 		);
 
@@ -199,14 +213,13 @@ class CDN {
 	 * @return bool
 	 */
 	public function purge_cache() {
-		$zones   = $this->configure_zones();
-		$api_key = Api::get_cdn_key();
+		$pull_zone = $this->get_pull_zone();
 
 		$response = wp_remote_post(
-			'https://api.bunny.net/pullzone/' . $zones['pull_zone']['zone_id'] . '/purgeCache',
+			'https://api.bunny.net/pullzone/' . $pull_zone['zone_id'] . '/purgeCache',
 			array(
 				'headers' => array(
-					'AccessKey' => $api_key,
+					'AccessKey' => $this->api_key,
 				),
 			)
 		);
