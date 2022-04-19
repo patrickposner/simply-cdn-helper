@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '06d231f216f1bae0fde37c7914cfeb58450f04ae',
+    'reference' => '49580b2468e5e367cd1c60992149dec9980622ac',
     'name' => 'patrickposner/simply-static-cloud-helper',
   ),
   'versions' => 
@@ -87,7 +87,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '06d231f216f1bae0fde37c7914cfeb58450f04ae',
+      'reference' => '49580b2468e5e367cd1c60992149dec9980622ac',
     ),
     'php-http/async-client-implementation' => 
     array (
@@ -150,8 +150,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '^1.0',
-        1 => '1.0',
+        0 => '1.0',
+        1 => '^1.0',
       ),
     ),
     'psr/http-message' => 

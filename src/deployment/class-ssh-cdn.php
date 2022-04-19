@@ -165,7 +165,7 @@ class CDN {
 			set_time_limit( 0 );
 
 			// Upload files.
-			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_ASCII );
+			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_BINARY );
 
 			if ( ! $ftp_upload ) {
 				error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
