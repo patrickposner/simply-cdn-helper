@@ -8,6 +8,8 @@ Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+~Current Version:1.2~
+
 Simply Static Hosting makes static WordPress Hosting easy.
 
 == Description ==

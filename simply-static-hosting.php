@@ -99,8 +99,27 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 
 		// Multilingual.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/multilingual/class-ssh-multilingual.php';
-
 		ssh\Multilingual::get_instance();
+
+		// Updater.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/class-ssh-github-updater.php';
+
+		if ( is_admin() ) {
+			$config = array(
+				'slug'               => plugin_basename( __FILE__ ),
+				'proper_folder_name' => 'simply-static-hosting',
+				'api_url'            => 'https://api.github.com/repos/patrickposner/simply-static-hosting',
+				'raw_url'            => 'https://raw.github.com/patrickposner/simply-static-hosting/master',
+				'github_url'         => 'https://github.com/patrickposner/simply-static-hosting',
+				'zip_url'            => 'https://github.com/patrickposner/simply-static-hosting/archive/refs/heads/master.zip',
+				'sslverify'          => true,
+				'requires'           => '5.0',
+				'tested'             => '5.8',
+				'readme'             => 'readme.txt',
+				'access_token'       => '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',
+			);
+			new ssh\GitHub_Updater( $config );
+		}
 
 		// CDN Deployment.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
