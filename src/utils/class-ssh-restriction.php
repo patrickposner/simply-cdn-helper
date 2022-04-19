@@ -44,9 +44,7 @@ class Restriction {
 		global $pagenow;
 
 		$restrict_access = get_option( 'ssh_restrict_access' );
-
-		$ip_address = getHostByName( getHostName() );
-		$whitelist  = array( '127.0.0.1', '::1', $ip_address );
+		$whitelist       = array( '127.0.0.1', '::1', '164.90.211.119', '137.184.21.252' );
 
 		if ( 'yes' === $restrict_access ) {
 			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' && ! in_array( $_SERVER['REMOTE_ADDR'], $whitelist ) ) {
