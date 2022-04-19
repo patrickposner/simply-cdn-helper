@@ -1,0 +1,10 @@
+{
+	"name": "Simply Static Hosting",
+	"version": "1.2",
+	"download_url": "http://example.com/plugin-name-2.0.zip",
+	"sections": {
+		"description": "Simply Static Hosting is a little helper plugin to connect to simplystatic.io and provide a static version of your WordPress website in a matter of seconds.",
+		"installation": "",
+		"changelog": "<p><b>1.3<b><ul><li>WPML/Polylang support</li><li>delete from single function</li><li>BunnyCDN with WP API instead of composer package</li><li>better restriction handling</li><li>config files in /uploads/</li><li>better UI cleanup</li></p>"
+	}
+}

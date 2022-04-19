@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Simply Static Hosting
  * Plugin URI:        https://patrickposner.dev
  * Description:       A little helper plugin to connect to simplystatic.io
- * Version:           1.3
+ * Version:           1.2
  * Author:            Patrick Posner
  * Author URI:        https://simplystatic.io
  * License:           GPL-2.0+
@@ -56,6 +56,10 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		// Restrict installation.
 		update_option( 'ssh_restrict_access', 'yes' );
 
+		// Updater.
+		require SIMPLY_STATIC_HOSTING_PATH . 'inc/plugin-update-checker/plugin-update-checker.php';
+		$updater = Puc_v4_Factory::buildUpdateChecker( 'https://manage.simplystatic.io/details.json', __FILE__, 'simply-static-hosting' );
+
 		// We need the task class from Simply Static to integrate our job.
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
 		require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
@@ -100,26 +104,6 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		// Multilingual.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/multilingual/class-ssh-multilingual.php';
 		ssh\Multilingual::get_instance();
-
-		// Updater.
-		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/class-ssh-github-updater.php';
-
-		if ( is_admin() ) {
-			$config = array(
-				'slug'               => plugin_basename( __FILE__ ),
-				'proper_folder_name' => 'simply-static-hosting',
-				'api_url'            => 'https://api.github.com/repos/patrickposner/simply-static-hosting',
-				'raw_url'            => 'https://raw.github.com/patrickposner/simply-static-hosting/master',
-				'github_url'         => 'https://github.com/patrickposner/simply-static-hosting',
-				'zip_url'            => 'https://github.com/patrickposner/simply-static-hosting/archive/refs/heads/master.zip',
-				'sslverify'          => true,
-				'requires'           => '5.0',
-				'tested'             => '5.8',
-				'readme'             => 'readme.txt',
-				'access_token'       => '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',
-			);
-			new ssh\GitHub_Updater( $config );
-		}
 
 		// CDN Deployment.
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn-task.php';
