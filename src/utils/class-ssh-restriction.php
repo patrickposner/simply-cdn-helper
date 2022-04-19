@@ -32,11 +32,9 @@ class Restriction {
 	 */
 	public function __construct() {
 		add_action( 'wp', array( $this, 'restrict_access' ) );
-		add_filter( 'allow_password_reset', array( $this, 'disable_password_reset' ) );
-		add_filter( 'gettext', array( $this, 'remove_lostpassword_text' ) );
 		add_action( 'login_head', array( $this, 'add_login_logo' ) );
-		add_action( 'ss_before_static_export', array( $this, 'allow_access_static' ) );
-		add_action( 'ss_after_cleanup', array( $this, 'restrict_access_static' ) );
+		//add_action( 'ss_before_static_export', array( $this, 'allow_access_static' ) );
+		//add_action( 'ss_after_cleanup', array( $this, 'restrict_access_static' ) );
 	}
 
 	/**
@@ -68,37 +66,14 @@ class Restriction {
 
 		$restrict_access = get_option( 'ssh_restrict_access' );
 
+		$ip_address = getHostByName( getHostName() );
+		$whitelist  = array( '127.0.0.1', '::1', $ip_address );
+
 		if ( 'yes' === $restrict_access ) {
-			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' ) {
+			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' && ! in_array( $_SERVER['REMOTE_ADDR'], $whitelist ) ) {
 				auth_redirect();
 			}
 		}
-	}
-
-	/**
-	 * Disable password reset.
-	 *
-	 * @return bool
-	 */
-	public function disable_password_reset() {
-		return false;
-	}
-
-	/**
-	 * Remove password reset text.
-	 *
-	 * @param  string $text given password reset text.
-	 * @return string
-	 */
-	public function remove_lostpassword_text( $text ) {
-		if ( 'Lost your password?' == $text ) {
-			$text = '';
-		}
-
-		if ( 'Passwort vergessen?' == $text ) {
-			$text = '';
-		}
-		return $text;
 	}
 
 	/**
