@@ -53,9 +53,6 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 			require __DIR__ . '/vendor/autoload.php';
 		}
 
-		// Restrict installation.
-		update_option( 'ssh_restrict_access', 'yes' );
-
 		// Updater.
 		require SIMPLY_STATIC_HOSTING_PATH . 'inc/plugin-update-checker/plugin-update-checker.php';
 		$updater = Puc_v4_Factory::buildUpdateChecker( 'https://github.com/patrickposner/simply-static-hosting/', __FILE__, 'simply-static-hosting' );

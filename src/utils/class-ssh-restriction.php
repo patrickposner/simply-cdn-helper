@@ -33,6 +33,27 @@ class Restriction {
 	public function __construct() {
 		add_action( 'wp', array( $this, 'restrict_access' ) );
 		add_action( 'login_head', array( $this, 'add_login_logo' ) );
+		add_action( 'ss_before_static_export', array( $this, 'allow_access_static' ) );
+		add_action( 'ss_after_cleanup', array( $this, 'restrict_access_static' ) );
+
+	}
+
+	/**
+	 * Enable website access for static export.
+	 *
+	 * @return void
+	 */
+	public function allow_access_static() {
+		update_option( 'ssh_restrict_access', 'no' );
+	}
+
+	/**
+	 * Disable website access after static export.
+	 *
+	 * @return void
+	 */
+	public function restrict_access_static() {
+		update_option( 'ssh_restrict_access', 'yes' );
 	}
 
 	/**
@@ -44,10 +65,9 @@ class Restriction {
 		global $pagenow;
 
 		$restrict_access = get_option( 'ssh_restrict_access' );
-		$whitelist       = array( '127.0.0.1', '::1', '164.90.211.119', '137.184.21.252' );
 
 		if ( 'yes' === $restrict_access ) {
-			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' && ! in_array( $_SERVER['REMOTE_ADDR'], $whitelist ) ) {
+			if ( ! is_user_logged_in() && $pagenow != 'wp-login.php' ) {
 				auth_redirect();
 			}
 		}
