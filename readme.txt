@@ -25,6 +25,7 @@ Simply Static Hosting is a little helper plugin to connect to simplystatic.io an
 * better restriction handling
 * config files in /uploads/
 * better UI cleanup
+* auto updater via GitHub
 
 = 1.2 =
 
