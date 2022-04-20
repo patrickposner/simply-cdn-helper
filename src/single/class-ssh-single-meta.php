@@ -77,16 +77,16 @@ class Single_Meta {
 		?>
 		<?php if ( 'publish' === $post->post_status || method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) : ?>
 		<p id="export-file-container">
-			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-pro' ); ?></a>
+			<a href="#" id="generate-single" class="button button-primary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Generate static', 'simply-static-hosting' ); ?></a>
 			<span class="spinner"></span>
 			<br>
-			<small><?php esc_html_e( 'Use this to generate a static version of the current page you are editing.', 'simply-static-pro' ); ?></small>
+			<small><?php esc_html_e( 'Use this to generate a static version of the current page you are editing.', 'simply-static-hosting' ); ?></small>
 		</p>
 		<p id="delete-file-container">
-			<a href="#" id="delete-single" class="button button-secondary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Delete static', 'simply-static-pro' ); ?></a>
+			<a href="#" id="delete-single" class="button button-secondary" data-id="<?php echo esc_html( $post->ID ); ?>"><?php esc_html_e( 'Delete static', 'simply-static-hosting' ); ?></a>
 			<span class="spinner"></span>
 			<br>
-			<small><?php esc_html_e( 'Use this to delete the static version of the current page you are editing.', 'simply-static-pro' ); ?></small>
+			<small><?php esc_html_e( 'Use this to delete the static version of the current page you are editing.', 'simply-static-hosting' ); ?></small>
 		</p>
 		<?php else : ?>
 		<p>

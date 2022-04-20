@@ -342,7 +342,7 @@ class Single {
 		$urls[] = get_permalink( $single_id );
 
 		// Delete search results.
-		if ( ! empty( $options['use-search'] ) && 'no' !== $options['use-search'] && 'algolia' == $options['search-type'] ) {
+		if ( ! empty( $options['use-search'] ) && 'no' !== $options['use-search'] ) {
 			if ( isset( $options['algolia-app-id'] ) && ! empty( $options['algolia-app-id'] ) && isset( $options['algolia-admin-api-key'] ) && ! empty( $options['algolia-admin-api-key'] ) ) {
 				$client = \Algolia\AlgoliaSearch\SearchClient::create( $options['algolia-app-id'], $options['algolia-admin-api-key'] );
 				$index  = $client->initIndex( $options['algolia-index'] );
@@ -392,12 +392,14 @@ class Single {
 						// Build the path to delete.
 						$path = untrailingslashit( $relative_path ) . str_replace( get_bloginfo( 'url' ), '', $url );
 
+						error_log( $path );
+
 						// Delete the file path.
 						$bunny   = CDN::get_instance();
 						$deleted = $bunny->delete_file( $path );
 
 						if ( ! $deleted ) {
-							$response = array( 'success' => false, 'error' => __( 'The file could not be deleted. Please check your access key in Simply Static -> Settings -> Deployment', 'simply-static-pro' ) );
+							$response = array( 'success' => false, 'error' => __( 'The file could not be deleted. Please check your access key in Simply Static -> Settings -> Deployment', 'simply-static-hosting' ) );
 							print wp_json_encode( $response );
 							exit;
 						}

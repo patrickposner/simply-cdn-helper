@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-04-20 08:30+0200\n"
+"POT-Creation-Date: 2022-04-20 09:39+0200\n"
 "PO-Revision-Date: 2022-01-13 11:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -516,7 +516,7 @@ msgstr ""
 msgid "Additional URL"
 msgstr ""
 
-#: src/single/class-ssh-single.php:400
+#: src/single/class-ssh-single.php:402
 msgid ""
 "The file could not be deleted. Please check your access key in Simply Static "
 "-> Settings -> Deployment"
