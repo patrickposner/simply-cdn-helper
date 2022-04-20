@@ -223,12 +223,43 @@ class Single {
 	}
 
 	/**
+	 * Update related URLs for a single post.
+	 *
+	 * @param  int $single_id post id.
+	 * @return void
+	 */
+	public function update_related_urls( $single_id ) {
+		$related_urls = $this->get_related_urls( $single_id );
+
+		// Update option for using a single post.
+		update_option( 'simply-static-use-single', $single_id );
+
+		// Clear records before run the export.
+		Simply_Static\Page::query()->delete_all();
+
+		// Add URls for static export.
+		$this->add_additional_urls( $related_urls, $single_id );
+
+		// Start static export.
+		$ss = Simply_Static\Plugin::instance();
+		$ss->run_static_export();
+	}
+
+	/**
 	 * Clear selected single after export.
 	 *
 	 * @return void
 	 */
 	public function clear_single() {
 		delete_option( 'simply-static-use-single' );
+
+		$options         = get_option( 'simply-static' );
+		$delivery_method = $options['delivery_method'];
+
+		if ( 'cdn' === $delivery_method ) {
+			$bunny = CDN::get_instance();
+			$bunny->purge_cache();
+		}
 	}
 
 	/**
@@ -338,8 +369,7 @@ class Single {
 		$options   = get_option( 'simply-static' );
 
 		// Get Urls.
-		$urls   = $this->get_related_attachements( $single_id );
-		$urls[] = get_permalink( $single_id );
+		$url = get_permalink( $single_id );
 
 		// Delete search results.
 		if ( ! empty( $options['use-search'] ) && 'no' !== $options['use-search'] ) {
@@ -354,59 +384,57 @@ class Single {
 
 		// Check delivery method.
 		$delivery_method = $options['delivery_method'];
+		$origin_url      = untrailingslashit( get_bloginfo( 'url' ) );
 
 		switch ( $delivery_method ) {
 			case 'local':
 				$relative_path = $options['local_dir'];
 
-				foreach ( $urls as $url ) {
-					// Build the path to delete.
-					$path = untrailingslashit( $relative_path ) . str_replace( get_bloginfo( 'url' ), '', $url );
+				// Build the path to delete.
+				$path = untrailingslashit( $relative_path ) . str_replace( $origin_url, '', $url );
 
-					// Delete direcory of file.
-					if ( is_dir( $path ) ) {
-						global $wp_filesystem;
+				// Delete direcory of file.
+				if ( is_dir( $path ) ) {
+					global $wp_filesystem;
 
-						// Initialize the WP filesystem.
-						if ( empty( $wp_filesystem ) ) {
-							require_once( ABSPATH . '/wp-admin/includes/file.php' );
-							WP_Filesystem();
-						}
-						$wp_filesystem->rmdir( $path, true );
-					} else {
-						// Delete directory.
-						if ( file_exists( $path ) ) {
-							wp_delete_file( $path, true );
-						}
+					// Initialize the WP filesystem.
+					if ( empty( $wp_filesystem ) ) {
+						require_once( ABSPATH . '/wp-admin/includes/file.php' );
+						WP_Filesystem();
+					}
+					$wp_filesystem->rmdir( $path, true );
+				} else {
+					// Delete directory.
+					if ( file_exists( $path ) ) {
+						wp_delete_file( $path, true );
 					}
 				}
-
 				break;
 			case 'cdn':
-				$data = Api::get_site_data();
+				$data  = Api::get_site_data();
+				$bunny = CDN::get_instance();
 
+				// Get the right path.
 				if ( ! empty( $data->cdn->sub_directory ) ) {
 					$relative_path = $data->cdn->sub_directory;
-
-					foreach ( $urls as $url ) {
-						// Build the path to delete.
-						$path = untrailingslashit( $relative_path ) . str_replace( get_bloginfo( 'url' ), '', $url );
-
-						error_log( $path );
-
-						// Delete the file path.
-						$bunny   = CDN::get_instance();
-						$deleted = $bunny->delete_file( $path );
-
-						if ( ! $deleted ) {
-							$response = array( 'success' => false, 'error' => __( 'The file could not be deleted. Please check your access key in Simply Static -> Settings -> Deployment', 'simply-static-hosting' ) );
-							print wp_json_encode( $response );
-							exit;
-						}
-					}
+					$path          = untrailingslashit( $relative_path ) . str_replace( $origin_url, '', $url );
+				} else {
+					$path = str_replace( $origin_url, '', $url );
 				}
-			break;
+
+				// Delete the file path.
+				$deleted = $bunny->delete_file( $path );
+
+				if ( ! $deleted ) {
+					$response = array( 'success' => false, 'error' => __( 'The file could not be deleted. Please check your access key in Simply Static -> Settings -> Deployment', 'simply-static-hosting' ) );
+					print wp_json_encode( $response );
+					exit;
+				}
+				break;
 		}
+
+		// Run static single export to update blog/homepage and cat/tag pages.
+		$this->update_related_urls( $single_id );
 
 		// Exit now.
 		$response = array( 'success' => true );

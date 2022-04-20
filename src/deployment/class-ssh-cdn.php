@@ -185,7 +185,7 @@ class CDN {
 		$storage_zone = $this->get_storage_zone();
 
 		$response = wp_remote_request(
-			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path . '/',
+			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path,
 			array(
 				'method' => 'DELETE',
 				'headers' => array( 'AccessKey' => $this->data->cdn->access_key ),
