@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply Static Hosting\n"
-"POT-Creation-Date: 2022-02-18 11:41+0100\n"
-"PO-Revision-Date: 2022-02-18 11:43+0100\n"
+"POT-Creation-Date: 2022-04-20 08:30+0200\n"
+"PO-Revision-Date: 2022-04-20 08:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -22,28 +22,68 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: src/class-ssh-admin.php:52
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:54
+msgid "View details"
+msgstr "Details ansehen"
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr "Mehr Informationen über %s"
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr "Nach Updates suchen"
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:214
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr "Das %s plugin ist aktuell."
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:216
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr "Eine neue Version des %s plugins ist verfügbar."
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:218
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr "Es konnte nicht ermittelt werden, ob es Updates für %s gibt."
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:224
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Unbekannter Update-Status \"%s\""
+
+#: inc/plugin-update-checker/Puc/v4p11/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr "Es ist kein Changelog verfügbar."
+
+#: src/class-ssh-admin.php:53
 msgid "Test E-Mail sent successfully."
 msgstr "Test E-Mail erfolgreich gesendet."
 
-#: src/class-ssh-admin.php:53
+#: src/class-ssh-admin.php:54
 msgid "Cache cleared successfully."
 msgstr "Cache erfolgreich gelöscht."
 
-#: src/class-ssh-admin.php:85
+#: src/class-ssh-admin.php:86
 msgid "Hosting"
 msgstr "Hosting"
 
 #. Plugin Name of the plugin/theme
-#: src/class-ssh-admin.php:98
+#: src/class-ssh-admin.php:99
 msgid "Simply Static Hosting"
 msgstr "Simply Static Hosting"
 
-#: src/class-ssh-admin.php:102
+#: src/class-ssh-admin.php:103
 msgid "Connect your website"
 msgstr "Verbinde deine Website"
 
-#: src/class-ssh-admin.php:105
+#: src/class-ssh-admin.php:106
 msgid ""
 "Add the site id that was sent to you by e-mail after you made your purchase "
 "on simplystatic.io."
@@ -51,7 +91,7 @@ msgstr ""
 "Trage die Seiten-ID ein, welche dir via E-mail nach deinem Kauf auf "
 "simplystatic.io übermittelt wurde."
 
-#: src/class-ssh-admin.php:108
+#: src/class-ssh-admin.php:109
 msgid ""
 "You need an active connection to get your access credentials to your server "
 "and to automatically deploy your site to the CDN."
@@ -60,75 +100,75 @@ msgstr ""
 "Datenbank usw. zugreifen zu können. Auch die Übertragung aufs CDN ist nur "
 "mit einer aktiven Verbindung möglich."
 
-#: src/class-ssh-admin.php:113 src/class-ssh-admin.php:139
+#: src/class-ssh-admin.php:114 src/class-ssh-admin.php:140
 msgid "Site-ID"
 msgstr "Seiten-ID"
 
-#: src/class-ssh-admin.php:118
+#: src/class-ssh-admin.php:119
 msgid "Your site is successfully connected to the platform."
 msgstr "Deine Seite wurde erfolgreich mit der Plattform verbunden."
 
-#: src/class-ssh-admin.php:127
+#: src/class-ssh-admin.php:128
 msgid "Connection Details"
 msgstr "Verbindungs-Details"
 
-#: src/class-ssh-admin.php:133
+#: src/class-ssh-admin.php:134
 msgid "Connection"
 msgstr "Verbindung"
 
-#: src/class-ssh-admin.php:134
+#: src/class-ssh-admin.php:135
 msgid "Your data"
 msgstr "Deine Daten"
 
-#: src/class-ssh-admin.php:143
+#: src/class-ssh-admin.php:144
 msgid "Region"
 msgstr "Region"
 
-#: src/class-ssh-admin.php:147
+#: src/class-ssh-admin.php:148
 msgid "Server (Host)"
 msgstr "Server (Host)"
 
-#: src/class-ssh-admin.php:151
+#: src/class-ssh-admin.php:152
 msgid "Server (User)"
 msgstr "Server (Benutzer)"
 
-#: src/class-ssh-admin.php:155
+#: src/class-ssh-admin.php:156
 msgid "Server (Password)"
 msgstr "Server (Passwort)"
 
-#: src/class-ssh-admin.php:156 src/class-ssh-admin.php:168
+#: src/class-ssh-admin.php:157 src/class-ssh-admin.php:169
 msgid "Your SSH-Key"
 msgstr "Dein SSH-Schlüssel"
 
-#: src/class-ssh-admin.php:159
+#: src/class-ssh-admin.php:160
 msgid "Database (Host)"
 msgstr "Datenbank (Host)"
 
-#: src/class-ssh-admin.php:163
+#: src/class-ssh-admin.php:164
 msgid "Database (User)"
 msgstr "Database (Benutzer)"
 
-#: src/class-ssh-admin.php:167
+#: src/class-ssh-admin.php:168
 msgid "Database (Password)"
 msgstr "Datenbank (Passwort)"
 
-#: src/class-ssh-admin.php:171
+#: src/class-ssh-admin.php:172
 msgid "CDN (Storage Zone)"
 msgstr "CDN (Storage Zone)"
 
-#: src/class-ssh-admin.php:175
+#: src/class-ssh-admin.php:176
 msgid "CDN (Pull Zone)"
 msgstr "CDN (Pull Zone)"
 
-#: src/class-ssh-admin.php:179
+#: src/class-ssh-admin.php:180
 msgid "CDN (CNAME)"
 msgstr "CDN (CNAME)"
 
-#: src/class-ssh-admin.php:183
+#: src/class-ssh-admin.php:184
 msgid "CDN (Subdirectory)"
 msgstr "CDN (Unterverzeichnis)"
 
-#: src/class-ssh-admin.php:189
+#: src/class-ssh-admin.php:190
 msgid ""
 "Please connect your site to the simplystatic.io plattform to get access to "
 "your server data."
@@ -136,11 +176,11 @@ msgstr ""
 "Bitte verbinde deine Website mit simplystatic.io um Zugang zu deinen "
 "Serverdaten zu erhalten."
 
-#: src/class-ssh-admin.php:195
+#: src/class-ssh-admin.php:196
 msgid "Configure your static website"
 msgstr "Statische Website konfigurieren"
 
-#: src/class-ssh-admin.php:198
+#: src/class-ssh-admin.php:199
 msgid ""
 "Once your website is connected you can configure all settings related to the "
 "CDN here. This includes settings up redirects, proxy URLs and setting up a "
@@ -150,11 +190,11 @@ msgstr ""
 "CDN-Einstellungen überarbeiten. Setze Weiterleitungen, richte Proxy-URLs ein "
 "und konfiguriere eine eigene 404-Fehlerseite."
 
-#: src/class-ssh-admin.php:203
+#: src/class-ssh-admin.php:204
 msgid "Static URL"
 msgstr "Statische URL"
 
-#: src/class-ssh-admin.php:205
+#: src/class-ssh-admin.php:206
 msgid ""
 "Once you change this setting, your static website will be available under "
 "the new domain. Make sure you set your CNAME record before you change this "
@@ -164,15 +204,15 @@ msgstr ""
 "unter dieser URL erreichbar sein. Stelle sicher, dass du den CNAME Eintrag "
 "vor dieser Änderung angepasst hast."
 
-#: src/class-ssh-admin.php:208
+#: src/class-ssh-admin.php:209
 msgid "Relative path to your 404 page"
 msgstr "Relativer Pfad zu deiner 404-Fehlerseite"
 
-#: src/class-ssh-admin.php:214
+#: src/class-ssh-admin.php:215
 msgid "Caching"
 msgstr "Caching"
 
-#: src/class-ssh-admin.php:215
+#: src/class-ssh-admin.php:216
 msgid ""
 "The CDN cache is cleared automatically after each static export. Sometimes "
 "you want to clear the cache manually to make sure you get the latest results "
@@ -182,15 +222,15 @@ msgstr ""
 "möchtest du den Cache manuell löschen, um sicher zu gehen, dass auch alle "
 "Änderungen erfolgreich übertragen wurden."
 
-#: src/class-ssh-admin.php:218
+#: src/class-ssh-admin.php:219
 msgid "Clear Cache"
 msgstr "Cache löschen"
 
-#: src/class-ssh-admin.php:226
+#: src/class-ssh-admin.php:227
 msgid "Setup SMTP"
 msgstr "SMTP einrichten"
 
-#: src/class-ssh-admin.php:229
+#: src/class-ssh-admin.php:230
 msgid ""
 "We provide you with a ready-to-go e-mail address and a from-name to receive "
 "e-mails from your website. If you like to use your own e-mail, please "
@@ -201,7 +241,7 @@ msgstr ""
 "eigene E-Mail-Adresse nutzen möchtest, trage bitte deine SMTP-Zugangsdaten "
 "weiter unten ein."
 
-#: src/class-ssh-admin.php:239
+#: src/class-ssh-admin.php:240
 #, php-format
 msgid ""
 "Your default e-mail address is %s, and we use %s as the from name to send e-"
@@ -210,47 +250,47 @@ msgstr ""
 "Deine Standard-E-Mail-Adresse lautet %s und wir nutzen %s als Absendernamen "
 "für deine E-Mails."
 
-#: src/class-ssh-admin.php:242
+#: src/class-ssh-admin.php:243
 msgid "SMTP User"
 msgstr "SMTP Nutzer"
 
-#: src/class-ssh-admin.php:246
+#: src/class-ssh-admin.php:247
 msgid "SMTP Password"
 msgstr "SMTP Passwort"
 
-#: src/class-ssh-admin.php:250
+#: src/class-ssh-admin.php:251
 msgid "SMTP Host"
 msgstr "SMTP Host"
 
-#: src/class-ssh-admin.php:254
+#: src/class-ssh-admin.php:255
 msgid "SMTP Secure Connection"
 msgstr "SMTP (gesicherte Verbindung)"
 
-#: src/class-ssh-admin.php:257 src/class-ssh-admin.php:260
+#: src/class-ssh-admin.php:258 src/class-ssh-admin.php:261
 msgid "TLS"
 msgstr "TLS"
 
-#: src/class-ssh-admin.php:258 src/class-ssh-admin.php:261
+#: src/class-ssh-admin.php:259 src/class-ssh-admin.php:262
 msgid "SSL"
 msgstr "SSL"
 
-#: src/class-ssh-admin.php:266
+#: src/class-ssh-admin.php:267
 msgid "E-Mail (from)"
 msgstr "E-Mail (von)"
 
-#: src/class-ssh-admin.php:270
+#: src/class-ssh-admin.php:271
 msgid "Name (from)"
 msgstr "Name (von)"
 
-#: src/class-ssh-admin.php:274
+#: src/class-ssh-admin.php:275
 msgid "SMTP Port"
 msgstr "SMTP Port"
 
-#: src/class-ssh-admin.php:281 src/utils/class-ssh-mailer.php:110
+#: src/class-ssh-admin.php:282 src/utils/class-ssh-mailer.php:114
 msgid "Test E-Mail"
 msgstr "Test E-Mail"
 
-#: src/class-ssh-admin.php:282
+#: src/class-ssh-admin.php:283
 msgid ""
 "Once you added and saved your SMTP settings, you can send a test e-mail to "
 "see if everything works correctly."
@@ -258,19 +298,19 @@ msgstr ""
 "Sobald du deine SMTP-Einstellungen gespeichert hast, kannst du hier eine "
 "Test-E-Mail senden um zu prüfen das deine Konfiguration korrekt ist."
 
-#: src/class-ssh-admin.php:285
+#: src/class-ssh-admin.php:286
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: src/class-ssh-admin.php:289
+#: src/class-ssh-admin.php:290
 msgid "Send E-Mail"
 msgstr "E-Mail senden"
 
-#: src/class-ssh-admin.php:296
+#: src/class-ssh-admin.php:297
 msgid "Branding"
 msgstr "Branding"
 
-#: src/class-ssh-admin.php:299
+#: src/class-ssh-admin.php:300
 msgid ""
 "You may want to apply your corporate design to the client's admin area. We "
 "added a couple of settings to customize the appearance further."
@@ -279,11 +319,11 @@ msgstr ""
 "WordPress-Website. Wir haben einige Einstellungen ergänzt, damit du den "
 "Adminbereich anpassen kannst."
 
-#: src/class-ssh-admin.php:304
+#: src/class-ssh-admin.php:305
 msgid "Add a URL to your logo here."
 msgstr "Füge hier die URL deines Logos ein."
 
-#: src/class-ssh-admin.php:306
+#: src/class-ssh-admin.php:307
 msgid ""
 "This image will replace the Simply Static Hosting logo on the login page of "
 "your WordPress website."
@@ -291,26 +331,31 @@ msgstr ""
 "Dieses Bild wird das Simply Static Hosting Logo auf der Login-URL deiner "
 "WordPress Website ersetzen."
 
-#: src/class-ssh-admin.php:415
+#: src/class-ssh-admin.php:333
 msgid "Static URL changed for "
 msgstr "Statische URL geändert zu "
 
-#: src/class-ssh-admin.php:416
+#: src/class-ssh-admin.php:334
 msgid "The static URL has changed to "
 msgstr "Die statische URL wurde geändert auf "
 
-#: src/deployment/class-ssh-cdn-task.php:51
+#: src/deployment/class-ssh-cdn-task.php:47
 msgid "Starts to transfer of pages/files to CDN"
 msgstr "Beginne die Übertragung der Seiten/Dateien zum CDN"
 
-#: src/deployment/class-ssh-cdn-task.php:69
+#: src/deployment/class-ssh-cdn-task.php:65
 #, php-format
 msgid "Pushed %d pages/files to CDN"
 msgstr "%d Seiten/Dateien zu CDN übertragen"
 
+#: src/deployment/class-ssh-cdn.php:171
+#, php-format
+msgid "The file located at %s could not be uploaded via FTP."
+msgstr "Die Dateien in %s konnten nicht via FTP hochgeladen werden."
+
 #: src/deployment/class-ssh-deployment-settings.php:51
-msgid "CDN"
-msgstr "CDN"
+msgid "Simply Static CDN"
+msgstr "Simply Static CDN"
 
 #: src/deployment/class-ssh-deployment-settings.php:65
 msgid ""
@@ -321,17 +366,17 @@ msgstr ""
 "Bei Benutzung des CDNs stelle sicher, dass du relative URLs benutzt. Dies "
 "kannst du in Simply Static - Einstellungen konfigurieren"
 
-#: src/search/class-ssh-search-algolia.php:225
+#: src/search/class-ssh-search-algolia.php:241
 msgid "There was an connection error with Algolia. Please check your settings."
 msgstr ""
 "Es gab einen Verbindungsfehler mit Algolia. Bitte überprüfe deine "
 "Einstellungen."
 
-#: src/search/class-ssh-search-algolia.php:228
+#: src/search/class-ssh-search-algolia.php:244
 msgid "Added the following URL to search index"
 msgstr "Folgende URLs wurden zum Suche-Index hinzugefügt"
 
-#: src/search/class-ssh-search-algolia.php:230
+#: src/search/class-ssh-search-algolia.php:246
 msgid ""
 "You need to add the static URL in your search settings before you can create "
 "an index."
@@ -505,18 +550,35 @@ msgid ""
 "Use this to generate a static version of the current page you are editing."
 msgstr "Nutze dies um eine statische Version der aktuellen Seite zu erstellen."
 
-#: src/single/class-ssh-single-meta.php:87
+#: src/single/class-ssh-single-meta.php:86
+msgid "Delete static"
+msgstr "Statisch löschen"
+
+#: src/single/class-ssh-single-meta.php:89
+msgid ""
+"Use this to delete the static version of the current page you are editing."
+msgstr "Lösche die statische Version der Seite die du gerade bearbeitest."
+
+#: src/single/class-ssh-single-meta.php:93
 msgid ""
 "You have to publish your post before you can create a static version of it."
 msgstr ""
 "Du musst deinen Beitrag erst veröffentlichen, bevor du ihn statisch "
 "exportieren kannst."
 
-#: src/single/class-ssh-single.php:185 src/single/class-ssh-single.php:203
+#: src/single/class-ssh-single.php:199 src/single/class-ssh-single.php:217
 msgid "Additional URL"
 msgstr "Zusätzliche URL"
 
-#: src/utils/class-ssh-helper.php:55
+#: src/single/class-ssh-single.php:400
+msgid ""
+"The file could not be deleted. Please check your access key in Simply Static "
+"-> Settings -> Deployment"
+msgstr ""
+"Die Datei konnte nicht geelöscht werden. Bitte überprüfe deinen Access Key "
+"in Simply Static -> Einstellungen -> Deployment"
+
+#: src/utils/class-ssh-helper.php:56
 msgid ""
 "Warning, you are currently running in development mode. Make sure to remove "
 "define( 'SSH_DEV_MODE', true ); from your wp-config.php before you run a new "
@@ -526,12 +588,12 @@ msgstr ""
 "define( 'SSH_DEV_MODE', true ); aus deiner wp-config.php entfernst, bevor du "
 "einen neuen statischen Export startest."
 
-#: src/utils/class-ssh-mailer.php:111
+#: src/utils/class-ssh-mailer.php:115
 msgid "This is the Test E-Mail you have triggered from "
 msgstr "Das ist eine Test-Email die ausgelöst wurde von "
 
-#: src/utils/class-ssh-simply-static.php:136
-#: src/utils/class-ssh-simply-static.php:139
+#: src/utils/class-ssh-simply-static.php:111
+#: src/utils/class-ssh-simply-static.php:114
 msgid "View static URL"
 msgstr "Statische URL ansehen"
 
@@ -550,6 +612,9 @@ msgstr "Patrick Posner"
 #. Author URI of the plugin/theme
 msgid "https://simplystatic.io"
 msgstr "https://simplystatic.io"
+
+#~ msgid "CDN"
+#~ msgstr "CDN"
 
 #~ msgid ""
 #~ "The native PHP Mailer is deactivated on the Simply Static plattform for "
