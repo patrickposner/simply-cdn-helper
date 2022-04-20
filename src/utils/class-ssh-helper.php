@@ -118,18 +118,12 @@ class Helper {
 		$config_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'simply-static' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR;
 
 		// Setup config URL.
-		$config_url = $upload_dir['baseurl'] . '/simply-static/configs/';
-
-		if ( ! empty( $options->get( 'relative_path' ) ) ) {
-			$config_url = str_replace( $origin_url, $origin_url . $options->get( 'relative_path' ), $config_url );
-		}
-
-		$config_url = str_replace( $origin_url, '', $config_url );
+		$config_url = str_replace( $origin_url, '', $upload_dir['baseurl'] . '/simply-static/configs/' );
 
 		if ( 'local' === $options->get( 'delivery_method' ) ) {
-			$copy = $this->copy_directory( $config_dir, $options->get( 'local_dir' ) . $config_url );
+			$copy = $this->copy_directory( $config_dir, untrailingslashit( $options->get( 'local_dir' ) ) . $config_url );
 		} else {
-			$copy = $this->copy_directory( $config_dir, $temp_dir . $config_url );
+			$copy = $this->copy_directory( $config_dir, untrailingslashit( $temp_dir ) . $config_url );
 		}
 	}
 
