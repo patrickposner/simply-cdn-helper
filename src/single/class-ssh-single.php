@@ -229,6 +229,9 @@ class Single {
 	 * @return void
 	 */
 	public function update_related_urls( $single_id ) {
+		// set post to draft to exclude it from related URLs.
+		wp_update_post( array( 'ID' => $single_id, 'post_status' => 'draft' ) );
+
 		$related_urls = $this->get_related_urls( $single_id );
 
 		// Update option for using a single post.
@@ -251,15 +254,21 @@ class Single {
 	 * @return void
 	 */
 	public function clear_single() {
-		delete_option( 'simply-static-use-single' );
-
 		$options         = get_option( 'simply-static' );
 		$delivery_method = $options['delivery_method'];
+		$single_id       = get_option( 'simply-static-use-single' );
 
+		// set post back to published.
+		wp_update_post( array( 'ID' => $single_id, 'post_status' => 'publish' ) );
+
+		// Clear cache if CDN.
 		if ( 'cdn' === $delivery_method ) {
 			$bunny = CDN::get_instance();
 			$bunny->purge_cache();
 		}
+
+		// Reset to full static export.
+		delete_option( 'simply-static-use-single' );
 	}
 
 	/**
