@@ -112,5 +112,9 @@ if ( ! function_exists( 'ssh_run_plugin' ) ) {
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-cdn.php';
 		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/deployment/class-ssh-deployment-settings.php';
 		ssh\Deployment_Settings::get_instance();
+
+		// CDN Rewrites.
+		require_once SIMPLY_STATIC_HOSTING_PATH . 'src/utils/class-ssh-cdn-rewrite.php';
+		ssh\CDN_Rewrite::get_instance();
 	}
 }
