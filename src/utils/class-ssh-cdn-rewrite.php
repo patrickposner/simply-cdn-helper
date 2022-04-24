@@ -39,7 +39,7 @@ class CDN_Rewrite {
 	 * Constructor for Cors_Settings.
 	 */
 	public function __construct() {
-		add_action( 'the_content', array( $this, 'replace_image_url_in_html' ) );
+		add_action( 'the_content', array( $this, 'replace_image_url_in_html' ), 99 );
 		add_filter( 'wp_handle_upload', array( $this, 'upload_to_cdn' ), 10, 2 );
 	}
 
@@ -92,7 +92,7 @@ class CDN_Rewrite {
 		$static_url_path = $static_url['host'] . $cdn_path;
 
 		// Replace in HTML.
-		preg_match_all( '/(\/\/\S+\.(?:jpg|png|gif))/', $content, $images );
+		preg_match_all( '/(\/\/\S+\.(?:jpg|png|gif|webp))/', $content, $images );
 
 		foreach ( $images[0] as $image ) {
 			$new_path  = str_replace( $origin_url['host'], $static_url_path, $image );
