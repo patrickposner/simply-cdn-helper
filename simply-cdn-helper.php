@@ -63,9 +63,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn-rewrite.php';
 
 			sch\Deployment_Settings::get_instance();
-			sch\CDN_Rewrite::get_instance();
-
-			add_action( 'admin_enqueue_scripts', 'sch_add_admin_styles' );
+			sch\Simply_CDN_Rewrite::get_instance();
 		} else {
 			add_action( 'admin_notices', 'sch_show_requirements' );
 		}
@@ -80,12 +78,4 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 function sch_show_requirements() {
 	$message = sprintf( __( 'The free version of Simply Static is required to use Simply CDN Helper. You can get it %s.', 'simply-cdn-helper' ), '<a target="_blank" href="https://wordpress.org/plugins/simply-static/">here</a>' );
 	echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
-}
-
-/**
- * Enqueue admin scripts.
- */
-function sch_add_admin_styles() {
-	wp_enqueue_style( 'sch-admin-css', SCH_URL . '/assets/sch-admin.css', false, '1.1' );
-	wp_enqueue_script( 'sch-admin-js', SCH_URL . '/assets/sch-admin.js', false, '1.1' );
 }

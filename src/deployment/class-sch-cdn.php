@@ -1,11 +1,11 @@
 <?php
 
-namespace ssh;
+namespace sch;
 
 /**
  * Class to handle CDN updates.
  */
-class CDN {
+class Simply_CDN {
 	/**
 	 * Contains instance or null
 	 *

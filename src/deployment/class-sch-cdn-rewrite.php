@@ -1,19 +1,11 @@
 <?php
-/** Available image filters: https://davidsword.ca/every-image-url-filter-for-wordpress-front-end-and-backend/.
- * Upload to BunnyCDN.
- * https://developer.wordpress.org/reference/hooks/wp_handle_upload_prefilter/
- * https://developer.wordpress.org/reference/hooks/add_attachment/
- * https://developer.wordpress.org/reference/hooks/delete_attachment/
- * https://developer.wordpress.org/reference/hooks/edit_attachment/
- * Change attachement preview with: https://developer.wordpress.org/reference/hooks/attachment_link/
- */
 
-namespace ssh;
+namespace sch;
 
 /**
  * Class to handle CDN URL rewrites.
  */
-class CDN_Rewrite {
+class Simply_CDN_Rewrite {
 	/**
 	 * Contains instance or null
 	 *

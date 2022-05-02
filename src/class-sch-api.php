@@ -1,6 +1,6 @@
 <?php
 
-namespace ssh;
+namespace sch;
 
 /**
  * Class to handle Api settings

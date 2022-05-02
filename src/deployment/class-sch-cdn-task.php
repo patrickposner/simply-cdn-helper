@@ -1,19 +1,19 @@
 <?php
 
-namespace ssh;
+namespace sch;
 
 use Simply_Static;
 
 /**
  * Class which handles GitHub commits.
  */
-class CDN_Task extends Simply_Static\Task {
+class Simply_CDN_Task extends Simply_Static\Task {
 	/**
 	 * The task name.
 	 *
 	 * @var string
 	 */
-	protected static $task_name = 'cdn';
+	protected static $task_name = 'simply_cdn';
 
 	/**
 	 * Constructor
@@ -45,7 +45,7 @@ class CDN_Task extends Simply_Static\Task {
 			$cdn_path = $bunny_updater->data->cdn->sub_directory . '/';
 		}
 
-		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-static-hosting' );
+		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-cdn-helper' );
 		$this->save_status_message( $message );
 
 		// Upload directory.
@@ -74,7 +74,7 @@ class CDN_Task extends Simply_Static\Task {
 				$ftp_upload    = ftp_put( $ftp_connection, $relative_path, realpath( $file_name ), FTP_BINARY );
 
 				if ( ! $ftp_upload ) {
-					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
+					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ), $current_file_path ) );
 				}
 
 				$counter++;
@@ -84,11 +84,11 @@ class CDN_Task extends Simply_Static\Task {
 		// Close connection.
 		ftp_close( $ftp_connection );
 
-		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-static-hosting' ), $counter );
+		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-cdn-helper' ), $counter );
 		$this->save_status_message( $message );
 
 		// Maybe add 404.
-		$cdn_404_path = get_option( 'ssh_404_path' );
+		$cdn_404_path = get_option( 'sch_404_path' );
 
 		if ( ! empty( $cdn_404_path ) && realpath( $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html' ) ) {
 

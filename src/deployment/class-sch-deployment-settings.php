@@ -1,6 +1,6 @@
 <?php
 
-namespace ssh;
+namespace sch;
 
 use Simply_Static;
 
@@ -48,7 +48,7 @@ class Deployment_Settings {
 	public function add_delivery_method() {
 		$options = get_option( 'simply-static' );
 		?>
-		<option value='cdn' <?php Simply_Static\Util::selected_if( 'cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'Simply Static CDN', 'simply-static-hosting' ); ?></option>
+		<option value='simply-cdn' <?php Simply_Static\Util::selected_if( 'simply-cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></option>
 		<?php
 	}
 
@@ -59,10 +59,10 @@ class Deployment_Settings {
 	 */
 	public function add_delivery_method_description() {
 		?>
-		<tr class="delivery-method cdn-deploy" style="display:none">
+		<tr class="delivery-method simply-cdn" style="display:none">
 			<th></th>
 			<td>
-				<p><?php esc_html_e( 'When using CDN please make sure you are using relative URLs and that you have configured the necessary settings in Simply Static -> Settings -> Deployment', 'simply-static-hosting' ); ?></p>
+				<p><?php esc_html_e( 'Make sure you get an account at simplycdn.io and connect your website before selecting it as an deployment option.', 'simply-cdn-helper' ); ?></p>
 			</td>
 		</tr>
 		<?php
@@ -76,8 +76,8 @@ class Deployment_Settings {
 	 * @return array
 	 */
 	public function modify_task_list( $task_list, $delivery_method ) {
-		if ( 'cdn' === $delivery_method ) {
-			$task_list = array( 'setup', 'fetch_urls', 'cdn', 'wrapup' );
+		if ( 'simply_cdn' === $delivery_method ) {
+			$task_list = array( 'setup', 'fetch_urls', 'simply_cdn', 'wrapup' );
 
 			return $task_list;
 		}
@@ -92,8 +92,8 @@ class Deployment_Settings {
 	 * @return string
 	 */
 	public function check_class_name( $class_name, $task_name ) {
-		if ( 'cdn' === $task_name ) {
-			return 'ssh\\' . strtoupper( $task_name ) . '_Task';
+		if ( 'simply_cdn' === $task_name ) {
+			return 'sch\\' . strtoupper( $task_name ) . '_Task';
 		}
 		return $class_name;
 	}
@@ -106,11 +106,11 @@ class Deployment_Settings {
 	public function clear_cache() {
 		$nonce = esc_html( $_POST['nonce'] );
 
-		if ( ! wp_verify_nonce( $nonce, 'ssh-cache-nonce' ) ) {
+		if ( ! wp_verify_nonce( $nonce, 'sch-cache-nonce' ) ) {
 			die();
 		}
 
-		$cdn = CDN::get_instance();
+		$cdn = Simply_CDN::get_instance();
 		$cdn->purge_cache();
 
 		$response = array( 'success' => true );

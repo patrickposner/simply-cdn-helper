@@ -1,17 +1,13 @@
-.info-links a:first-child {
-    display: none !important;
-  }
-.ssh-container .wrap {
+.sch-container .wrap {
     background: #fafafa;
     padding: 30px;
     box-sizing: border-box;
     min-height: auto;
     margin-bottom: 15px;
-    max-width: 700px;
-    margin: 20px auto;
-}
+    max-width: 900px;
+  }
 
-.ssh-container #submit {
+.sch-container #submit {
     background: #7200e5;
     background-color: rgb(114, 0, 229);
     background-color: #7200e5;
@@ -33,21 +29,21 @@
     border-radius: 5px;
     background-origin: border-box;
 }
-.ssh-container #submit:hover {
+.sch-container #submit:hover {
     background-color: #6500cc;
     color: #fff;
     border-color: transparent;
     box-shadow: 0 0 30px 0 rgba(114,0,229,.4);
 }
-.ssh-container input {
+.sch-container input {
     width: 100%;
 }
-.ssh-container select {
+.sch-container select {
     width: 100%;
     max-width: 100% !important;
 }
 
-.ssh-secondary-button  {
+.sch-secondary-button  {
     background-color: #959595 !important;
     color: #fff;
     border: 2px solid transparent !important;
@@ -72,13 +68,13 @@
     color:white !important;
 }
 
-.ssh-secondary-button:hover {
+.sch-secondary-button:hover {
     background-color: #626262;
     color: #fff;
     border-color: transparent;
     box-shadow: 0 0 30px 0 rgba(98,98,98,.4);
 }
 
-.ssh-container .success {
+.sch-container .success {
 color: #2aa42a;
 }
