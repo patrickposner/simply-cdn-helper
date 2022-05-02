@@ -49,21 +49,21 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			$updater->setAuthentication( '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' );
 
 			// Admin settings.
-			require_once SCH_PATH . 'src/class-ssh-admin.php';
-			ssh\Admin::get_instance();
+			require_once SCH_PATH . 'src/class-sch-admin.php';
+			sch\Admin::get_instance();
 
 			// Api.
-			require_once SCH_PATH . 'src/class-ssh-api.php';
-			ssh\Api::get_instance();
+			require_once SCH_PATH . 'src/class-sch-api.php';
+			sch\Api::get_instance();
 
 			// CDN.
-			require_once SCH_PATH . 'src/deployment/class-ssh-cdn-task.php';
-			require_once SCH_PATH . 'src/deployment/class-ssh-cdn.php';
-			require_once SCH_PATH . 'src/deployment/class-ssh-deployment-settings.php';
-			require_once SCH_PATH . 'src/deployment/class-ssh-cdn-rewrite.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-deployment-settings.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-cdn-rewrite.php';
 
-			ssh\Deployment_Settings::get_instance();
-			ssh\CDN_Rewrite::get_instance();
+			sch\Deployment_Settings::get_instance();
+			sch\CDN_Rewrite::get_instance();
 
 			add_action( 'admin_enqueue_scripts', 'sch_add_admin_styles' );
 		} else {
