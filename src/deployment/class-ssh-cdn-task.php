@@ -23,6 +23,7 @@ class CDN_Task extends Simply_Static\Task {
 
 		$options = Simply_Static\Options::instance();
 
+		$this->data       = Api::get_site_data();
 		$this->options    = $options;
 		$this->temp_dir   = $options->get_archive_dir();
 		$this->start_time = $options->get( 'archive_start_time' );
@@ -51,16 +52,37 @@ class CDN_Task extends Simply_Static\Task {
 		$iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $this->temp_dir, \RecursiveDirectoryIterator::SKIP_DOTS ) );
 		$counter  = 0;
 
-		foreach ( $iterator as $file_name => $file_object ) {
-			if ( ! realpath( $file_name ) ) {
-				continue;
+		// Open FTP connection.
+		$storage_zone   = $bunny_updater->get_storage_zone();
+		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
+
+		ftp_pasv( $ftp_connection, true );
+
+		if ( $ftp_connection ) {
+			ftp_login( $ftp_connection, $storage_zone['name'], $this->data->cdn->access_key );
+
+			// Set execution time for transfer.
+			set_time_limit( 0 );
+
+			// Upload files.
+			foreach ( $iterator as $file_name => $file_object ) {
+				if ( ! realpath( $file_name ) ) {
+					continue;
+				}
+	
+				$relative_path = str_replace( $this->temp_dir, $cdn_path, realpath( $file_name ) );
+				$ftp_upload    = ftp_put( $ftp_connection, $relative_path, realpath( $file_name ), FTP_BINARY );
+
+				if ( ! $ftp_upload ) {
+					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
+				}
+
+				$counter++;
 			}
-
-			$relative_path = str_replace( $this->temp_dir, $cdn_path, realpath( $file_name ) );
-
-			$bunny_updater->upload_file( realpath( $file_name ), $relative_path );
-			$counter++;
 		}
+
+		// Close connection.
+		ftp_close( $ftp_connection );
 
 		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-static-hosting' ), $counter );
 		$this->save_status_message( $message );
