@@ -1,0 +1,91 @@
+<?php
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Plugin Name:       Simply CDN helper
+ * Plugin URI:        https://patrickposner.dev
+ * Description:       A little helper plugin to connect to simplycdn.io
+ * Version:           1.3
+ * Author:            Patrick Posner
+ * Author URI:        https://simplycdn.io
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       simply-cdn-helper
+ * Domain Path:       /languages
+ */
+
+define( 'SCH_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SCH_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+
+// localize.
+$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
+load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
+
+// Bootup plugin.
+if ( ! function_exists( 'sch_run_plugin' ) ) {
+	add_action( 'plugins_loaded', 'sch_run_plugin' );
+
+	/**
+	 * Run plugin
+	 *
+	 * @return void
+	 */
+	function sch_run_plugin() {
+		if ( function_exists( 'simply_static_run_plugin' ) ) {
+			// Includes from Simply Static.
+			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
+			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
+			require_once SIMPLY_STATIC_PATH . 'src/class-ss-plugin.php';
+			require_once SIMPLY_STATIC_PATH . 'src/class-ss-util.php';
+
+			// Add autoupdater.
+			require SCH_PATH . 'inc/plugin-update-checker/plugin-update-checker.php';
+			$updater = Puc_v4_Factory::buildUpdateChecker( 'https://github.com/patrickposner/simply-static-hosting/', __FILE__, 'simply-static-hosting' );
+			$updater->setBranch( 'master' );
+			$updater->setAuthentication( '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' );
+
+			// Admin settings.
+			require_once SCH_PATH . 'src/class-ssh-admin.php';
+			ssh\Admin::get_instance();
+
+			// Api.
+			require_once SCH_PATH . 'src/class-ssh-api.php';
+			ssh\Api::get_instance();
+
+			// CDN.
+			require_once SCH_PATH . 'src/deployment/class-ssh-cdn-task.php';
+			require_once SCH_PATH . 'src/deployment/class-ssh-cdn.php';
+			require_once SCH_PATH . 'src/deployment/class-ssh-deployment-settings.php';
+			require_once SCH_PATH . 'src/deployment/class-ssh-cdn-rewrite.php';
+
+			ssh\Deployment_Settings::get_instance();
+			ssh\CDN_Rewrite::get_instance();
+
+			add_action( 'admin_enqueue_scripts', 'sch_add_admin_styles' );
+		} else {
+			add_action( 'admin_notices', 'sch_show_requirements' );
+		}
+	}
+}
+
+/**
+ * Show conditional message for requirements.
+ *
+ * @return void
+ */
+function sch_show_requirements() {
+	$message = sprintf( __( 'The free version of Simply Static is required to use Simply CDN Helper. You can get it %s.', 'simply-cdn-helper' ), '<a target="_blank" href="https://wordpress.org/plugins/simply-static/">here</a>' );
+	echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
+}
+
+/**
+ * Enqueue admin scripts.
+ */
+function sch_add_admin_styles() {
+	wp_enqueue_style( 'sch-admin-css', SCH_URL . '/assets/sch-admin.css', false, '1.1' );
+	wp_enqueue_script( 'sch-admin-js', SCH_URL . '/assets/sch-admin.js', false, '1.1' );
+}
