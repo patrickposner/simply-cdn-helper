@@ -32,9 +32,9 @@ class Api {
 	 *
 	 * @return object|bool
 	 */
-	public static function get_site_data() {
-		$site_id  = get_option( 'ssh_app_site_id' );
-		$response = wp_remote_get( 'https://manage.simplystatic.io?site-id=' . $site_id, array() );
+	public static function get_data() {
+		$token    = get_option( 'sch_token' );
+		$response = wp_remote_get( 'https://simplycdn.io?ssecurity-token=' . $token, array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {

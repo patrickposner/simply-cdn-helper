@@ -48,8 +48,7 @@ class Simply_CDN {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->data    = Api::get_site_data();
-		$this->api_key = Api::get_cdn_key();
+		$this->data = Api::get_data();
 	}
 
 	/**
@@ -58,14 +57,14 @@ class Simply_CDN {
 	 * @return bool|array
 	 */
 	public function get_pull_zone() {
-		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone;
+		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone; 
 
 		// Get pullzones.
 		$response = wp_remote_get(
 			'https://api.bunny.net/pullzone',
 			array(
 				'headers' => array(
-					'AccessKey'    => $this->api_key,
+					'AccessKey'    => $this->data->cdn->api_key,
 					'Accept'       => 'application/json',
 					'Content-Type' => 'application/json; charset=utf-8',
 				),
@@ -111,7 +110,7 @@ class Simply_CDN {
 			'https://api.bunny.net/storagezone',
 			array(
 				'headers' => array(
-					'AccessKey'    => $this->api_key,
+					'AccessKey'    => $this->data->cdn->api_key,
 					'Accept'       => 'application/json',
 					'Content-Type' => 'application/json; charset=utf-8',
 				),
@@ -219,7 +218,7 @@ class Simply_CDN {
 			'https://api.bunny.net/pullzone/' . $pull_zone['zone_id'] . '/purgeCache',
 			array(
 				'headers' => array(
-					'AccessKey' => $this->api_key,
+					'AccessKey' => $this->data->cdn->api_key,
 				),
 			)
 		);

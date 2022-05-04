@@ -61,7 +61,7 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		register_setting( 'sch_options_group', 'sch_app_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 	}
@@ -81,7 +81,7 @@ class Admin {
 	 * @return void
 	 */
 	public function render_options() {
-		$data = Api::get_site_data();
+		$data = Api::get_data();
 
 		?>
 		<div class="sch-container">
@@ -92,18 +92,17 @@ class Admin {
 						<h2><?php echo esc_html_e( 'Connect your website', 'simply-cdn-helper' ); ?></h2>
 					</p>
 					<p>
-						<?php echo esc_html_e( 'Add the site id that was sent to you by e-mail after you made your purchase on simplystatic.io.', 'simply-cdn-helper' ); ?>
-					</p>
-					<p style="margin-bottom: 50px;">
-						<?php echo esc_html_e( 'You need an active connection to get your access credentials to your server and to automatically deploy your site to the CDN.', 'simply-cdn-helper' ); ?>
+						<?php echo esc_html_e( 'Copy and paste the Security Token from your account dashboard and save it to enable the connection.', 'simply-cdn-helper' ); ?><br>
+						<?php echo esc_html_e( 'This is required to publish your static site on simplycdn.io and enable the CDN settings.', 'simply-cdn-helper' ); ?>
+
 					</p>
 					<form method="post" action="options.php">
 					<?php settings_fields( 'sch_options_group' ); ?>
 					<p>
-						<label for="sch_app_site_id"><?php echo esc_html_e( 'Site-ID', 'simply-cdn-helper' ); ?></label></br>
-						<input type="text" id="sch_app_site_id" name="sch_app_site_id" value="<?php echo esc_html( get_option( 'sch_app_site_id' ) ); ?>" />
+						<label for="sch_token"><?php echo esc_html_e( 'Security Token', 'simply-cdn-helper' ); ?></label></br>
+						<input type="text" id="sch_token" name="sch_token" value="<?php echo esc_html( get_option( 'sch_token' ) ); ?>" />
 					</p>
-					<?php submit_button(); ?>
+					<?php submit_button( __( 'Connect', 'simply-cdn-helper' ), 'primary' );; ?>
 					<?php if ( ! empty( $data ) ) : ?>
 					<p class="success"><?php echo esc_html_e( 'Your site is successfully connected to the platform.', 'simply-cdn-helper' ); ?></p>
 					<?php endif; ?>
@@ -133,7 +132,12 @@ class Admin {
 					</p>
 					<?php submit_button(); ?>
 					</form>
-					<p>
+				</div>
+				<div>
+				</div>
+			</div>
+			<div class="wrap">
+				<div>
 					<h2><?php echo esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>
 						<?php echo esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-cdn-helper' ); ?>
 					</p>

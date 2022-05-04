@@ -31,6 +31,8 @@ class Simply_CDN_Rewrite {
 	 * Constructor for Cors_Settings.
 	 */
 	public function __construct() {
+		$this->cdn = Simply_CDN::get_instance();
+
 		add_action( 'the_content', array( $this, 'replace_image_url_in_html' ), 99 );
 		add_filter( 'wp_handle_upload', array( $this, 'upload_to_cdn' ), 10, 2 );
 	}
@@ -43,7 +45,7 @@ class Simply_CDN_Rewrite {
 	 * @return array
 	 */
 	public function upload_to_cdn( $upload, $context ) {
-		$cdn = CDN::get_instance();
+		
 
 		// Get path.
 		$real_path     = $upload['file'];
@@ -51,10 +53,10 @@ class Simply_CDN_Rewrite {
 
 		// Sub directory?
 		if ( ! empty( $cdn->data->cdn->sub_directory ) ) {
-			$relative_path = str_replace( get_bloginfo( 'url' ), $cdn->data->cdn->sub_directory, $upload['url'] );
+			$relative_path = str_replace( get_bloginfo( 'url' ), $this->cdn->data->cdn->sub_directory, $upload['url'] );
 		}
 
-		$cdn->upload_file( $real_path, $relative_path );
+		$this->cdn->upload_file( $real_path, $relative_path );
 
 		return $upload;
 	}
@@ -68,18 +70,15 @@ class Simply_CDN_Rewrite {
 	 * @return string HTML with possibly images that have been filtered
 	 */
 	public function replace_image_url_in_html( $content ) {
-
-		$cdn = CDN::get_instance();
-
 		// Sub directory?
 		$cdn_path = '';
 
-		if ( ! empty( $cdn->data->cdn->sub_directory ) ) {
-			$cdn_path = '/' . $cdn->data->cdn->sub_directory;
+		if ( ! empty( $this->cdn->data->cdn->sub_directory ) ) {
+			$cdn_path = '/' . $this->cdn->data->cdn->sub_directory;
 		}
 
 		// Get static URL path.
-		$static_url      = wp_parse_url( get_option( 'ssh_static_url' ) );
+		$static_url      = wp_parse_url( get_option( 'sch_static_url' ) );
 		$origin_url      = wp_parse_url( get_bloginfo( 'url' ) );
 		$static_url_path = $static_url['host'] . $cdn_path;
 

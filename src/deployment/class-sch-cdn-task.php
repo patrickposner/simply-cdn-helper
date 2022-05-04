@@ -23,7 +23,8 @@ class Simply_CDN_Task extends Simply_Static\Task {
 
 		$options = Simply_Static\Options::instance();
 
-		$this->data       = Api::get_site_data();
+		$this->cdn        = Simply_CDN::get_instance();
+		$this->data       = Api::get_data();
 		$this->options    = $options;
 		$this->temp_dir   = $options->get_archive_dir();
 		$this->start_time = $options->get( 'archive_start_time' );
@@ -35,14 +36,11 @@ class Simply_CDN_Task extends Simply_Static\Task {
 	 * @return bool
 	 */
 	public function perform() {
-		// Setup BunnyCDN client.
-		$bunny_updater = CDN::get_instance();
-
 		// Sub directory?
 		$cdn_path = '';
 
-		if ( ! empty( $bunny_updater->data->cdn->sub_directory ) ) {
-			$cdn_path = $bunny_updater->data->cdn->sub_directory . '/';
+		if ( ! empty( $this->cdn->data->cdn->sub_directory ) ) {
+			$cdn_path = $this->cdn->data->cdn->sub_directory . '/';
 		}
 
 		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-cdn-helper' );
@@ -53,7 +51,7 @@ class Simply_CDN_Task extends Simply_Static\Task {
 		$counter  = 0;
 
 		// Open FTP connection.
-		$storage_zone   = $bunny_updater->get_storage_zone();
+		$storage_zone   = $this->cdn->get_storage_zone();
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
 
 		ftp_pasv( $ftp_connection, true );
@@ -109,12 +107,12 @@ class Simply_CDN_Task extends Simply_Static\Task {
 			$error_relative_path = str_replace( $this->temp_dir, '', $error_file_path );
 
 			if ( $error_file_path ) {
-				$bunny_updater->upload_file( $error_file_path, $error_relative_path );
+				$this->cdn->upload_file( $error_file_path, $error_relative_path );
 			}
 		}
 
 		// Clear Pull zone cache.
-		$bunny_updater->purge_cache();
+		$this->cdn->purge_cache();
 		return true;
 	}
 }
