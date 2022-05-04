@@ -34,6 +34,11 @@ class Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'register_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
+
+		// Only include if Simply Static Pro is not installed.
+		if ( ! class_exists( '\simply_static_pro\Build_Settings' ) ) {
+			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
+		}
 	}
 
 	/**
@@ -150,5 +155,47 @@ class Admin {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Add admin bar menu to visit static website.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
+	 * @return void
+	 */
+	public function add_admin_bar_menu( \WP_Admin_Bar $admin_bar ) {
+		global $post;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$static_url = get_option( 'sch_static_url' );
+
+		// Additional Path set?
+		if ( ! empty( $options['relative_path'] ) ) {
+			$static_url = $static_url . $options['relative_path'];
+		}
+
+		// If the current page has an post id we get the permalink and replace it.
+		if ( ! empty( $post ) && ! empty( $static_url ) ) {
+			$permalink  = get_permalink( $post->ID );
+			$static_url = str_replace( untrailingslashit( get_bloginfo( 'url' ) ), untrailingslashit( $static_url ), $permalink );
+		}
+
+		if ( ! empty( $static_url ) ) {
+			$admin_bar->add_menu(
+				array(
+					'id'     => 'static-site',
+					'parent' => null,
+					'group'  => null,
+					'title'  => __( 'View static URL', 'simply-cdn-helper' ),
+					'href'   => $static_url,
+					'meta' => array(
+						'title' => __( 'View static URL', 'simply-cdn-helper' ),
+					),
+				)
+			);
+		}
 	}
 }
