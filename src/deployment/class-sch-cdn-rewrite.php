@@ -77,18 +77,25 @@ class Simply_CDN_Rewrite {
 		// Subdirectory?
 		if ( ! empty( $this->cdn->data->cdn->sub_directory ) ) {
 			$cdn_path   = '/' . $this->cdn->data->cdn->sub_directory;
-			$static_url = $static_url['host'] . $cdn_path;
+			$static_url = $static_url . $cdn_path;
 		}
 
-		$static_image_url = str_replace( $origin_url, $static_url, $url );
-
-		// Check if file exists.
-		$handle = fopen( $static_image_url, 'r' );
-
-		if ( $handle ) {
-			return $static_image_url;
+		// Check URL for data type.
+		if ( is_array( $url ) ) {
+			$url = $url[0];
 		}
 
+		// Only replace the image URL if it's a valid URL.
+		if ( filter_var( $url, FILTER_VALIDATE_URL ) !== false ) {
+			$static_image_url = str_replace( $origin_url, $static_url, $url );
+
+			// Check if file exists.
+			$handle = fopen( $static_image_url, 'r' );
+
+			if ( $handle ) {
+				return $static_image_url;
+			}
+		}
 		return $url;
 	}
 
