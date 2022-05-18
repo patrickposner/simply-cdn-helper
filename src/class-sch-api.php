@@ -16,9 +16,9 @@ class Api {
 	/**
 	 * Returns instance of Api.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
-	public static function get_instance(): object {
+	public static function get_instance(): object|null {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -39,7 +39,7 @@ class Api {
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$result = json_decode( $response['body'] );
-				return esc_html( $result );
+				return $result;
 			} else {
 				return false;
 			}

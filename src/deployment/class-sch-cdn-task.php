@@ -14,13 +14,9 @@ class Simply_CDN_Task extends Simply_Static\Task {
 	 * @var string
 	 */
 	protected static $task_name = 'simply_cdn';
-	private null|object $cdn;
-	private bool|object $data;
-	private string $temp_dir;
-	/**
-	 * @var mixed|null
-	 */
-	private mixed $start_time;
+	private $cdn;
+	private $data;
+	private $temp_dir;
 
 	/**
 	 * Constructor
@@ -34,7 +30,6 @@ class Simply_CDN_Task extends Simply_Static\Task {
 		$this->data       = Api::get_data();
 		$this->options    = $options;
 		$this->temp_dir   = $options->get_archive_dir();
-		$this->start_time = $options->get( 'archive_start_time' );
 	}
 
 	/**
