@@ -1,0 +1,217 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Simply CDN helper\n"
+"POT-Creation-Date: 2022-05-18 23:19+0200\n"
+"PO-Revision-Date: 2022-05-18 23:19+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: simply-cdn-helper.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:54
+msgid "View details"
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:214
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:216
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:218
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Plugin/Ui.php:224
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: inc/plugin-update-checker/Puc/v4p11/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr ""
+
+#: simply-cdn-helper.php:83
+#, php-format
+msgid ""
+"The free version of Simply Static is required to use Simply CDN Helper. You "
+"can get it %s."
+msgstr ""
+
+#: src/class-sch-admin.php:56
+msgid "Cache cleared successfully."
+msgstr ""
+
+#: src/class-sch-admin.php:81 src/class-sch-admin.php:94
+#: src/deployment/class-sch-deployment-settings.php:51
+msgid "Simply CDN"
+msgstr ""
+
+#: src/class-sch-admin.php:98
+msgid "Connect your website"
+msgstr ""
+
+#: src/class-sch-admin.php:101
+msgid ""
+"Copy and paste the Security Token from your account dashboard and save it to "
+"enable the connection."
+msgstr ""
+
+#: src/class-sch-admin.php:102
+msgid ""
+"This is required to publish your static site on simplycdn.io and enable the "
+"CDN settings."
+msgstr ""
+
+#: src/class-sch-admin.php:108
+msgid "Security Token"
+msgstr ""
+
+#: src/class-sch-admin.php:111
+msgid "Connect"
+msgstr ""
+
+#: src/class-sch-admin.php:113
+msgid "Your site is successfully connected to the platform."
+msgstr ""
+
+#: src/class-sch-admin.php:123
+msgid "Configure your static website"
+msgstr ""
+
+#: src/class-sch-admin.php:126
+msgid ""
+"Once your website is connected you can configure all settings related to the "
+"CDN here. This includes settings up redirects, proxy URLs and setting up a "
+"custom 404 error page."
+msgstr ""
+
+#: src/class-sch-admin.php:131
+msgid "Static URL"
+msgstr ""
+
+#: src/class-sch-admin.php:133
+msgid ""
+"Once you change this setting, your static website will be available under "
+"the new domain. Make sure you set your CNAME record before you change this "
+"setting."
+msgstr ""
+
+#: src/class-sch-admin.php:136
+msgid "Relative path to your 404 page"
+msgstr ""
+
+#: src/class-sch-admin.php:148
+msgid "Managing Media"
+msgstr ""
+
+#: src/class-sch-admin.php:151
+msgid ""
+"We can replace the URLs to your media files on your WordPress website with "
+"the one from the CDN."
+msgstr ""
+
+#: src/class-sch-admin.php:154
+msgid ""
+"This can drastically improve the performance of static exports as Simply "
+"Static does not need to copy image files anymore that already exists on your "
+"static website."
+msgstr ""
+
+#: src/class-sch-admin.php:161
+msgid "Find and replace all image URLs from attachments."
+msgstr ""
+
+#: src/class-sch-admin.php:167
+msgid "Find and replace all image URLs within HTML."
+msgstr ""
+
+#: src/class-sch-admin.php:178
+msgid "Caching"
+msgstr ""
+
+#: src/class-sch-admin.php:179
+msgid ""
+"The CDN cache is cleared automatically after each static export. Sometimes "
+"you want to clear the cache manually to make sure you get the latest results "
+"in your browser."
+msgstr ""
+
+#: src/class-sch-admin.php:181
+msgid "Clear Cache"
+msgstr ""
+
+#: src/class-sch-admin.php:223 src/class-sch-admin.php:226
+msgid "View static URL"
+msgstr ""
+
+#: src/deployment/class-sch-cdn-task.php:48
+msgid "Starting transfer of pages/files to Simply CDN"
+msgstr ""
+
+#: src/deployment/class-sch-cdn-task.php:77
+#: src/deployment/class-sch-cdn.php:167
+#, php-format
+msgid "The file located at %s could not be uploaded via FTP."
+msgstr ""
+
+#: src/deployment/class-sch-cdn-task.php:87
+#, php-format
+msgid "Pushed %d pages/files to Simply CDN"
+msgstr ""
+
+#: src/deployment/class-sch-deployment-settings.php:65
+msgid ""
+"Make sure you get an account at simplycdn.io and connect your website before "
+"selecting it as an deployment option."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Simply CDN helper"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://patrickposner.dev"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A little helper plugin to connect to simplycdn.io"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Patrick Posner"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://simplycdn.io"
+msgstr ""
