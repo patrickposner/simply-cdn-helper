@@ -14,6 +14,13 @@ class Simply_CDN_Task extends Simply_Static\Task {
 	 * @var string
 	 */
 	protected static $task_name = 'simply_cdn';
+	private null|object $cdn;
+	private bool|object $data;
+	private string $temp_dir;
+	/**
+	 * @var mixed|null
+	 */
+	private mixed $start_time;
 
 	/**
 	 * Constructor
@@ -35,8 +42,8 @@ class Simply_CDN_Task extends Simply_Static\Task {
 	 *
 	 * @return bool
 	 */
-	public function perform() {
-		// Sub directory?
+	public function perform(): bool {
+		// Subdirectory?
 		$cdn_path = '';
 
 		if ( ! empty( $this->cdn->data->cdn->sub_directory ) ) {
@@ -72,7 +79,7 @@ class Simply_CDN_Task extends Simply_Static\Task {
 				$ftp_upload    = ftp_put( $ftp_connection, $relative_path, realpath( $file_name ), FTP_BINARY );
 
 				if ( ! $ftp_upload ) {
-					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ), $current_file_path ) );
+					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ),  realpath( $file_name ) ) );
 				}
 
 				$counter++;

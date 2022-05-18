@@ -11,29 +11,21 @@ class Simply_CDN {
 	 *
 	 * @var object|null
 	 */
-	private static $instance = null;
+	private static ?object $instance = null;
 
 	/**
 	 * Contains data array for the site.
 	 *
-	 * @var object
+	 * @var object|bool
 	 */
-	public $data;
-
-	/**
-	 * Contains the api key for the CDN.
-	 *
-	 * @var string
-	 */
-	public $api_key;
-
+	public bool|object $data;
 
 	/**
 	 * Returns instance of CDN.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
-	public static function get_instance() {
+	public static function get_instance(): object|null {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -56,8 +48,8 @@ class Simply_CDN {
 	 *
 	 * @return bool|array
 	 */
-	public function get_pull_zone() {
-		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone; 
+	public function get_pull_zone(): bool|array {
+		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone;
 
 		// Get pullzones.
 		$response = wp_remote_get(
@@ -88,11 +80,13 @@ class Simply_CDN {
 			} else {
 				$error_message = wp_remote_retrieve_response_message( $response );
 				error_log( $error_message );
+
 				return false;
 			}
 		} else {
 			$error_message = $response->get_error_message();
 			error_log( $error_message );
+
 			return false;
 		}
 	}
@@ -102,7 +96,7 @@ class Simply_CDN {
 	 *
 	 * @return bool|array
 	 */
-	public function get_storage_zone() {
+	public function get_storage_zone(): bool|array {
 		$api_storage_zone = 'sshm-' . $this->data->cdn->storage_zone;
 
 		// Get storage zones.
@@ -134,11 +128,13 @@ class Simply_CDN {
 			} else {
 				$error_message = wp_remote_retrieve_response_message( $response );
 				error_log( $error_message );
+
 				return false;
 			}
 		} else {
 			$error_message = $response->get_error_message();
 			error_log( $error_message );
+
 			return false;
 		}
 	}
@@ -149,9 +145,10 @@ class Simply_CDN {
 	 *
 	 * @param string $current_file_path current local file path.
 	 * @param string $cdn_path file path in storage.
+	 *
 	 * @return void
 	 */
-	public function upload_file( $current_file_path, $cdn_path ) {
+	public function upload_file( string $current_file_path, string $cdn_path ): void {
 		$storage_zone = $this->get_storage_zone();
 
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
@@ -178,15 +175,17 @@ class Simply_CDN {
 	/**
 	 * Delete file from BunnyCDN storage.
 	 *
-	 * @return string
+	 * @param $path
+	 *
+	 * @return bool|string
 	 */
-	public function delete_file( $path ) {
+	public function delete_file( $path ): bool|string {
 		$storage_zone = $this->get_storage_zone();
 
 		$response = wp_remote_request(
 			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path,
 			array(
-				'method' => 'DELETE',
+				'method'  => 'DELETE',
 				'headers' => array( 'AccessKey' => $this->data->cdn->access_key ),
 			)
 		);
@@ -197,11 +196,13 @@ class Simply_CDN {
 			} else {
 				$error_message = wp_remote_retrieve_response_message( $response );
 				error_log( $error_message );
+
 				return false;
 			}
 		} else {
 			$error_message = $response->get_error_message();
 			error_log( $error_message );
+
 			return false;
 		}
 	}
@@ -211,7 +212,7 @@ class Simply_CDN {
 	 *
 	 * @return bool
 	 */
-	public function purge_cache() {
+	public function purge_cache(): bool {
 		$pull_zone = $this->get_pull_zone();
 
 		$response = wp_remote_post(

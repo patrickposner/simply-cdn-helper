@@ -34,7 +34,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 	 *
 	 * @return void
 	 */
-	function sch_run_plugin() {
+	function sch_run_plugin(): void {
 		if ( function_exists( 'simply_static_run_plugin' ) ) {
 			// Includes from Simply Static.
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
@@ -56,6 +56,10 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require_once SCH_PATH . 'src/class-sch-api.php';
 			sch\Api::get_instance();
 
+			// Cors.
+			require_once SCH_PATH . 'src/class-sch-cors.php';
+			sch\Cors::get_instance();
+
 			// CDN.
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
@@ -75,7 +79,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
  *
  * @return void
  */
-function sch_show_requirements() {
-	$message = sprintf( __( 'The free version of Simply Static is required to use Simply CDN Helper. You can get it %s.', 'simply-cdn-helper' ), '<a target="_blank" href="https://wordpress.org/plugins/simply-static/">here</a>' );
-	echo '<div class="notice notice-error"><p>' . $message . '</p></div>';
+function sch_show_requirements(): void {
+	$message = sprintf( esc_html__( 'The free version of Simply Static is required to use Simply CDN Helper. You can get it %s.', 'simply-cdn-helper' ), '<a target="_blank" href="https://wordpress.org/plugins/simply-static/">here</a>' );
+	echo wp_kses_post( '<div class="notice notice-error"><p>' . $message . '</p></div>' );
 }

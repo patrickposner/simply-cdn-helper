@@ -11,14 +11,14 @@ class Api {
 	 *
 	 * @var object|null
 	 */
-	private static $instance = null;
+	private static ?object $instance = null;
 
 	/**
 	 * Returns instance of Api.
 	 *
 	 * @return object
 	 */
-	public static function get_instance() {
+	public static function get_instance(): object {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -32,14 +32,14 @@ class Api {
 	 *
 	 * @return object|bool
 	 */
-	public static function get_data() {
+	public static function get_data(): object|bool {
 		$token    = get_option( 'sch_token' );
-		$response = wp_remote_get( 'https://simplycdn.io?ssecurity-token=' . $token, array() );
+		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $token, array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
 				$result = json_decode( $response['body'] );
-				return $result;
+				return esc_html( $result );
 			} else {
 				return false;
 			}

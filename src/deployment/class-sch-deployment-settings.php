@@ -13,14 +13,14 @@ class Deployment_Settings {
 	 *
 	 * @var object|null
 	 */
-	private static $instance = null;
+	private static ?object $instance = null;
 
 	/**
 	 * Returns instance of Deployment_Settings.
 	 *
-	 * @return object
+	 * @return object|null
 	 */
-	public static function get_instance() {
+	public static function get_instance(): object|null {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -45,7 +45,7 @@ class Deployment_Settings {
 	 *
 	 * @return void
 	 */
-	public function add_delivery_method() {
+	public function add_delivery_method(): void {
 		$options = get_option( 'simply-static' );
 		?>
 		<option value='simply-cdn' <?php Simply_Static\Util::selected_if( 'simply-cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></option>
@@ -57,7 +57,7 @@ class Deployment_Settings {
 	 *
 	 * @return void
 	 */
-	public function add_delivery_method_description() {
+	public function add_delivery_method_description(): void {
 		?>
 		<tr class="delivery-method simply-cdn" style="display:none">
 			<th></th>
@@ -71,15 +71,14 @@ class Deployment_Settings {
 	/**
 	 * Add tasks to Simply Static task list.
 	 *
-	 * @param array  $task_list current task list.
+	 * @param array $task_list current task list.
 	 * @param string $delivery_method current delivery method.
+	 *
 	 * @return array
 	 */
-	public function modify_task_list( $task_list, $delivery_method ) {
+	public function modify_task_list( array $task_list, string $delivery_method ): array {
 		if ( 'simply_cdn' === $delivery_method ) {
-			$task_list = array( 'setup', 'fetch_urls', 'simply_cdn', 'wrapup' );
-
-			return $task_list;
+			return array( 'setup', 'fetch_urls', 'simply_cdn', 'wrapup' );
 		}
 		return $task_list;
 	}
@@ -89,9 +88,10 @@ class Deployment_Settings {
 	 *
 	 * @param string $class_name current class name.
 	 * @param string $task_name current task name.
+	 *
 	 * @return string
 	 */
-	public function check_class_name( $class_name, $task_name ) {
+	public function check_class_name( string $class_name, string $task_name ): string {
 		if ( 'simply_cdn' === $task_name ) {
 			return 'sch\\' . strtoupper( $task_name ) . '_Task';
 		}
@@ -103,7 +103,7 @@ class Deployment_Settings {
 	 *
 	 * @return void
 	 */
-	public function clear_cache() {
+	public function clear_cache() : void {
 		$nonce = esc_html( $_POST['nonce'] );
 
 		if ( ! wp_verify_nonce( $nonce, 'sch-cache-nonce' ) ) {
