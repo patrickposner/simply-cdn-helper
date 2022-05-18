@@ -77,7 +77,7 @@ class Deployment_Settings {
 	 * @return array
 	 */
 	public function modify_task_list( $task_list, $delivery_method ) {
-		if ( 'simply_cdn' === $delivery_method ) {
+		if ( 'simply-cdn' === $delivery_method ) {
 			return array( 'setup', 'fetch_urls', 'simply_cdn', 'wrapup' );
 		}
 		return $task_list;

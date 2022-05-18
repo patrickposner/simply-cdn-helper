@@ -7,7 +7,7 @@ use Simply_Static;
 /**
  * Class which handles GitHub commits.
  */
-class Simply_CDN_Task extends Simply_Static\Task {
+class Simply_Cdn_Task extends Simply_Static\Task {
 	/**
 	 * The task name.
 	 *
@@ -45,7 +45,7 @@ class Simply_CDN_Task extends Simply_Static\Task {
 			$cdn_path = $this->cdn->data->cdn->sub_directory . '/';
 		}
 
-		$message = __( 'Starts to transfer of pages/files to CDN', 'simply-cdn-helper' );
+		$message = __( 'Starting transfer of pages/files to Simply CDN', 'simply-cdn-helper' );
 		$this->save_status_message( $message );
 
 		// Upload directory.
@@ -84,7 +84,7 @@ class Simply_CDN_Task extends Simply_Static\Task {
 		// Close connection.
 		ftp_close( $ftp_connection );
 
-		$message = sprintf( __( 'Pushed %d pages/files to CDN', 'simply-cdn-helper' ), $counter );
+		$message = sprintf( __( 'Pushed %d pages/files to Simply CDN', 'simply-cdn-helper' ), $counter );
 		$this->save_status_message( $message );
 
 		// Maybe add 404.
