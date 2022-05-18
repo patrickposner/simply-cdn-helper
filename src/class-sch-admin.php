@@ -164,7 +164,7 @@ class Admin {
                         <p>
                             <label for="sch_replace_html_urls">
                                 <input type="checkbox" name="sch_replace_html_urls" value="1" <?php checked(1, get_option('sch_replace_html_urls'), true); ?> />
-			                    <?php esc_html_e( 'Find and replace all image URLs with HTML.', 'simply-cdn-helper' ); ?>
+			                    <?php esc_html_e( 'Find and replace all image URLs within HTML.', 'simply-cdn-helper' ); ?>
                             </label>
                         </p>
 						<?php submit_button(); ?>
