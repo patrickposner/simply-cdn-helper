@@ -34,10 +34,16 @@ class Simply_CDN_Rewrite {
 	public function __construct() {
 		$this->cdn = Simply_CDN::get_instance();
 
-		add_action( 'the_content', array( $this, 'replace_image_url_in_html' ), 99 );
-		add_filter('wp_get_attachment_url', array( $this, 'replace_image_url' ) );
-		add_filter('wp_get_attachment_image',     array( $this, 'replace_image_url' ) );
-		add_filter('wp_get_attachment_image_src', array( $this, 'replace_image_url' ) );
+		if ( get_option( 'sch_replace_html_urls' ) ) {
+			add_action( 'the_content', array( $this, 'replace_image_url_in_html' ), 99 );
+		}
+
+		if ( get_option( 'sch_replace_image_urls' ) ) {
+			add_filter('wp_get_attachment_url', array( $this, 'replace_image_url' ) );
+			add_filter('wp_get_attachment_image',     array( $this, 'replace_image_url' ) );
+			add_filter('wp_get_attachment_image_src', array( $this, 'replace_image_url' ) );
+		}
+
 		add_filter( 'wp_handle_upload', array( $this, 'upload_to_cdn' ) );
 	}
 

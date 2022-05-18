@@ -74,3 +74,11 @@
 .sch-container .success {
     color: #2aa42a;
 }
+
+.sch-container input[type="checkbox"] {
+    max-width: 10px;
+}
+
+#sch-clear-cache {
+    color:white;
+}

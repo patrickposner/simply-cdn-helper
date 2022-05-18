@@ -53,7 +53,7 @@ class Admin {
 		$args = array(
 			'ajax_url'      => admin_url( 'admin-ajax.php' ),
 			'cache_nonce'   => wp_create_nonce( 'sch-cache-nonce' ),
-			'cache_cleared' => __( 'Cache cleared successfully.', 'simply-cdn-helper' ),
+			'cache_cleared' => esc_html__( 'Cache cleared successfully.', 'simply-cdn-helper' ),
 		);
 
 		wp_localize_script( 'sch-admin', 'sch_ajax', $args );
@@ -68,7 +68,9 @@ class Admin {
 		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-	}
+		register_setting( 'sch_media_group', 'sch_replace_image_urls', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'sch_media_group', 'sch_replace_html_urls', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+    }
 
 	/**
 	 * Register menu page for settings.
@@ -152,15 +154,18 @@ class Admin {
 	                    <?php esc_html_e( 'This can drastically improve the performance of static exports as Simply Static does not need to copy image files anymore that already exists on your static website.', 'simply-cdn-helper' ); ?>
                     </p>
                     <form method="post" action="options.php">
-						<?php settings_fields( 'sch_cdn_group' ); ?>
+						<?php settings_fields( 'sch_media_group' ); ?>
                         <p>
-                            <label for="sch_static_url"><?php esc_html_e( 'Static URL', 'simply-cdn-helper' ); ?></label><br>
-                            <input type="url" id="sch_static_url" name="sch_static_url" value="<?php echo esc_html( get_option( 'sch_static_url' ) ); ?>" />
-                            <small><?php esc_html_e( 'Once you change this setting, your static website will be available under the new domain. Make sure you set your CNAME record before you change this setting.', 'simply-cdn-helper' ); ?></small>
+                            <label for="sch_replace_image_urls">
+                                <input type="checkbox" name="sch_replace_image_urls" value="1" <?php checked(1, get_option('sch_replace_image_urls'), true); ?> />
+	                            <?php esc_html_e( 'Find and replace all image URLs from attachments.', 'simply-cdn-helper' ); ?>
+                            </label>
                         </p>
                         <p>
-                            <label for="sch_404_path"><?php esc_html_e( 'Relative path to your 404 page', 'simply-cdn-helper' ); ?></label><br>
-                            <input type="text" id="sch_404_path" name="sch_404_path" value="<?php echo esc_html( get_option( 'sch_404_path' ) ); ?>" />
+                            <label for="sch_replace_html_urls">
+                                <input type="checkbox" name="sch_replace_html_urls" value="1" <?php checked(1, get_option('sch_replace_html_urls'), true); ?> />
+			                    <?php esc_html_e( 'Find and replace all image URLs with HTML.', 'simply-cdn-helper' ); ?>
+                            </label>
                         </p>
 						<?php submit_button(); ?>
                     </form>
@@ -215,10 +220,10 @@ class Admin {
 					'id'     => 'static-site',
 					'parent' => null,
 					'group'  => null,
-					'title'  => __( 'View static URL', 'simply-cdn-helper' ),
+					'title'  => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					'href'   => $static_url,
 					'meta' => array(
-						'title' => __( 'View static URL', 'simply-cdn-helper' ),
+						'title' => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					),
 				)
 			);
