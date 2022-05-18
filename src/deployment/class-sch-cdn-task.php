@@ -37,7 +37,7 @@ class Simply_CDN_Task extends Simply_Static\Task {
 	 *
 	 * @return bool
 	 */
-	public function perform(): bool {
+	public function perform() {
 		// Subdirectory?
 		$cdn_path = '';
 

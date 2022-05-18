@@ -11,21 +11,21 @@ class Simply_CDN {
 	 *
 	 * @var object|null
 	 */
-	private static ?object $instance = null;
+	private static $instance = null;
 
 	/**
 	 * Contains data array for the site.
 	 *
 	 * @var object|bool
 	 */
-	public bool|object $data;
+	public $data;
 
 	/**
 	 * Returns instance of CDN.
 	 *
 	 * @return object|null
 	 */
-	public static function get_instance(): object|null {
+	public static function get_instance() {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -48,7 +48,7 @@ class Simply_CDN {
 	 *
 	 * @return bool|array
 	 */
-	public function get_pull_zone(): bool|array {
+	public function get_pull_zone() {
 		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone;
 
 		// Get pullzones.
@@ -96,7 +96,7 @@ class Simply_CDN {
 	 *
 	 * @return bool|array
 	 */
-	public function get_storage_zone(): bool|array {
+	public function get_storage_zone() {
 		$api_storage_zone = 'sshm-' . $this->data->cdn->storage_zone;
 
 		// Get storage zones.
@@ -148,7 +148,7 @@ class Simply_CDN {
 	 *
 	 * @return void
 	 */
-	public function upload_file( string $current_file_path, string $cdn_path ): void {
+	public function upload_file( string $current_file_path, string $cdn_path ) {
 		$storage_zone = $this->get_storage_zone();
 
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
@@ -179,7 +179,7 @@ class Simply_CDN {
 	 *
 	 * @return bool|string
 	 */
-	public function delete_file( $path ): bool|string {
+	public function delete_file( $path ) {
 		$storage_zone = $this->get_storage_zone();
 
 		$response = wp_remote_request(
@@ -212,7 +212,7 @@ class Simply_CDN {
 	 *
 	 * @return bool
 	 */
-	public function purge_cache(): bool {
+	public function purge_cache() {
 		$pull_zone = $this->get_pull_zone();
 
 		$response = wp_remote_post(

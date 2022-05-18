@@ -11,15 +11,15 @@ class Simply_CDN_Rewrite {
 	 *
 	 * @var object|null
 	 */
-	private static ?object $instance = null;
-	private null|object $cdn;
+	private static $instance = null;
+	private $cdn;
 
 	/**
 	 * Returns instance of Cors_Settings.
 	 *
 	 * @return object
 	 */
-	public static function get_instance(): object|null {
+	public static function get_instance() {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -54,7 +54,7 @@ class Simply_CDN_Rewrite {
 	 *
 	 * @return array
 	 */
-	public function upload_to_cdn( array $upload ): array {
+	public function upload_to_cdn( $upload ) {
 		// Get path.
 		$real_path     = $upload['file'];
 		$relative_path = str_replace( get_bloginfo( 'url' ), '', $upload['url'] );
@@ -101,7 +101,7 @@ class Simply_CDN_Rewrite {
 	 *
 	 * @return string HTML with possibly images that have been filtered
 	 */
-	public function replace_image_url_in_html( string $content ): string {
+	public function replace_image_url_in_html( $content ) {
 		// Subdirectory?
 		$cdn_path = '';
 

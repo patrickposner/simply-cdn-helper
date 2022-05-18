@@ -11,7 +11,7 @@ class Admin {
 	 *
 	 * @var object|null
 	 */
-	private static ?object $instance = null;
+	private static $instance = null;
 
 	/**
 	 * Returns instance of Admin.
@@ -46,7 +46,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function add_admin_scripts(): void {
+	public function add_admin_scripts() {
 		wp_enqueue_script( 'sch-admin', SCH_URL . '/assets/sch-admin.js', array( 'jquery' ), '1.0', true );
 		wp_enqueue_style( 'sch-admin-style', SCH_URL . '/assets/sch-admin.css', array(), '1.1.1', 'all' );
 
@@ -64,7 +64,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function register_settings(): void {
+	public function register_settings() {
 		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
@@ -77,7 +77,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function register_menu_page(): void {
+	public function register_menu_page() {
 		add_submenu_page( 'simply-static', esc_html__( 'Simply CDN', 'simply-cdn-helper' ), esc_html__( 'Simply CDN', 'simply-cdn-helper' ), 'manage_options', 'simply-static_cdn', array( $this, 'render_options' ), 10 );
 	}
 
@@ -86,7 +86,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function render_options(): void {
+	public function render_options() {
 		$data = Api::get_data();
 
 		?>
@@ -194,7 +194,7 @@ class Admin {
 	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
 	 * @return void
 	 */
-	public function add_admin_bar_menu( \WP_Admin_Bar $admin_bar ): void {
+	public function add_admin_bar_menu( $admin_bar ) {
 		global $post;
 
 		if ( ! current_user_can( 'manage_options' ) ) {

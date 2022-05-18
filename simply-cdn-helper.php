@@ -34,7 +34,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 	 *
 	 * @return void
 	 */
-	function sch_run_plugin(): void {
+	function sch_run_plugin() {
 		if ( function_exists( 'simply_static_run_plugin' ) ) {
 			// Includes from Simply Static.
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
@@ -79,7 +79,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
  *
  * @return void
  */
-function sch_show_requirements(): void {
+function sch_show_requirements() {
 	$message = sprintf( esc_html__( 'The free version of Simply Static is required to use Simply CDN Helper. You can get it %s.', 'simply-cdn-helper' ), '<a target="_blank" href="https://wordpress.org/plugins/simply-static/">here</a>' );
 	echo wp_kses_post( '<div class="notice notice-error"><p>' . $message . '</p></div>' );
 }

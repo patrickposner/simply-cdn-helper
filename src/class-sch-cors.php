@@ -11,14 +11,14 @@ class Cors {
 	 *
 	 * @var object|null
 	 */
-	private static ?object $instance = null;
+	private static $instance = null;
 
 	/**
 	 * Returns instance of Cors_Settings.
 	 *
 	 * @return object
 	 */
-	public static function get_instance(): object {
+	public static function get_instance() {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -42,7 +42,7 @@ class Cors {
 	 *
 	 * @return array
 	 */
-	public function add_allowed_origins( array $origins ): array {
+	public function add_allowed_origins( $origins ) {
 		$static_url = get_option( 'sch_static_url' );
 
 		if ( ! empty( $static_url ) ) {
@@ -57,7 +57,7 @@ class Cors {
 	 *
 	 * @return void
 	 */
-	public function set_cors_headers(): void {
+	public function set_cors_headers() {
 		$origin     = get_http_origin();
 		$static_url = untrailingslashit( get_option( 'sch_static_url' ) );
 

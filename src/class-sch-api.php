@@ -11,14 +11,14 @@ class Api {
 	 *
 	 * @var object|null
 	 */
-	private static ?object $instance = null;
+	private static $instance = null;
 
 	/**
 	 * Returns instance of Api.
 	 *
 	 * @return object|null
 	 */
-	public static function get_instance(): object|null {
+	public static function get_instance() {
 
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -32,7 +32,7 @@ class Api {
 	 *
 	 * @return object|bool
 	 */
-	public static function get_data(): object|bool {
+	public static function get_data() {
 		$token    = get_option( 'sch_token' );
 		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $token, array() );
 
