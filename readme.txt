@@ -17,23 +17,6 @@ Simply Static Hosting is a little helper plugin to connect to simplystatic.io an
 
 == Changelog ==
 
-= 1.3 =
-
-* WPML/Polylang support
-* delete from single function
-* BunnyCDN with WP API instead of composer package
-* better restriction handling
-* config files in /uploads/
-* better UI cleanup
-* auto updater via GitHub
-
-= 1.2 =
-
-* Algolia entries with post id 
-* better CDN error handling
-* clear pages in db for each export
-* add home and blog page to single exports
-
 = 1.0 =
 
 * initial release
