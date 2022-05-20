@@ -19,9 +19,13 @@ class Form_Webhook {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_webhook_scripts' ) );
-		add_filter( 'wpcf7_load_js', '__return_false' );
-		add_filter( 'gform_form_args', array( $this, 'disable_ajax' ) );
+		$options = get_option( 'simply-static' );
+
+		if ( 'no' === $options['use-forms'] ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'add_webhook_scripts' ) );
+			add_filter( 'wpcf7_load_js', '__return_false' );
+			add_filter( 'gform_form_args', array( $this, 'disable_ajax' ) );
+		}
 	}
 
 	/**
