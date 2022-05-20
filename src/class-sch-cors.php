@@ -31,8 +31,10 @@ class Cors {
 	 * Constructor for Cors.
 	 */
 	public function __construct() {
-		add_filter( 'allowed_http_origins', array( $this, 'add_allowed_origins' ) );
-		add_action( 'init', array( $this, 'set_cors_headers' ) );
+		if ( class_exists('\simply_static_pro\CORS' ) ) {
+			add_filter( 'allowed_http_origins', array( $this, 'add_allowed_origins' ) );
+			add_action( 'init', array( $this, 'set_cors_headers' ) );
+		}
 	}
 
 	/**
