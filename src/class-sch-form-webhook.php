@@ -14,6 +14,20 @@ class Form_Webhook {
 	private static $instance = null;
 
 	/**
+	 * Returns instance of Cors_Settings.
+	 *
+	 * @return object
+	 */
+	public static function get_instance() {
+
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor for Form_Webhook.
 	 *
 	 * @return void
