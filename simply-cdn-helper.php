@@ -60,6 +60,10 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require_once SCH_PATH . 'src/class-sch-cors.php';
 			sch\Cors::get_instance();
 
+			// Form webhook.
+			require_once SCH_PATH . 'src/class-sch-form-webhook.php';
+			sch\Form_Webhook::get_instance();
+
 			// CDN.
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
