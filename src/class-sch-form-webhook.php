@@ -48,7 +48,7 @@ class Form_Webhook {
 	 * @return void
 	 */
 	public function add_webhook_scripts() {
-		wp_enqueue_script( 'sch-webhook-js', SCH_URL . '/assets/sch-webhook.js', array(), '1.0', true );
+		wp_enqueue_script( 'sch-form-webhook-js', SCH_URL . '/assets/sch-form-webhook.js', array(), '1.0', true );
 	}
 
 	/**
