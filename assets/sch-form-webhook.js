@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
             el.preventDefault();
 
             var data = new FormData(form);
-            submitForm("POST", 'https://api.web3forms.com/submit', data, el);
+            submitForm("POST", 'https://simplycdn.io?mailme=true', data, el);
         });
     });
 });
