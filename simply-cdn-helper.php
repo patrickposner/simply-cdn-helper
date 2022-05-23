@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Simply CDN helper
  * Plugin URI:        https://patrickposner.dev
  * Description:       A little helper plugin to connect to simplycdn.io
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Patrick Posner
  * Author URI:        https://simplycdn.io
  * License:           GPL-2.0+

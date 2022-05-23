@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simply CDN helper\n"
-"POT-Creation-Date: 2022-05-18 23:19+0200\n"
+"POT-Creation-Date: 2022-05-23 12:26+0200\n"
 "PO-Revision-Date: 2022-05-18 23:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "There is no changelog available."
 msgstr ""
 
-#: simply-cdn-helper.php:83
+#: simply-cdn-helper.php:87
 #, php-format
 msgid ""
 "The free version of Simply Static is required to use Simply CDN Helper. You "
