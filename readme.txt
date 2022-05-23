@@ -1,4 +1,4 @@
-=== Simply Static Hosting ===
+=== Simply CDN Helper ===
 Contributors: patrickposner
 Tags: html, static website generator, static site, secure, fast
 Requires at least: 5.0
