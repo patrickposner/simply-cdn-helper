@@ -110,8 +110,7 @@ class Deployment_Settings {
 			die();
 		}
 
-		$cdn = Simply_CDN::get_instance();
-		$cdn->purge_cache();
+	    API::clear_cache();
 
 		$response = array( 'success' => true );
 
