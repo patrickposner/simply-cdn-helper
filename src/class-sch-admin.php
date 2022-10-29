@@ -47,16 +47,7 @@ class Admin {
 	 * @return void
 	 */
 	public function add_admin_scripts() {
-		wp_enqueue_script( 'sch-admin', SCH_URL . '/assets/sch-admin.js', array( 'jquery' ), '1.0', true );
 		wp_enqueue_style( 'sch-admin-style', SCH_URL . '/assets/sch-admin.css', array(), '1.1.1', 'all' );
-
-		$args = array(
-			'ajax_url'      => admin_url( 'admin-ajax.php' ),
-			'cache_nonce'   => wp_create_nonce( 'sch-cache-nonce' ),
-			'cache_cleared' => esc_html__( 'Cache cleared successfully.', 'simply-cdn-helper' ),
-		);
-
-		wp_localize_script( 'sch-admin', 'sch_ajax', $args );
 	}
 
 	/**
@@ -173,17 +164,6 @@ class Admin {
                 <div>
                 </div>
             </div>
-			<div class="wrap">
-				<div>
-					<h2><?php esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>
-						<?php esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-cdn-helper' ); ?>
-					<p>
-					<span class="button-secondary button sch-secondary-button" id="sch-clear-cache"><?php esc_html_e( 'Clear Cache', 'simply-cdn-helper' ); ?></span>
-					</p>
-				</div>
-				<div>
-				</div>
-			</div>
 		</div>
 		<?php
 	}
