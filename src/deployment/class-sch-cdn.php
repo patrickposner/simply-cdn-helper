@@ -44,103 +44,6 @@ class Simply_CDN {
 	}
 
 	/**
-	 * Get current pull zone.
-	 *
-	 * @return bool|array
-	 */
-	public function get_pull_zone() {
-		$api_pull_zone = 'sshm-' . $this->data->cdn->pull_zone;
-
-		// Get pullzones.
-		$response = wp_remote_get(
-			'https://api.bunny.net/pullzone',
-			array(
-				'headers' => array(
-					'AccessKey'    => $this->data->cdn->api_key,
-					'Accept'       => 'application/json',
-					'Content-Type' => 'application/json; charset=utf-8',
-				),
-			)
-		);
-
-		if ( ! is_wp_error( $response ) ) {
-			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
-				$body       = wp_remote_retrieve_body( $response );
-				$pull_zones = json_decode( $body );
-
-				foreach ( $pull_zones as $pull_zone ) {
-					if ( $pull_zone->Name === $api_pull_zone ) {
-						return array(
-							'name'       => $pull_zone->Name,
-							'zone_id'    => $pull_zone->Id,
-							'storage_id' => $pull_zone->StorageZoneId,
-						);
-					}
-				}
-			} else {
-				$error_message = wp_remote_retrieve_response_message( $response );
-				error_log( $error_message );
-
-				return false;
-			}
-		} else {
-			$error_message = $response->get_error_message();
-			error_log( $error_message );
-
-			return false;
-		}
-	}
-
-	/**
-	 * Get current storage zone.
-	 *
-	 * @return bool|array
-	 */
-	public function get_storage_zone() {
-		$api_storage_zone = 'sshm-' . $this->data->cdn->storage_zone;
-
-		// Get storage zones.
-		$response = wp_remote_get(
-			'https://api.bunny.net/storagezone',
-			array(
-				'headers' => array(
-					'AccessKey'    => $this->data->cdn->api_key,
-					'Accept'       => 'application/json',
-					'Content-Type' => 'application/json; charset=utf-8',
-				),
-			)
-		);
-
-		if ( ! is_wp_error( $response ) ) {
-			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
-				$body          = wp_remote_retrieve_body( $response );
-				$storage_zones = json_decode( $body );
-
-				foreach ( $storage_zones as $storage_zone ) {
-					if ( $storage_zone->Name === $api_storage_zone ) {
-						return array(
-							'name'       => $storage_zone->Name,
-							'storage_id' => $storage_zone->Id,
-							'password'   => $storage_zone->Password
-						);
-					}
-				}
-			} else {
-				$error_message = wp_remote_retrieve_response_message( $response );
-				error_log( $error_message );
-
-				return false;
-			}
-		} else {
-			$error_message = $response->get_error_message();
-			error_log( $error_message );
-
-			return false;
-		}
-	}
-
-
-	/**
 	 * Upload file to BunnyCDN storage.
 	 *
 	 * @param string $current_file_path current local file path.
@@ -149,9 +52,9 @@ class Simply_CDN {
 	 * @return void
 	 */
 	public function upload_file( string $current_file_path, string $cdn_path ) {
-		$storage_zone = $this->get_storage_zone();
-
+		$storage_zone   = $this->data->cdn->storage_zone;
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
+
 		ftp_pasv( $ftp_connection, true );
 
 		if ( $ftp_connection ) {
@@ -180,7 +83,7 @@ class Simply_CDN {
 	 * @return bool|string
 	 */
 	public function delete_file( $path ) {
-		$storage_zone = $this->get_storage_zone();
+		$storage_zone = $this->data->cdn->storage_zone;
 
 		$response = wp_remote_request(
 			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path,
@@ -203,34 +106,6 @@ class Simply_CDN {
 			$error_message = $response->get_error_message();
 			error_log( $error_message );
 
-			return false;
-		}
-	}
-
-	/**
-	 * Purge Zone Cache in BunnyCDN pull zone.
-	 *
-	 * @return bool
-	 */
-	public function purge_cache() {
-		$pull_zone = $this->get_pull_zone();
-
-		$response = wp_remote_post(
-			'https://api.bunny.net/pullzone/' . $pull_zone['zone_id'] . '/purgeCache',
-			array(
-				'headers' => array(
-					'AccessKey' => $this->data->cdn->api_key,
-				),
-			)
-		);
-
-		if ( ! is_wp_error( $response ) ) {
-			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
 			return false;
 		}
 	}

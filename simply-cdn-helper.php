@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       Simply CDN helper
  * Plugin URI:        https://patrickposner.dev
  * Description:       A little helper plugin to connect to simplycdn.io
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Patrick Posner
  * Author URI:        https://simplycdn.io
  * License:           GPL-2.0+
@@ -21,10 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SCH_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SCH_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-// localize.
-$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
-load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
-
 // Bootup plugin.
 if ( ! function_exists( 'sch_run_plugin' ) ) {
 	add_action( 'plugins_loaded', 'sch_run_plugin' );
@@ -35,6 +31,11 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 	 * @return void
 	 */
 	function sch_run_plugin() {
+
+		// localize.
+		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
+		load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
+
 		if ( function_exists( 'simply_static_run_plugin' ) ) {
 			// Includes from Simply Static.
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
@@ -46,7 +47,6 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require SCH_PATH . 'inc/plugin-update-checker/plugin-update-checker.php';
 			$updater = Puc_v4_Factory::buildUpdateChecker( 'https://github.com/patrickposner/simply-cdn-helper/', __FILE__, 'simply-cdn-helper' );
 			$updater->setBranch( 'master' );
-			$updater->setAuthentication( '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' );
 
 			// Admin settings.
 			require_once SCH_PATH . 'src/class-sch-admin.php';

@@ -53,7 +53,7 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 		$counter  = 0;
 
 		// Open FTP connection.
-		$storage_zone   = $this->cdn->get_storage_zone();
+		$storage_zone   = $this->data->cdn->storage_zone;
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
 
 		ftp_pasv( $ftp_connection, true );
@@ -113,8 +113,6 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 			}
 		}
 
-		// Clear Pull zone cache.
-		$this->cdn->purge_cache();
 		return true;
 	}
 }
