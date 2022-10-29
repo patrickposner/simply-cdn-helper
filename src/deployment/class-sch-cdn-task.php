@@ -53,13 +53,12 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 		$counter  = 0;
 
 		// Open FTP connection.
-		$storage_zone   = $this->data->cdn->storage_zone;
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
 
 		ftp_pasv( $ftp_connection, true );
 
 		if ( $ftp_connection ) {
-			ftp_login( $ftp_connection, $storage_zone['name'], $this->data->cdn->access_key );
+			ftp_login( $ftp_connection, $this->data->cdn->storage_zone->name, $this->data->cdn->access_key );
 
 			// Set execution time for transfer.
 			set_time_limit( 0 );

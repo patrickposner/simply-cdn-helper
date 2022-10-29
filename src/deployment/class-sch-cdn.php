@@ -52,13 +52,12 @@ class Simply_CDN {
 	 * @return void
 	 */
 	public function upload_file( string $current_file_path, string $cdn_path ) {
-		$storage_zone   = $this->data->cdn->storage_zone;
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
 
 		ftp_pasv( $ftp_connection, true );
 
 		if ( $ftp_connection ) {
-			ftp_login( $ftp_connection, $storage_zone['name'], $this->data->cdn->access_key );
+			ftp_login( $ftp_connection, $this->data->cdn->storage_zone->name, $this->data->cdn->access_key );
 
 			// Set execution time for transfer.
 			set_time_limit( 0 );
@@ -86,7 +85,7 @@ class Simply_CDN {
 		$storage_zone = $this->data->cdn->storage_zone;
 
 		$response = wp_remote_request(
-			'https://storage.bunnycdn.com/' . $storage_zone['name'] . '/' . $path,
+			'https://storage.bunnycdn.com/' . $this->data->cdn->storage_zone->name . '/' . $path,
 			array(
 				'method'  => 'DELETE',
 				'headers' => array( 'AccessKey' => $this->data->cdn->access_key ),
