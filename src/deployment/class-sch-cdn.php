@@ -82,8 +82,6 @@ class Simply_CDN {
 	 * @return bool|string
 	 */
 	public function delete_file( $path ) {
-		$storage_zone = $this->data->cdn->storage_zone;
-
 		$response = wp_remote_request(
 			'https://storage.bunnycdn.com/' . $this->data->cdn->storage_zone->name . '/' . $path,
 			array(

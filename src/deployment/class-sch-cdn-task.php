@@ -110,6 +110,9 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 			if ( $error_file_path ) {
 				$this->cdn->upload_file( $error_file_path, $error_relative_path );
 			}
+
+			// Clear cache.
+			Api::clear_cache();
 		}
 
 		return true;

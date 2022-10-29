@@ -37,6 +37,7 @@ class Deployment_Settings {
 		add_filter( 'simply_static_class_name', array( $this, 'check_class_name' ), 10, 2 );
 		add_action( 'simply_static_delivery_methods', array( $this, 'add_delivery_method' ) );
 		add_action( 'simply_static_delivery_method_description', array( $this, 'add_delivery_method_description' ) );
+		add_action( 'wp_ajax_clear_cache', array( $this, 'clear_cache' ) );
 	}
 
 	/**
@@ -95,5 +96,26 @@ class Deployment_Settings {
 			return 'sch\\' . strtoupper( $task_name ) . '_Task';
 		}
 		return $class_name;
+	}
+
+	/**
+	 * Clear cache via ajax.
+	 *
+	 * @return void
+	 */
+	public function clear_cache() {
+		$nonce = esc_html( $_POST['nonce'] );
+
+		if ( ! wp_verify_nonce( $nonce, 'sch-cache-nonce' ) ) {
+			die();
+		}
+
+		$cdn = Simply_CDN::get_instance();
+		$cdn->purge_cache();
+
+		$response = array( 'success' => true );
+
+		print wp_json_encode( $response );
+		exit;
 	}
 }

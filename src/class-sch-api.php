@@ -46,4 +46,24 @@ class Api {
 			return false;
 		}
 	}
+
+	/**
+	 * Get site data
+	 *
+	 * @return object|bool
+	 */
+	public static function clear_cache() {
+		$token    = get_option( 'sch_token' );
+		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $token . '&clear-cache=true', array() );
+
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }
