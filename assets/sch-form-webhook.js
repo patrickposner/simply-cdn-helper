@@ -34,7 +34,7 @@ function modifyFormAttributes(form) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const allForms = document.querySelectorAll(
-        ".wpcf7 form, .wpcf7-form, .gform_wrapper form, .wpforms-container form"
+        ".wpcf7 form, .wpcf7-form, .gform_wrapper form, .wpforms-container form, .elementor-form"
     );
 
     allForms.forEach((form) => {
