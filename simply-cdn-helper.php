@@ -68,10 +68,8 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
 			require_once SCH_PATH . 'src/deployment/class-sch-deployment-settings.php';
-			require_once SCH_PATH . 'src/deployment/class-sch-cdn-rewrite.php';
 
 			sch\Deployment_Settings::get_instance();
-			sch\Simply_CDN_Rewrite::get_instance();
 		} else {
 			add_action( 'admin_notices', 'sch_show_requirements' );
 		}

@@ -69,8 +69,6 @@ class Admin {
 		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'sch_media_group', 'sch_replace_image_urls', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'sch_media_group', 'sch_replace_html_urls', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
     }
 
 	/**
@@ -143,37 +141,6 @@ class Admin {
 				<div>
 				</div>
 			</div>
-            <div class="wrap">
-                <div>
-                    <p>
-                    <h2><?php esc_html_e( 'Managing Media', 'simply-cdn-helper' ); ?></h2>
-                    </p>
-                    <p>
-						<?php esc_html_e( 'We can replace the URLs to your media files on your WordPress website with the one from the CDN.', 'simply-cdn-helper' ); ?>
-                    </p>
-                    <p>
-	                    <?php esc_html_e( 'This can drastically improve the performance of static exports as Simply Static does not need to copy image files anymore that already exists on your static website.', 'simply-cdn-helper' ); ?>
-                    </p>
-                    <form method="post" action="options.php">
-						<?php settings_fields( 'sch_media_group' ); ?>
-                        <p>
-                            <label for="sch_replace_image_urls">
-                                <input type="checkbox" name="sch_replace_image_urls" value="1" <?php checked(1, get_option('sch_replace_image_urls'), true); ?> />
-	                            <?php esc_html_e( 'Find and replace all image URLs from attachments.', 'simply-cdn-helper' ); ?>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="sch_replace_html_urls">
-                                <input type="checkbox" name="sch_replace_html_urls" value="1" <?php checked(1, get_option('sch_replace_html_urls'), true); ?> />
-			                    <?php esc_html_e( 'Find and replace all image URLs within HTML.', 'simply-cdn-helper' ); ?>
-                            </label>
-                        </p>
-						<?php submit_button(); ?>
-                    </form>
-                </div>
-                <div>
-                </div>
-            </div>
             <div class="wrap">
                 <div>
                     <h2><?php esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>

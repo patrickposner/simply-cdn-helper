@@ -73,37 +73,4 @@ class Simply_CDN {
 			ftp_close( $ftp_connection );
 		}
 	}
-
-	/**
-	 * Delete file from BunnyCDN storage.
-	 *
-	 * @param $path
-	 *
-	 * @return bool|string
-	 */
-	public function delete_file( $path ) {
-		$response = wp_remote_request(
-			'https://storage.bunnycdn.com/' . $this->data->cdn->storage_zone->name . '/' . $path,
-			array(
-				'method'  => 'DELETE',
-				'headers' => array( 'AccessKey' => $this->data->cdn->access_key ),
-			)
-		);
-
-		if ( ! is_wp_error( $response ) ) {
-			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
-				return true;
-			} else {
-				$error_message = wp_remote_retrieve_response_message( $response );
-				error_log( $error_message );
-
-				return false;
-			}
-		} else {
-			$error_message = $response->get_error_message();
-			error_log( $error_message );
-
-			return false;
-		}
-	}
 }
