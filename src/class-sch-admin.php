@@ -47,8 +47,8 @@ class Admin {
 	 * @return void
 	 */
 	public function add_admin_scripts() {
-		wp_enqueue_style( 'sch-admin-style', SCH_URL . '/assets/sch-admin.css', array(), '1.1.1', 'all' );
-		wp_enqueue_script( 'sch-admin', SCH_URL . '/assets/sch-admin.js', array( 'jquery' ), '1.0', true );
+		wp_enqueue_style( 'sch-admin-style', SCH_URL . '/assets/sch-admin.css', array(), '1.0.4', 'all' );
+		wp_enqueue_script( 'sch-admin', SCH_URL . '/assets/sch-admin.js', array( 'jquery' ), '1.0.4', true );
 
 		$args = array(
 			'ajax_url'      => admin_url( 'admin-ajax.php' ),
