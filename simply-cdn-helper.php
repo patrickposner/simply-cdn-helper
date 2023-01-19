@@ -37,6 +37,9 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 		load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
 
 		if ( function_exists( 'simply_static_run_plugin' ) ) {
+			// Maybe upgrade options.
+			sch_maybe_upgrade_options();
+
 			// Includes from Simply Static.
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
@@ -49,25 +52,25 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			$updater->setBranch( 'master' );
 
 			// Admin settings.
-			require_once SCH_PATH . 'src/class-sch-admin.php';
+			require_once SCH_PATH . 'inc/class-sch-admin.php';
 			sch\Admin::get_instance();
 
 			// Api.
-			require_once SCH_PATH . 'src/class-sch-api.php';
+			require_once SCH_PATH . 'inc/class-sch-api.php';
 			sch\Api::get_instance();
 
 			// Cors.
-			require_once SCH_PATH . 'src/class-sch-cors.php';
+			require_once SCH_PATH . 'inc/class-sch-cors.php';
 			sch\Cors::get_instance();
 
 			// Form webhook.
-			require_once SCH_PATH . 'src/class-sch-form-webhook.php';
+			require_once SCH_PATH . 'inc/class-sch-form-webhook.php';
 			sch\Form_Webhook::get_instance();
 
 			// CDN.
-			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
-			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
-			require_once SCH_PATH . 'src/deployment/class-sch-deployment-settings.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-cdn-task.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-cdn.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-deployment-settings.php';
 
 			sch\Deployment_Settings::get_instance();
 		} else {
@@ -75,6 +78,38 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 		}
 	}
 }
+
+function sch_maybe_upgrade_options() {
+	$options = get_option( 'simply-static' );
+
+	// Getting old options.
+	$old_token      = get_option( 'sch_token' );
+	$old_static_url = get_option( 'sch_static_url' );
+	$old_404_path   = get_option( 'sch_404_path' );
+
+
+	if ( ! empty( $options ) && ! empty( $old_token ) ) {
+		if ( ! empty( $old_token ) ) {
+			$options['security-token'] = $old_token;
+		}
+
+		if ( ! empty( $old_static_url ) ) {
+			$options['static-url'] = $old_static_url;
+		}
+
+		if ( ! empty( $old_404_path ) ) {
+			$options['404-path'] = $old_404_path;
+		}
+
+		// Update and delete old options.
+		update_option('simply-static', $options );
+
+		delete_option('sch_token');
+		delete_option('sch_static_url');
+		delete_option('sch_404_path');
+	}
+}
+
 
 /**
  * Show conditional message for requirements.

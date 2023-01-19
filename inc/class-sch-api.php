@@ -33,8 +33,8 @@ class Api {
 	 * @return object|bool
 	 */
 	public static function get_data() {
-		$token    = get_option( 'sch_token' );
-		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $token, array() );
+		$options  = get_option( 'simply-static' );
+		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $options['security-token'], array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {
@@ -53,8 +53,8 @@ class Api {
 	 * @return object|bool
 	 */
 	public static function clear_cache() {
-		$token    = get_option( 'sch_token' );
-		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $token . '&clear-cache=true', array() );
+		$options  = get_option( 'simply-static' );
+		$response = wp_remote_get( 'https://simplycdn.io?security-token=' . $options['security-token'] . '&clear-cache=true', array() );
 
 		if ( ! is_wp_error( $response ) ) {
 			if ( 200 === wp_remote_retrieve_response_code( $response ) ) {

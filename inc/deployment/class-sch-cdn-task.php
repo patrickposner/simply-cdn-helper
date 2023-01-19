@@ -26,10 +26,10 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 
 		$options = Simply_Static\Options::instance();
 
-		$this->cdn        = Simply_CDN::get_instance();
-		$this->data       = Api::get_data();
-		$this->options    = $options;
-		$this->temp_dir   = $options->get_archive_dir();
+		$this->cdn      = Simply_CDN::get_instance();
+		$this->data     = Api::get_data();
+		$this->options  = $options;
+		$this->temp_dir = $options->get_archive_dir();
 	}
 
 	/**
@@ -68,15 +68,15 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 				if ( ! realpath( $file_name ) ) {
 					continue;
 				}
-	
+
 				$relative_path = str_replace( $this->temp_dir, $cdn_path, realpath( $file_name ) );
 				$ftp_upload    = ftp_put( $ftp_connection, $relative_path, realpath( $file_name ), FTP_BINARY );
 
 				if ( ! $ftp_upload ) {
-					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ),  realpath( $file_name ) ) );
+					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ), realpath( $file_name ) ) );
 				}
 
-				$counter++;
+				$counter ++;
 			}
 		}
 
@@ -87,7 +87,8 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 		$this->save_status_message( $message );
 
 		// Maybe add 404.
-		$cdn_404_path = get_option( 'sch_404_path' );
+		$options      = get_option( 'simply-static' );
+		$cdn_404_path = $options['404-path'];
 
 		if ( ! empty( $cdn_404_path ) && realpath( $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html' ) ) {
 
