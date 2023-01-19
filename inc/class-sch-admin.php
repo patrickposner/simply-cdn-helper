@@ -38,10 +38,29 @@ class Admin {
 		add_action( 'simply_static_settings_view_form', array( $this, 'output_settings_form' ), 10 );
 		add_filter( 'simply_static_options', array( $this, 'add_options' ) );
 
+        // Changing the top links.
+		remove_action( 'simply_static_admin_info_links', array( Plugin::instance(), 'add_info_links' ) );
+		add_action( 'simply_static_admin_info_links', array( $this, 'add_info_links' ) );
+
 		// Only include if Simply Static Pro is not installed.
 		if ( ! class_exists( '\simply_static_pro\Build_Settings' ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
 		}
+	}
+
+	/**
+	 * Add information links in admin header.
+	 *
+	 * @return void
+	 */
+	public function add_info_links( $info_text ) {
+		ob_start();
+		?>
+        <a href="https://simplycdn.io/documentation/" target="_blank"><?php esc_html_e('Documentation', 'simply-cdn-helper'); ?></a>
+        <a href="https://simplycdn.io/dashboard/" target="_blank"><?php esc_html_e('Dashboard', 'simply-cdn-helper'); ?></a>
+		<?php
+		$info_text = apply_filters( 'simply_static_info_links', ob_get_clean() );
+		echo $info_text;
 	}
 
 	/**
