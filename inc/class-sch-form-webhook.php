@@ -35,7 +35,7 @@ class Form_Webhook {
 	public function __construct() {
 		$options = get_option( 'simply-static' );
 
-		if ( isset( $options['use-forms'] ) && 'no' === $options['use-forms'] ) {
+		if ( isset( $options['use-forms-hook'] ) && 'no' === $options['use-forms-hook'] ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'add_webhook_scripts' ) );
 			add_filter( 'wpcf7_load_js', '__return_false' );
 			add_filter( 'gform_form_args', array( $this, 'disable_ajax' ) );
@@ -60,6 +60,7 @@ class Form_Webhook {
 	 */
 	public function disable_ajax( $args ) {
 		$args['ajax'] = false;
+
 		return $args;
 	}
 }

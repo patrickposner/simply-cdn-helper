@@ -2,6 +2,8 @@
 
 namespace sch;
 
+use Simply_Static\Plugin;
+
 /**
  * Class to handle admin settings
  */
@@ -87,6 +89,13 @@ class Admin {
 			$settings = str_replace( '[404_PATH]', '', $settings );
 		}
 
+		if ( $options['use-forms-hook'] ) {
+			$settings = str_replace( '[USE_FORMS_WEBHOOK]', 'checked', $settings );
+		} else {
+			$settings = str_replace( '[USE_FORMS_WEBHOOK]', '', $settings );
+		}
+
+
 		echo $settings;
 	}
 
@@ -98,9 +107,10 @@ class Admin {
 	 * @return array
 	 */
 	public function add_options( $options ) {
-		$ss = \Simply_Static\Plugin::instance();
+		$ss = Plugin::instance();
 
 		$options['security-token'] = $ss->fetch_post_value( 'security-token' );
+		$options['use-forms-hook'] = $ss->fetch_post_value( 'use-forms-hook' );
 		$options['static-url']     = $ss->fetch_post_value( 'static-url' );
 		$options['404-path']       = $ss->fetch_post_value( '404-path' );
 

@@ -1,5 +1,6 @@
 <div id='simplycdn' class='tab-pane'>
-	<h3 class="title"><?php esc_html_e( 'Simply CDN', 'simply-static-pro' ); ?></h3>
+	<h3 class="title">
+		<?php esc_html_e( 'Simply CDN', 'simply-static-pro' ); ?></h3>
 	<table class='form-table'>
 		<tbody>
 		<tr>
@@ -40,6 +41,17 @@
 				</div>
 			</td>
 		</tr>
+        <tr>
+            <th>
+                <label for='use-forms-hook'><?php _e( "Use Forms integration", 'simply-cdn-helper' ); ?></label>
+            </th>
+            <td>
+                <input type="checkbox" name="use-forms-hook" id="use-forms-hook" [USE_FORMS_WEBHOOK] />
+                <p>
+		            <?php esc_html_e( "We automatically send you submissions of your forms via e-mail from message@simplystatic.io", 'simply-cdn-helper' ); ?>
+                </p>
+            </td>
+        </tr>
         <tr>
             <th>
                 <label for='clear.cache'><?php esc_html_e( 'Clear Cache', 'simply-cdn-helper' ); ?></label>

@@ -108,6 +108,13 @@ function sch_maybe_upgrade_options() {
 		delete_option('sch_static_url');
 		delete_option('sch_404_path');
 	}
+
+	// Activate forms integration
+
+	if( ! isset( $options['use-forms-hook'] ) ) {
+		$options['use-forms-hook'] = true;
+		update_option('simply-static', $options );
+	}
 }
 
 
