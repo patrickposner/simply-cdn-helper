@@ -38,7 +38,7 @@ class Admin {
 		add_action( 'simply_static_settings_view_form', array( $this, 'output_settings_form' ), 10 );
 		add_filter( 'simply_static_options', array( $this, 'add_options' ) );
 
-        // Changing the top links.
+		// Changing the top links.
 		remove_action( 'simply_static_admin_info_links', array( Plugin::instance(), 'add_info_links' ) );
 		add_action( 'simply_static_admin_info_links', array( $this, 'add_info_links' ) );
 
@@ -56,8 +56,10 @@ class Admin {
 	public function add_info_links( $info_text ) {
 		ob_start();
 		?>
-        <a href="https://simplycdn.io/documentation/" target="_blank"><?php esc_html_e('Documentation', 'simply-cdn-helper'); ?></a>
-        <a href="https://simplycdn.io/dashboard/" target="_blank"><?php esc_html_e('Dashboard', 'simply-cdn-helper'); ?></a>
+        <a href="https://simplycdn.io/documentation/"
+           target="_blank"><?php esc_html_e( 'Documentation', 'simply-cdn-helper' ); ?></a>
+        <a href="https://simplycdn.io/dashboard/"
+           target="_blank"><?php esc_html_e( 'Dashboard', 'simply-cdn-helper' ); ?></a>
 		<?php
 		$info_text = apply_filters( 'simply_static_info_links', ob_get_clean() );
 		echo $info_text;
@@ -92,6 +94,8 @@ class Admin {
 		// Replacing placeholders with values from options.
 		if ( ! empty( $options['security-token'] ) ) {
 			$settings = str_replace( '[SECURITY_TOKEN]', $options['security-token'], $settings );
+			$this->set_default_configuration();
+
 		} else {
 			$settings = str_replace( '[SECURITY_TOKEN]', '', $settings );
 		}
@@ -116,6 +120,33 @@ class Admin {
 
 
 		echo $settings;
+	}
+
+	/**
+     * Set default configuration for Simply Static on saving security token.
+     *
+	 * @return void
+	 */
+	public function set_default_configuration(): void {
+		$options = get_option( 'simply-static' );
+
+		if ( ! $options['defaults_set'] ) {
+			$data = Api::get_data();
+
+			$static_url = wp_parse_url( $data->cdn->url );
+
+			$options['destination_url_type'] = 'absolute';
+			$options['destination_scheme']   = 'https://';
+			$options['destination_host']     = $static_url['host'];
+			$options['static-url']           = $data->cdn->url;
+			$options['delivery_method']      = 'simply-cdn';
+			$options['use-forms-hook']       = 'on';
+			$options['force_replace_url']    = 'on';
+			$options['use_cron']             = 'on';
+			$options['defaults_set']         = true;
+
+			update_option( 'simply-static', $options );
+		}
 	}
 
 	/**
