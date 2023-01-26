@@ -3,7 +3,7 @@
   "description": "A helper plugin to host on SimplyCDN.",
   "type": "wordpress-plugin",
   "require": {
-    "voku/httpful": "^2.4"
+    "voku/httpful": "^2.4.7"
   },
   "license": "gpl",
   "authors": [

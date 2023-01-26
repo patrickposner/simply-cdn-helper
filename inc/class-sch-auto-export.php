@@ -9,12 +9,6 @@ namespace sch;
 use Simply_Static;
 
 /**
- * HTTP Client for extracting elements from dom.
- */
-
-use voku\Httpful\Client;
-
-/**
  * Class to handle automatic exports.
  */
 class Auto_Export {
