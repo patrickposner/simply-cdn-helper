@@ -7,6 +7,7 @@ namespace sch;
  */
 
 use Simply_Static;
+use voku\helper\HtmlDomParser;
 
 /**
  * Class to handle automatic exports.
@@ -122,33 +123,19 @@ class Auto_Export {
 	 *
 	 * @return array
 	 */
-	public function get_related_attachements( $single_id ) {
-		$options       = get_option( 'simply-static' );
+	public function get_related_attachements( $single_id ): array {
 		$related_files = array();
 
 		// Get all images from that post.
+		$response = Simply_Static\Url_Fetcher::remote_get( get_permalink( $single_id ) );
 
-		// Basic Auth enabled?
-		if ( isset( $options['http_basic_auth_digest'] ) && ! empty( $options['http_basic_auth_digest'] ) ) {
-			$auth_params = explode( ':', base64_decode( $options['http_basic_auth_digest'] ) );
-			$response    = \Httpful\Client::get_request( get_permalink( $single_id ) )
-			                              ->expectsHtml()
-			                              ->disableStrictSSL()
-			                              ->withBasicAuth( $auth_params[0], $auth_params[1] )
-			                              ->send();
+		if ( ! is_wp_error( $response ) ) {
+			$dom = HtmlDomParser::str_get_html( wp_remote_retrieve_body( $response ) );
 
-		} else {
-			$response = \Httpful\Client::get_request( get_permalink( $single_id ) )
-			                           ->expectsHtml()
-			                           ->disableStrictSSL()
-			                           ->send();
-		}
-
-		$dom = $response->getRawBody();
-
-		foreach ( $dom->find( 'img' ) as $img ) {
-			$related_files[] = $img->src;
-			$related_files[] = $img->srcset;
+			foreach ( $dom->find( 'img' ) as $img ) {
+				$related_files[] = $img->getAttribute( 'src' );
+				$related_files[] = $img->getAttribute( 'srcset' );
+			}
 		}
 
 		return $related_files;
