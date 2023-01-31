@@ -129,31 +129,51 @@ class Admin {
 	}
 
 	/**
-     * Set default configuration for Simply Static on saving security token.
-     *
+	 * Set default configuration for Simply Static on saving security token.
+	 *
 	 * @return void
 	 */
 	public function set_default_configuration(): void {
 		$options = get_option( 'simply-static' );
 
-		if ( ! $options['defaults_set'] ) {
+		if ( ! $options ) {
+			$data    = Api::get_data();
+			$options = array();
+
+			if ( $data ) {
+				$static_url = wp_parse_url( $data->cdn->url );
+
+				$options['destination_url_type'] = 'absolute';
+				$options['destination_scheme']   = 'https://';
+				$options['destination_host']     = $static_url['host'];
+				$options['static-url']           = $data->cdn->url;
+				$options['delivery_method']      = 'simply-cdn';
+				$options['use-forms-hook']       = 'on';
+				$options['use-auto-publish']     = 'off';
+				$options['force_replace_url']    = 'on';
+				$options['use_cron']             = 'on';
+				$options['defaults_set']         = true;
+			}
+		} elseif ( ! $options['defaults_set'] ) {
 			$data = Api::get_data();
 
-			$static_url = wp_parse_url( $data->cdn->url );
+			if ( $data ) {
+				$static_url = wp_parse_url( $data->cdn->url );
 
-			$options['destination_url_type'] = 'absolute';
-			$options['destination_scheme']   = 'https://';
-			$options['destination_host']     = $static_url['host'];
-			$options['static-url']           = $data->cdn->url;
-			$options['delivery_method']      = 'simply-cdn';
-			$options['use-forms-hook']       = 'on';
-			$options['use-auto-publish']     = 'off';
-			$options['force_replace_url']    = 'on';
-			$options['use_cron']             = 'on';
-			$options['defaults_set']         = true;
-
-			update_option( 'simply-static', $options );
+				$options['destination_url_type'] = 'absolute';
+				$options['destination_scheme']   = 'https://';
+				$options['destination_host']     = $static_url['host'];
+				$options['static-url']           = $data->cdn->url;
+				$options['delivery_method']      = 'simply-cdn';
+				$options['use-forms-hook']       = 'on';
+				$options['use-auto-publish']     = 'off';
+				$options['force_replace_url']    = 'on';
+				$options['use_cron']             = 'on';
+				$options['defaults_set']         = true;
+			}
 		}
+
+		update_option( 'simply-static', $options );
 	}
 
 	/**
@@ -166,11 +186,11 @@ class Admin {
 	public function add_options( $options ) {
 		$ss = Plugin::instance();
 
-		$options['security-token'] = $ss->fetch_post_value( 'security-token' );
-		$options['use-forms-hook'] = $ss->fetch_post_value( 'use-forms-hook' );
+		$options['security-token']   = $ss->fetch_post_value( 'security-token' );
+		$options['use-forms-hook']   = $ss->fetch_post_value( 'use-forms-hook' );
 		$options['use-auto-publish'] = $ss->fetch_post_value( 'use-auto-publish' );
-		$options['static-url']     = $ss->fetch_post_value( 'static-url' );
-		$options['404-path']       = $ss->fetch_post_value( '404-path' );
+		$options['static-url']       = $ss->fetch_post_value( 'static-url' );
+		$options['404-path']         = $ss->fetch_post_value( '404-path' );
 
 		return $options;
 	}
