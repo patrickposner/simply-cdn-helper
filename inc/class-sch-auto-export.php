@@ -38,12 +38,16 @@ class Auto_Export {
 	 * Constructor for Auto_Export.
 	 */
 	public function __construct() {
-		add_action( 'save_post', array( $this, 'run_single_export' ) );
-		add_filter( 'ss_static_pages', array( $this, 'filter_static_pages' ), 10, 2 );
-		add_filter( 'ss_remaining_pages', array( $this, 'filter_remaining_pages' ), 10, 2 );
-		add_filter( 'ss_total_pages', array( $this, 'filter_total_pages' ) );
-		add_filter( 'ss_total_pages_log', array( $this, 'filter_total_pages_log' ) );
-		add_action( 'ss_after_cleanup', array( $this, 'clear_single' ) );
+		$options = get_option( 'simply-static' );
+
+		if ( 'on' === $options['use-auto-publish'] ) {
+			add_action( 'save_post', array( $this, 'run_single_export' ) );
+			add_filter( 'ss_static_pages', array( $this, 'filter_static_pages' ), 10, 2 );
+			add_filter( 'ss_remaining_pages', array( $this, 'filter_remaining_pages' ), 10, 2 );
+			add_filter( 'ss_total_pages', array( $this, 'filter_total_pages' ) );
+			add_filter( 'ss_total_pages_log', array( $this, 'filter_total_pages_log' ) );
+			add_action( 'ss_after_cleanup', array( $this, 'clear_single' ) );
+		}
 	}
 
 	/**

@@ -55,6 +55,17 @@
         </tr>
         <tr>
             <th>
+                <label for='use-auto-publish'><?php _e( "Use Auto-Publish", 'simply-cdn-helper' ); ?></label>
+            </th>
+            <td>
+                <input type="checkbox" name="use-auto-publish" id="use-auto-publish" [USE_AUTO_PUBLISH]/>
+                <p>
+			        <?php esc_html_e( "Automatically publish a post or page to the static site on saving it.", 'simply-cdn-helper' ); ?>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th>
                 <label for='clear.cache'><?php esc_html_e( 'Clear Cache', 'simply-cdn-helper' ); ?></label>
             </th>
             <td>

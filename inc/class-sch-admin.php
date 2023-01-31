@@ -118,6 +118,12 @@ class Admin {
 			$settings = str_replace( '[USE_FORMS_WEBHOOK]', '', $settings );
 		}
 
+		if ( $options['use-auto-publish'] ) {
+			$settings = str_replace( '[USE_AUTO_PUBLISH]', 'checked', $settings );
+		} else {
+			$settings = str_replace( '[USE_AUTO_PUBLISH]', '', $settings );
+		}
+
 
 		echo $settings;
 	}
@@ -141,6 +147,7 @@ class Admin {
 			$options['static-url']           = $data->cdn->url;
 			$options['delivery_method']      = 'simply-cdn';
 			$options['use-forms-hook']       = 'on';
+			$options['use-auto-publish']     = 'off';
 			$options['force_replace_url']    = 'on';
 			$options['use_cron']             = 'on';
 			$options['defaults_set']         = true;
@@ -161,9 +168,9 @@ class Admin {
 
 		$options['security-token'] = $ss->fetch_post_value( 'security-token' );
 		$options['use-forms-hook'] = $ss->fetch_post_value( 'use-forms-hook' );
+		$options['use-auto-publish'] = $ss->fetch_post_value( 'use-auto-publish' );
 		$options['static-url']     = $ss->fetch_post_value( 'static-url' );
 		$options['404-path']       = $ss->fetch_post_value( '404-path' );
-
 
 		return $options;
 	}
