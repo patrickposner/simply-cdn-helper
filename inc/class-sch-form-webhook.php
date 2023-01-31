@@ -14,7 +14,7 @@ class Form_Webhook {
 	private static $instance = null;
 
 	/**
-	 * Returns instance of Cors_Settings.
+	 * Returns instance of Form_Webhook.
 	 *
 	 * @return object
 	 */

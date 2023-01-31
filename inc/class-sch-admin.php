@@ -177,7 +177,7 @@ class Admin {
 	}
 
 	/**
-	 * Filter the Simply Static options and add pro options.
+	 * Filter the Simply Static options.
 	 *
 	 * @param array $options array of options.
 	 *
