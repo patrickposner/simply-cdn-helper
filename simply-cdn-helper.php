@@ -72,7 +72,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			sch\Auto_Export::get_instance();
 
 			// CDN.
-			require_once SCH_PATH . 'inc/deployment/class-sch-cdn-task.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-simplycdn-task.php';
 			require_once SCH_PATH . 'inc/deployment/class-sch-cdn.php';
 			require_once SCH_PATH . 'inc/deployment/class-sch-deployment-settings.php';
 
