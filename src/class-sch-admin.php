@@ -66,9 +66,21 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
-		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'sch_options_group', 'sch_token', array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => null
+		) );
+		register_setting( 'sch_cdn_group', 'sch_static_url', array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => null
+		) );
+		register_setting( 'sch_cdn_group', 'sch_404_path', array(
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+			'default'           => null
+		) );
 
 		register_setting( 'sch_forms_group', 'sch_use_forms', array(
 			'type'              => 'string',
@@ -87,7 +99,7 @@ class Admin {
 			),
 			'default'           => false
 		) );
-    }
+	}
 
 	public function sanitize_checkbox( $input ) {
 		return isset( $input );
@@ -99,7 +111,10 @@ class Admin {
 	 * @return void
 	 */
 	public function register_menu_page() {
-		add_submenu_page( 'simply-static', esc_html__( 'Simply CDN', 'simply-cdn-helper' ), esc_html__( 'Simply CDN', 'simply-cdn-helper' ), 'manage_options', 'simply-static_cdn', array( $this, 'render_options' ), 10 );
+		add_submenu_page( 'simply-static', esc_html__( 'Simply CDN', 'simply-cdn-helper' ), esc_html__( 'Simply CDN', 'simply-cdn-helper' ), 'manage_options', 'simply-static_cdn', array(
+			$this,
+			'render_options'
+		), 10 );
 	}
 
 	/**
@@ -111,7 +126,7 @@ class Admin {
 		$data = Api::get_data();
 
 		?>
-		<div class="sch-container">
+        <div class="sch-container">
             <h1><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></h1>
             <div class="wrap">
                 <div>
@@ -140,94 +155,96 @@ class Admin {
                 <div>
                 </div>
             </div>
-            <div class="wrap">
-                <div>
-                    <p>
-                    <h2><?php esc_html_e( 'Configure your static website', 'simply-cdn-helper' ); ?></h2>
-                    </p>
-                    <p>
-						<?php esc_html_e( 'Once your website is connected you can configure all settings related to the CDN here. This includes settings up redirects, proxy URLs and setting up a custom 404 error page.', 'simply-cdn-helper' ); ?>
-                    </p>
-                    <form method="post" action="options.php">
-						<?php settings_fields( 'sch_cdn_group' ); ?>
+			<?php if ( $data ) : ?>
+                <div class="wrap">
+                    <div>
                         <p>
-                            <label for="sch_static_url"><?php esc_html_e( 'Static URL', 'simply-cdn-helper' ); ?></label><br>
-                            <input type="url" id="sch_static_url" name="sch_static_url"
-                                   value="<?php echo esc_html( get_option( 'sch_static_url' ) ); ?>"/>
-                            <small><?php esc_html_e( 'Once you change this setting, your static website will be available under the new domain. Make sure you set your CNAME record before you change this setting.', 'simply-cdn-helper' ); ?></small>
+                        <h2><?php esc_html_e( 'Configure your static website', 'simply-cdn-helper' ); ?></h2>
                         </p>
                         <p>
-                            <label for="sch_404_path"><?php esc_html_e( 'Relative path to your 404 page', 'simply-cdn-helper' ); ?></label><br>
-                            <input type="text" id="sch_404_path" name="sch_404_path"
-                                   value="<?php echo esc_html( get_option( 'sch_404_path' ) ); ?>"/>
+							<?php esc_html_e( 'Once your website is connected you can configure all settings related to the CDN here. This includes settings up redirects, proxy URLs and setting up a custom 404 error page.', 'simply-cdn-helper' ); ?>
                         </p>
-						<?php submit_button(); ?>
-                    </form>
+                        <form method="post" action="options.php">
+							<?php settings_fields( 'sch_cdn_group' ); ?>
+                            <p>
+                                <label for="sch_static_url"><?php esc_html_e( 'Static URL', 'simply-cdn-helper' ); ?></label><br>
+                                <input type="url" id="sch_static_url" name="sch_static_url"
+                                       value="<?php echo esc_html( get_option( 'sch_static_url' ) ); ?>"/>
+                                <small><?php esc_html_e( 'Once you change this setting, your static website will be available under the new domain. Make sure you set your CNAME record before you change this setting.', 'simply-cdn-helper' ); ?></small>
+                            </p>
+                            <p>
+                                <label for="sch_404_path"><?php esc_html_e( 'Relative path to your 404 page', 'simply-cdn-helper' ); ?></label><br>
+                                <input type="text" id="sch_404_path" name="sch_404_path"
+                                       value="<?php echo esc_html( get_option( 'sch_404_path' ) ); ?>"/>
+                            </p>
+							<?php submit_button(); ?>
+                        </form>
+                    </div>
+                    <div>
+                    </div>
                 </div>
-                <div>
-                </div>
-            </div>
-            <div class="wrap">
-                <div>
-                    <p>
-                    <h2><?php esc_html_e( 'Forms integration', 'simply-cdn-helper' ); ?></h2>
-                    </p>
-                    <p>
-						<?php esc_html_e( 'We automatically send form submissions to the configured e-mail address of your project from message@simplycdn.io. Make sure to add your form token as a hidden field to each form of your website.', 'simply-cdn-helper' ); ?>
-                    </p>
-                    <p>
-                        <b><?php esc_html_e( 'Your form token: ', 'simply-cdn-helper' ); ?></b><?php echo esc_html( $data->cdn->form_token ); ?>
-                    </p>
-                    <form method="post" action="options.php">
-						<?php settings_fields( 'sch_forms_group' ); ?>
+                <div class="wrap">
+                    <div>
                         <p>
-                            <label for="sch_use_forms">
-                                <input type="checkbox" name="sch_use_forms"
-                                       value="1" <?php checked( 1, get_option( 'sch_use_forms' ), true ); ?> />
-								<?php esc_html_e( 'Use Forms integration', 'simply-cdn-helper' ); ?>
-                            </label>
+                        <h2><?php esc_html_e( 'Forms integration', 'simply-cdn-helper' ); ?></h2>
                         </p>
-						<?php submit_button(); ?>
-                    </form>
-                </div>
-                <div>
-                </div>
-            </div>
-            <div class="wrap">
-                <div>
-                    <p>
-                    <h2><?php esc_html_e( 'Automation', 'simply-cdn-helper' ); ?></h2>
-                    </p>
-                    <p>
-						<?php esc_html_e( 'Automatically updates a post/page on your static website once you saved it in WordPress.', 'simply-cdn-helper' ); ?>
-                    </p>
-                    <form method="post" action="options.php">
-						<?php settings_fields( 'sch_automation_group' ); ?>
                         <p>
-                            <label for="sch_use_auto_publish">
-                                <input type="checkbox" name="sch_use_auto_publish"
-                                       value="1" <?php checked( 1, get_option( 'sch_use_auto_publish' ), true ); ?> />
-								<?php esc_html_e( 'Use Auto-Publish', 'simply-cdn-helper' ); ?>
-                            </label>
+							<?php esc_html_e( 'We automatically send form submissions to the configured e-mail address of your project from message@simplycdn.io. Make sure to add your form token as a hidden field to each form of your website.', 'simply-cdn-helper' ); ?>
                         </p>
-						<?php submit_button(); ?>
-                    </form>
+                        <p>
+                            <b><?php esc_html_e( 'Your form token: ', 'simply-cdn-helper' ); ?></b><?php echo esc_html( $data->cdn->form_token ); ?>
+                        </p>
+                        <form method="post" action="options.php">
+							<?php settings_fields( 'sch_forms_group' ); ?>
+                            <p>
+                                <label for="sch_use_forms">
+                                    <input type="checkbox" name="sch_use_forms"
+                                           value="1" <?php checked( 1, get_option( 'sch_use_forms' ), true ); ?> />
+									<?php esc_html_e( 'Use Forms integration', 'simply-cdn-helper' ); ?>
+                                </label>
+                            </p>
+							<?php submit_button(); ?>
+                        </form>
+                    </div>
+                    <div>
+                    </div>
                 </div>
-                <div>
+                <div class="wrap">
+                    <div>
+                        <p>
+                        <h2><?php esc_html_e( 'Automation', 'simply-cdn-helper' ); ?></h2>
+                        </p>
+                        <p>
+							<?php esc_html_e( 'Automatically updates a post/page on your static website once you saved it in WordPress.', 'simply-cdn-helper' ); ?>
+                        </p>
+                        <form method="post" action="options.php">
+							<?php settings_fields( 'sch_automation_group' ); ?>
+                            <p>
+                                <label for="sch_use_auto_publish">
+                                    <input type="checkbox" name="sch_use_auto_publish"
+                                           value="1" <?php checked( 1, get_option( 'sch_use_auto_publish' ), true ); ?> />
+									<?php esc_html_e( 'Use Auto-Publish', 'simply-cdn-helper' ); ?>
+                                </label>
+                            </p>
+							<?php submit_button(); ?>
+                        </form>
+                    </div>
+                    <div>
+                    </div>
                 </div>
-            </div>
-            <div class="wrap">
-                <div>
-                    <h2><?php esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>
-					<?php esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-cdn-helper' ); ?>
-                    <p>
+                <div class="wrap">
+                    <div>
+                        <h2><?php esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>
+						<?php esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-cdn-helper' ); ?>
+                        <p>
                         <span class="button-secondary button sch-secondary-button"
                               id="sch-clear-cache"><?php esc_html_e( 'Clear Cache', 'simply-cdn-helper' ); ?></span>
-                    </p>
+                        </p>
+                    </div>
+                    <div>
+                    </div>
                 </div>
-                <div>
-                </div>
-            </div>
+			<?php endif; ?>
         </div>
 		<?php
 	}
@@ -236,6 +253,7 @@ class Admin {
 	 * Add admin bar menu to visit static website.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
+	 *
 	 * @return void
 	 */
 	public function add_admin_bar_menu( $admin_bar ) {
@@ -266,7 +284,7 @@ class Admin {
 					'group'  => null,
 					'title'  => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					'href'   => $static_url,
-					'meta' => array(
+					'meta'   => array(
 						'title' => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					),
 				)
