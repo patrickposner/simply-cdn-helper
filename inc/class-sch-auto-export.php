@@ -38,9 +38,9 @@ class Auto_Export {
 	 * Constructor for Auto_Export.
 	 */
 	public function __construct() {
-		$options = get_option( 'simply-static' );
+		$use_auto_publish = get_option( 'sch_use_auto_publish' );
 
-		if ( 'on' === $options['use-auto-publish'] ) {
+		if ( ! empty( $use_auto_publish ) ) {
 			add_action( 'save_post', array( $this, 'run_single_export' ) );
 			add_filter( 'ss_static_pages', array( $this, 'filter_static_pages' ), 10, 2 );
 			add_filter( 'ss_remaining_pages', array( $this, 'filter_remaining_pages' ), 10, 2 );
@@ -58,23 +58,27 @@ class Auto_Export {
 	 * @return void
 	 */
 	public function run_single_export( $post_id ) {
-		$additional_urls = apply_filters( 'ssp_single_export_additional_urls', array_merge( $this->get_related_urls( $post_id ), $this->get_related_attachements( $post_id ) ) );
+		$current_status = get_post_status( $post_id );
 
-		// Update option for using a single post.
-		update_option( 'simply-static-use-single', $post_id );
+		if ( 'publish' === $current_status ) {
+			$additional_urls = apply_filters( 'ssp_single_export_additional_urls', array_merge( $this->get_related_urls( $post_id ), $this->get_related_attachements( $post_id ) ) );
 
-		// Clear records before run the export.
-		Simply_Static\Page::query()->delete_all();
+			// Update option for using a single post.
+			update_option( 'simply-static-use-single', $post_id );
 
-		// Add URls for static export.
-		$this->add_url( $post_id );
-		$this->add_additional_urls( $additional_urls, $post_id );
+			// Clear records before run the export.
+			Simply_Static\Page::query()->delete_all();
 
-		do_action( 'sch_before_run_single' );
+			// Add URls for static export.
+			$this->add_url( $post_id );
+			$this->add_additional_urls( $additional_urls, $post_id );
 
-		// Start static export.
-		$ss = Simply_Static\Plugin::instance();
-		$ss->run_static_export();
+			do_action( 'sch_before_run_single' );
+
+			// Start static export.
+			$ss = Simply_Static\Plugin::instance();
+			$ss->run_static_export();
+		}
 	}
 
 	/**

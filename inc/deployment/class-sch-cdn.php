@@ -66,7 +66,7 @@ class Simply_CDN {
 			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_BINARY );
 
 			if ( ! $ftp_upload ) {
-				error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ), $current_file_path ) );
+				error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
 			}
 
 			// Close connection.

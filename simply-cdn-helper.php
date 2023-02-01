@@ -37,9 +37,6 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 		load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
 
 		if ( function_exists( 'simply_static_run_plugin' ) ) {
-			// Maybe upgrade options.
-			sch_maybe_upgrade_options();
-
 			// Includes from Simply Static.
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-task.php';
 			require_once SIMPLY_STATIC_PATH . 'src/tasks/class-ss-fetch-urls-task.php';
@@ -72,55 +69,17 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			sch\Auto_Export::get_instance();
 
 			// CDN.
-			require_once SCH_PATH . 'inc/deployment/class-sch-simplycdn-task.php';
-			require_once SCH_PATH . 'inc/deployment/class-sch-cdn.php';
 			require_once SCH_PATH . 'inc/deployment/class-sch-deployment-settings.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-cdn.php';
+			require_once SCH_PATH . 'inc/deployment/class-sch-task.php';
 
 			sch\Deployment_Settings::get_instance();
+
 		} else {
 			add_action( 'admin_notices', 'sch_show_requirements' );
 		}
 	}
 }
-
-function sch_maybe_upgrade_options() {
-	$options = get_option( 'simply-static' );
-
-	// Getting old options.
-	$old_token      = get_option( 'sch_token' );
-	$old_static_url = get_option( 'sch_static_url' );
-	$old_404_path   = get_option( 'sch_404_path' );
-
-
-	if ( ! empty( $options ) && ! empty( $old_token ) ) {
-		if ( ! empty( $old_token ) ) {
-			$options['security-token'] = $old_token;
-		}
-
-		if ( ! empty( $old_static_url ) ) {
-			$options['static-url'] = $old_static_url;
-		}
-
-		if ( ! empty( $old_404_path ) ) {
-			$options['404-path'] = $old_404_path;
-		}
-
-		// Update and delete old options.
-		update_option('simply-static', $options );
-
-		delete_option('sch_token');
-		delete_option('sch_static_url');
-		delete_option('sch_404_path');
-	}
-
-	// Activate forms integration
-
-	if( ! isset( $options['use-forms-hook'] ) ) {
-		$options['use-forms-hook'] = true;
-		update_option('simply-static', $options );
-	}
-}
-
 
 /**
  * Show conditional message for requirements.
