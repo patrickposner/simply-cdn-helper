@@ -7,13 +7,13 @@ use Simply_Static;
 /**
  * Class which handles GitHub commits.
  */
-class Simply_Cdn_Task extends Simply_Static\Task {
+class Simplycdn_Task extends Simply_Static\Task {
 	/**
 	 * The task name.
 	 *
 	 * @var string
 	 */
-	protected static $task_name = 'simply_cdn';
+	protected static $task_name = 'simplycdn';
 	private $cdn;
 	private $data;
 	private $temp_dir;

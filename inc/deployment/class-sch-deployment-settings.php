@@ -33,10 +33,10 @@ class Deployment_Settings {
 	 * Constructor for Deployment_Settings.
 	 */
 	public function __construct() {
-		add_filter( 'simplystatic.archive_creation_job.task_list', array( $this, 'modify_task_list' ), 99, 2 );
-		add_filter( 'simply_static_class_name', array( $this, 'check_class_name' ), 10, 2 );
 		add_action( 'simply_static_delivery_methods', array( $this, 'add_delivery_method' ) );
 		add_action( 'simply_static_delivery_method_description', array( $this, 'add_delivery_method_description' ) );
+		add_filter( 'simplystatic.archive_creation_job.task_list', array( $this, 'modify_task_list' ), 20, 2 );
+		add_filter( 'simply_static_class_name', array( $this, 'check_class_name' ), 10, 2 );
 		add_action( 'wp_ajax_clear_cache', array( $this, 'clear_cache' ) );
 	}
 
@@ -48,7 +48,7 @@ class Deployment_Settings {
 	public function add_delivery_method() {
 		$options = get_option( 'simply-static' );
 		?>
-		<option value='simply-cdn' <?php Simply_Static\Util::selected_if( 'simply-cdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></option>
+		<option value='simplycdn' <?php Simply_Static\Util::selected_if( 'simplycdn' === $options['delivery_method'] ); ?>><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></option>
 		<?php
 	}
 
@@ -59,7 +59,7 @@ class Deployment_Settings {
 	 */
 	public function add_delivery_method_description() {
 		?>
-		<tr class="delivery-method simply-cdn" style="display:none">
+		<tr class="delivery-method simplycdn" style="display:none">
 			<th></th>
 			<td>
 				<p><?php esc_html_e( 'Make sure you get an account at simplycdn.io and connect your website before selecting it as an deployment option.', 'simply-cdn-helper' ); ?></p>
@@ -77,8 +77,10 @@ class Deployment_Settings {
 	 * @return array
 	 */
 	public function modify_task_list( $task_list, $delivery_method ) {
-		if ( 'simply-cdn' === $delivery_method ) {
-			return array( 'setup', 'fetch_urls', 'simply_cdn', 'wrapup' );
+		error_log($delivery_method);
+
+		if ( 'simplycdn' === $delivery_method ) {
+			return array( 'setup', 'fetch_urls', 'simplycdn', 'wrapup' );
 		}
 		return $task_list;
 	}
@@ -92,7 +94,9 @@ class Deployment_Settings {
 	 * @return string
 	 */
 	public function check_class_name( $class_name, $task_name ) {
-		if ( 'simply_cdn' === $task_name ) {
+		//error_log(strtoupper( $task_name ) . '_Task');
+
+		if ( 'simplycdn' === $task_name ) {
 			return 'sch\\' . strtoupper( $task_name ) . '_Task';
 		}
 		return $class_name;
