@@ -63,6 +63,10 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			require_once SCH_PATH . 'src/class-sch-form-webhook.php';
 			sch\Form_Webhook::get_instance();
 
+			// Auto publish.
+			require_once SCH_PATH . 'src/class-sch-auto-export.php';
+			sch\Auto_Export::get_instance();
+
 			// CDN.
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
 			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';

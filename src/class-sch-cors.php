@@ -62,7 +62,7 @@ class Cors {
 	public function set_cors_headers() {
 		$origin     = get_http_origin();
 		$static_url = untrailingslashit(get_option( 'sch_static_url' ) );
-		
+
 		// If it's a temporary URL allow all CORS requests.
 		$temporary_url = strpos( $static_url, '.b-cdn.net' );
 
