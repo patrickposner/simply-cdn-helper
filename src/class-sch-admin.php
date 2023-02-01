@@ -125,6 +125,10 @@ class Admin {
 	public function render_options() {
 		$data = Api::get_data();
 
+		if ( $data && ! empty( $data->cdn->url ) ) {
+			update_option( 'sch_static_url', esc_url( $data->cdn->url ) );
+		}
+
 		?>
         <div class="sch-container">
             <h1><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></h1>
@@ -169,8 +173,8 @@ class Admin {
                             <p>
                                 <label for="sch_static_url"><?php esc_html_e( 'Static URL', 'simply-cdn-helper' ); ?></label><br>
                                 <input type="url" id="sch_static_url" name="sch_static_url"
-                                       value="<?php echo esc_html( get_option( 'sch_static_url' ) ); ?>"/>
-                                <small><?php esc_html_e( 'Once you change this setting, your static website will be available under the new domain. Make sure you set your CNAME record before you change this setting.', 'simply-cdn-helper' ); ?></small>
+                                       value="<?php echo esc_html( get_option( 'sch_static_url' ) ); ?>" disabled="disabled"/>
+                                <small><?php esc_html_e( 'This is your static site URL. We automatically change it based on your project configuration on simplycdn.io', 'simply-cdn-helper' ); ?></small>
                             </p>
                             <p>
                                 <label for="sch_404_path"><?php esc_html_e( 'Relative path to your 404 page', 'simply-cdn-helper' ); ?></label><br>
