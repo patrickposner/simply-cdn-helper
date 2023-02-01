@@ -31,6 +31,7 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 	 * @return void
 	 */
 	function sch_run_plugin() {
+
 		// localize.
 		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
 		load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );

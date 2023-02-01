@@ -2,8 +2,6 @@
 
 namespace sch;
 
-use Simply_Static\Plugin;
-
 /**
  * Class to handle admin settings
  */
@@ -41,10 +39,6 @@ class Admin {
 		if ( ! class_exists( '\simply_static_pro\Build_Settings' ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_menu' ), 500 );
 		}
-
-		// Changing the top links.
-		remove_action( 'simply_static_admin_info_links', array( Plugin::instance(), 'add_info_links' ) );
-		add_action( 'simply_static_admin_info_links', array( $this, 'add_info_links' ) );
 	}
 
 	/**
@@ -72,22 +66,10 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
+		register_setting( 'sch_options_group', 'sch_token', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'sch_cdn_group', 'sch_static_url', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
+		register_setting( 'sch_cdn_group', 'sch_404_path', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field', 'default' => NULL ) );
 
-		register_setting( 'sch_options_group', 'sch_token', array(
-			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_text_field',
-			'default'           => null
-		) );
-		register_setting( 'sch_cdn_group', 'sch_static_url', array(
-			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_text_field',
-			'default'           => null
-		) );
-		register_setting( 'sch_cdn_group', 'sch_404_path', array(
-			'type'              => 'string',
-			'sanitize_callback' => 'sanitize_text_field',
-			'default'           => null
-		) );
 		register_setting( 'sch_forms_group', 'sch_use_forms', array(
 			'type'              => 'string',
 			'sanitize_callback' => array(
@@ -105,12 +87,11 @@ class Admin {
 			),
 			'default'           => false
 		) );
-	}
+    }
 
 	public function sanitize_checkbox( $input ) {
 		return isset( $input );
 	}
-
 
 	/**
 	 * Register menu page for settings.
@@ -118,10 +99,7 @@ class Admin {
 	 * @return void
 	 */
 	public function register_menu_page() {
-		add_submenu_page( 'simply-static', esc_html__( 'Simply CDN', 'simply-cdn-helper' ), esc_html__( 'Simply CDN', 'simply-cdn-helper' ), 'manage_options', 'simply-static_cdn', array(
-			$this,
-			'render_options'
-		), 10 );
+		add_submenu_page( 'simply-static', esc_html__( 'Simply CDN', 'simply-cdn-helper' ), esc_html__( 'Simply CDN', 'simply-cdn-helper' ), 'manage_options', 'simply-static_cdn', array( $this, 'render_options' ), 10 );
 	}
 
 	/**
@@ -131,9 +109,9 @@ class Admin {
 	 */
 	public function render_options() {
 		$data = Api::get_data();
-		$this->set_default_configuration( $data );
+
 		?>
-        <div class="sch-container">
+		<div class="sch-container">
             <h1><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></h1>
             <div class="wrap">
                 <div>
@@ -255,80 +233,9 @@ class Admin {
 	}
 
 	/**
-	 * Set default configuration for Simply Static on saving security token.
-	 *
-	 * @return void
-	 */
-	public function set_default_configuration( $data ): void {
-		$options = get_option( 'simply-static' );
-        $default_set = get_option('sch_default_set');
-
-		if ( $data && ! $default_set ) {
-			if ( ! $options ) {
-				$options    = array();
-				$static_url = wp_parse_url( $data->cdn->url );
-
-				$options['destination_url_type'] = 'absolute';
-				$options['destination_scheme']   = 'https://';
-				$options['destination_host']     = $static_url['host'];
-				$options['delivery_method']      = 'simply-cdn';
-				$options['force_replace_url']    = 'on';
-				$options['use_cron']             = 'on';
-
-				update_option( 'simply-static', $options );
-
-				// Also update SimplyCDN settings.
-				$static_url = get_option( 'sch_static_url' );
-
-				if ( empty( $static_url ) ) {
-					update_option( 'sch_static_url', $data->cdn->url );
-				}
-
-				$use_forms = get_option( 'sch_use_forms' );
-
-				if ( empty( $use_forms ) ) {
-					update_option( 'sch_use_forms', true );
-				}
-
-				$use_auto_publish = get_option( 'sch_use_auto_publish' );
-
-				if ( empty( $use_auto_publish ) ) {
-					update_option( 'sch_use_auto_publish', true );
-				}
-
-                update_option('sch_default_set', true );
-
-			} else {
-				// Only update SimplyCDN settings.
-				$static_url = get_option( 'sch_static_url' );
-
-				if ( empty( $static_url ) ) {
-					update_option( 'sch_static_url', $data->cdn->url );
-				}
-
-				$use_forms = get_option( 'sch_use_forms' );
-
-				if ( empty( $use_forms ) ) {
-					update_option( 'sch_use_forms', true );
-				}
-
-				$use_auto_publish = get_option( 'sch_use_auto_publish' );
-
-				if ( empty( $use_auto_publish ) ) {
-					update_option( 'sch_use_auto_publish', false );
-				}
-
-				update_option('sch_default_set', true );
-			}
-		}
-	}
-
-
-	/**
 	 * Add admin bar menu to visit static website.
 	 *
 	 * @param \WP_Admin_Bar $admin_bar current admin bar object.
-	 *
 	 * @return void
 	 */
 	public function add_admin_bar_menu( $admin_bar ) {
@@ -359,28 +266,11 @@ class Admin {
 					'group'  => null,
 					'title'  => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					'href'   => $static_url,
-					'meta'   => array(
+					'meta' => array(
 						'title' => esc_html__( 'View static URL', 'simply-cdn-helper' ),
 					),
 				)
 			);
 		}
-	}
-
-	/**
-	 * Add information links in admin header.
-	 *
-	 * @return void
-	 */
-	public function add_info_links( $info_text ) {
-		ob_start();
-		?>
-        <a href="https://simplycdn.io/documentation/"
-           target="_blank"><?php esc_html_e( 'Documentation', 'simply-cdn-helper' ); ?></a>
-        <a href="https://simplycdn.io/dashboard/"
-           target="_blank"><?php esc_html_e( 'Dashboard', 'simply-cdn-helper' ); ?></a>
-		<?php
-		$info_text = apply_filters( 'simply_static_info_links', ob_get_clean() );
-		echo $info_text;
 	}
 }
