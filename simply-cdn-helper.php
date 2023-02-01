@@ -31,7 +31,6 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 	 * @return void
 	 */
 	function sch_run_plugin() {
-
 		// localize.
 		$textdomain_dir = plugin_basename( dirname( __FILE__ ) ) . '/languages';
 		load_plugin_textdomain( 'simply-cdn-helper', false, $textdomain_dir );
@@ -49,32 +48,27 @@ if ( ! function_exists( 'sch_run_plugin' ) ) {
 			$updater->setBranch( 'master' );
 
 			// Admin settings.
-			require_once SCH_PATH . 'inc/class-sch-admin.php';
+			require_once SCH_PATH . 'src/class-sch-admin.php';
 			sch\Admin::get_instance();
 
 			// Api.
-			require_once SCH_PATH . 'inc/class-sch-api.php';
+			require_once SCH_PATH . 'src/class-sch-api.php';
 			sch\Api::get_instance();
 
 			// Cors.
-			require_once SCH_PATH . 'inc/class-sch-cors.php';
+			require_once SCH_PATH . 'src/class-sch-cors.php';
 			sch\Cors::get_instance();
 
 			// Form webhook.
-			require_once SCH_PATH . 'inc/class-sch-form-webhook.php';
+			require_once SCH_PATH . 'src/class-sch-form-webhook.php';
 			sch\Form_Webhook::get_instance();
 
-			// Single exports.
-			require_once SCH_PATH . 'inc/class-sch-auto-export.php';
-			sch\Auto_Export::get_instance();
-
 			// CDN.
-			require_once SCH_PATH . 'inc/deployment/class-sch-deployment-settings.php';
-			require_once SCH_PATH . 'inc/deployment/class-sch-cdn.php';
-			require_once SCH_PATH . 'inc/deployment/class-sch-task.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-cdn-task.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-cdn.php';
+			require_once SCH_PATH . 'src/deployment/class-sch-deployment-settings.php';
 
 			sch\Deployment_Settings::get_instance();
-
 		} else {
 			add_action( 'admin_notices', 'sch_show_requirements' );
 		}

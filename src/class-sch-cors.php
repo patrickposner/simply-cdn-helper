@@ -45,10 +45,10 @@ class Cors {
 	 * @return array
 	 */
 	public function add_allowed_origins( $origins ) {
-		$options = get_option( 'simply-static' );
+		$static_url = get_option( 'sch_static_url' );
 
-		if ( ! empty( $options['static-url'] ) ) {
-			$origins[] =$options['static-url'];
+		if ( ! empty( $static_url ) ) {
+			$origins[] = $static_url;
 		}
 
 		return $origins;
@@ -61,10 +61,8 @@ class Cors {
 	 */
 	public function set_cors_headers() {
 		$origin     = get_http_origin();
-		$options = get_option( 'simply-static' );
-
-		$static_url = untrailingslashit( $options['static-url'] );
-
+		$static_url = untrailingslashit(get_option( 'sch_static_url' ) );
+		
 		// If it's a temporary URL allow all CORS requests.
 		$temporary_url = strpos( $static_url, '.b-cdn.net' );
 

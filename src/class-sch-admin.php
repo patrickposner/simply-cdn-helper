@@ -72,11 +72,6 @@ class Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		register_setting( 'sch_default_set_group', 'sch_default_set', array(
-			'type'              => 'bool',
-			'sanitize_callback' => 'sanitize_text_field',
-			'default'           => false
-		) );
 
 		register_setting( 'sch_options_group', 'sch_token', array(
 			'type'              => 'string',
@@ -136,7 +131,7 @@ class Admin {
 	 */
 	public function render_options() {
 		$data = Api::get_data();
-		//$this->set_default_configuration( $data );
+		$this->set_default_configuration( $data );
 		?>
         <div class="sch-container">
             <h1><?php esc_html_e( 'Simply CDN', 'simply-cdn-helper' ); ?></h1>

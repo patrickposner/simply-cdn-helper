@@ -40,7 +40,7 @@ class Auto_Export {
 	public function __construct() {
 		$use_auto_publish = get_option( 'sch_use_auto_publish' );
 
-		if ( ! empty( $use_auto_publish ) ) {
+		if ( $use_auto_publish ) {
 			add_action( 'save_post', array( $this, 'run_single_export' ) );
 			add_filter( 'ss_static_pages', array( $this, 'filter_static_pages' ), 10, 2 );
 			add_filter( 'ss_remaining_pages', array( $this, 'filter_remaining_pages' ), 10, 2 );
