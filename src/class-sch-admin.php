@@ -34,7 +34,7 @@ class Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_menu', array( $this, 'register_menu_page' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_admin_scripts' ) );
-		add_action( 'updated_option', array( $this, 'set_default_configuration' ), 10, 3 );
+		add_action( 'added_option', array( $this, 'set_default_configuration' ), 10, 2 );
 
 		// Only include if Simply Static Pro is not installed.
 		if ( ! class_exists( '\simply_static_pro\Build_Settings' ) ) {
@@ -300,12 +300,12 @@ class Admin {
 	 * Set default configuration for Simply Static on saving security token.
 	 *
 	 * @param string $option given option.
-	 * @param string $old_value the old value.
 	 * @param string $value the new value.
 	 *
 	 * @return void
 	 */
-	public function set_default_configuration( $option, $old_value, $value ) {
+
+	public function set_default_configuration( $option, $value ) {
 
 		if ( 'sch_token' === $option && ! empty( $value ) ) {
 			// Apply default configuration.
