@@ -1,5 +1,4 @@
 .sch-container {
-    float: left;
     width: 100%;
 }
 
@@ -7,12 +6,14 @@
     background: #fafafa;
     padding: 30px;
     box-sizing: border-box;
-    min-height: auto;
     margin-bottom: 15px;
     float: left;
     width: 45%;
     min-height: 400px;
     max-width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .sch-container #submit {
