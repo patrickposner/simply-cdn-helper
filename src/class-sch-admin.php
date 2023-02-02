@@ -193,8 +193,10 @@ class Admin {
                         <h2><?php esc_html_e( 'Forms integration', 'simply-cdn-helper' ); ?></h2>
                         </p>
                         <p>
-							<?php esc_html_e( 'We automatically send form submissions to the configured e-mail address of your project from message@simplycdn.io. Make sure to add your form token as a hidden field to each form of your website.', 'simply-cdn-helper' ); ?>
-                        </p>
+							<?php esc_html_e( 'We automatically send form submissions to the configured e-mail address of your project from message@simplycdn.io.', 'simply-cdn-helper' ); ?><br>
+                
+							<?php esc_html_e( 'Make sure to add your form token as a hidden field to each form of your website.', 'simply-cdn-helper' ); ?>						 
+						</p>
                         <p>
                             <b><?php esc_html_e( 'Your form token: ', 'simply-cdn-helper' ); ?></b><?php echo esc_html( $data->cdn->form_token ); ?>
                         </p>
@@ -216,7 +218,7 @@ class Admin {
                 <div class="wrap">
                     <div>
                         <p>
-                        <h2><?php esc_html_e( 'Automation', 'simply-cdn-helper' ); ?></h2>
+                        <h2><?php esc_html_e( 'Automation & Utilities', 'simply-cdn-helper' ); ?></h2>
                         </p>
                         <p>
 							<?php esc_html_e( 'Automatically updates a post/page on your static website once you saved it in WordPress.', 'simply-cdn-helper' ); ?>
@@ -233,11 +235,7 @@ class Admin {
 							<?php submit_button(); ?>
                         </form>
                     </div>
-                    <div>
-                    </div>
-                </div>
-                <div class="wrap">
-                    <div>
+					 <div>
                         <h2><?php esc_html_e( 'Caching', 'simply-cdn-helper' ); ?></h2>
 						<?php esc_html_e( 'The CDN cache is cleared automatically after each static export. Sometimes you want to clear the cache manually to make sure you get the latest results in your browser.', 'simply-cdn-helper' ); ?>
                         <p>
@@ -245,8 +243,7 @@ class Admin {
                               id="sch-clear-cache"><?php esc_html_e( 'Clear Cache', 'simply-cdn-helper' ); ?></span>
                         </p>
                     </div>
-                    <div>
-                    </div>
+                </div>
                 </div>
 			<?php endif; ?>
         </div>

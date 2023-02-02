@@ -1,10 +1,18 @@
+.sch-container {
+    float: left;
+    width: 100%;
+}
+
 .sch-container .wrap {
     background: #fafafa;
     padding: 30px;
     box-sizing: border-box;
     min-height: auto;
     margin-bottom: 15px;
-    max-width: 720px;
+    float: left;
+    width: 45%;
+    min-height: 400px;
+    max-width: 700px;
 }
 
 .sch-container #submit {
@@ -80,5 +88,5 @@
 }
 
 #sch-clear-cache {
-    color:white;
+    color: white;
 }
