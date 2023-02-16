@@ -2,6 +2,8 @@
 
 namespace sch;
 
+use Simply_Static;
+
 /**
  * Class to handle CDN updates.
  */
@@ -44,33 +46,47 @@ class Simply_CDN {
 	}
 
 	/**
-	 * Upload file to BunnyCDN storage.
+	 * Upload files to CDN.
 	 *
-	 * @param string $current_file_path current local file path.
-	 * @param string $cdn_path file path in storage.
+	 * @param string $access_key given access key for verification.
+	 * @param string $pull_zone given pullzone name.
+	 * @param string $to_path path to upload
+	 * @param string $file_path path in local filesystem
 	 *
 	 * @return void
 	 */
-	public function upload_file( string $current_file_path, string $cdn_path ) {
-		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
+	public function upload_file( string $access_key, string $pull_zone, string $to_path, string $file_path ) {
+		// Prepare WP Filesystem.
+		global $wp_filesystem;
 
-		ftp_pasv( $ftp_connection, true );
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		}
 
-		if ( $ftp_connection ) {
-			ftp_login( $ftp_connection, $this->data->cdn->storage_zone->name, $this->data->cdn->access_key );
+		if ( is_null( $wp_filesystem ) ) {
+			WP_Filesystem();
+		}
 
-			// Set execution time for transfer.
-			set_time_limit( 0 );
+		$content = $wp_filesystem->get_contents( $file_path );
 
-			// Upload files.
-			$ftp_upload = ftp_put( $ftp_connection, $cdn_path, $current_file_path, FTP_BINARY );
+		$response = wp_remote_request( 'https://storage.bunnycdn.com/' . $pull_zone . '/' . $to_path, array(
+			'method'  => 'PUT',
+			'headers' => array(
+				'AccessKey' => $access_key,
+			),
+			'body'    => $content,
+		) );
 
-			if ( ! $ftp_upload ) {
-				error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-static-hosting' ), $current_file_path ) );
+		if ( ! is_wp_error( $response ) ) {
+			if ( 200 == wp_remote_retrieve_response_code( $response ) ) {
+				Simply_Static\Util::debug_log( 'Sucessfully uploaded ' . $file_path );
+			} else {
+				$error_message = wp_remote_retrieve_response_message( $response );
+				Simply_Static\Util::debug_log( $error_message );
 			}
-
-			// Close connection.
-			ftp_close( $ftp_connection );
+		} else {
+			$error_message = $response->get_error_message();
+			Simply_Static\Util::debug_log( $error_message );
 		}
 	}
 }
