@@ -33,11 +33,51 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 	}
 
 	/**
-	 * Perform action to run on commit task.
+	 * Copy a batch of files from the temp dir to the destination dir
 	 *
-	 * @return bool
+	 * @return boolean true if done, false if not done.
 	 */
 	public function perform() {
+		list( $pages_processed, $total_pages ) = $this->upload_static_files( $this->temp_dir );
+
+		if ( $pages_processed !== 0 ) {
+			$message = sprintf( __( "Uploaded %d of %d files", 'simply-static' ), $pages_processed, $total_pages );
+			$this->save_status_message( $message );
+		}
+
+		if ( $pages_processed >= $total_pages ) {
+			if ( $this->options->get( 'destination_url_type' ) == 'absolute' ) {
+				$destination_url = trailingslashit( $this->options->get_destination_url() );
+				$message         = __( 'Destination URL:', 'simply-static' ) . ' <a href="' . $destination_url . '" target="_blank">' . $destination_url . '</a>';
+				$this->save_status_message( $message, 'destination_url' );
+			}
+		}
+
+		// return true when done (no more pages).
+		if ( $pages_processed >= $total_pages ) {
+			do_action( 'sch_finished_cdn_transfer', $this->temp_dir );
+
+			// Maybe add 404
+			$this->add_404();
+
+			// Clear cache.
+			Api::clear_cache();
+		}
+
+		return $pages_processed >= $total_pages;
+	}
+
+	/**
+	 * Copy temporary static files to a local directory.
+	 *
+	 * @param string $destination_dir The directory to put the files..
+	 *
+	 * @return array
+	 */
+	public function upload_static_files( $destination_dir ) {
+		$batch_size         = apply_filters( 'sch_upload_files_batch_size', 50 );
+		$archive_start_time = $this->options->get( 'archive_start_time' );
+
 		// Subdirectory?
 		$cdn_path = '';
 
@@ -45,16 +85,8 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 			$cdn_path = $this->cdn->data->cdn->sub_directory . '/';
 		}
 
-		$message = __( 'Starting transfer of pages/files to Simply CDN', 'simply-cdn-helper' );
-		$this->save_status_message( $message );
-
-		// Upload directory.
-		$iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $this->temp_dir, \RecursiveDirectoryIterator::SKIP_DOTS ) );
-		$counter  = 0;
-
 		// Open FTP connection.
 		$ftp_connection = ftp_connect( 'storage.bunnycdn.com' );
-
 		ftp_pasv( $ftp_connection, true );
 
 		if ( $ftp_connection ) {
@@ -63,30 +95,46 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 			// Set execution time for transfer.
 			set_time_limit( 0 );
 
-			// Upload files.
-			foreach ( $iterator as $file_name => $file_object ) {
-				if ( ! realpath( $file_name ) ) {
-					continue;
-				}
-	
-				$relative_path = str_replace( $this->temp_dir, $cdn_path, realpath( $file_name ) );
-				$ftp_upload    = ftp_put( $ftp_connection, $relative_path, realpath( $file_name ), FTP_BINARY );
+			// last_modified_at > ? AND
+			$static_pages    = Simply_Static\Page::query()
+			                                     ->where( "file_path IS NOT NULL" )
+			                                     ->where( "file_path != ''" )
+			                                     ->where( "( last_transferred_at < ? OR last_transferred_at IS NULL )", $archive_start_time )
+			                                     ->limit( $batch_size )
+			                                     ->find();
+			$pages_remaining = count( $static_pages );
+			$total_pages     = Simply_Static\Page::query()
+			                                     ->where( "file_path IS NOT NULL" )
+			                                     ->where( "file_path != ''" )
+			                                     ->count();
+			$pages_processed = $total_pages - $pages_remaining;
+			Simply_Static\Util::debug_log( "Total pages: " . $total_pages . '; Pages remaining: ' . $pages_remaining );
 
-				if ( ! $ftp_upload ) {
-					error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ),  realpath( $file_name ) ) );
+			while ( $static_page = array_shift( $static_pages ) ) {
+				$file_path =  $this->temp_dir . $static_page->file_path;
+
+				if ( ! is_dir( $file_path ) && file_exists( $file_path ) ) {
+					$ftp_upload    = ftp_put( $ftp_connection, $cdn_path . $static_page->file_path, $file_path, FTP_BINARY );
+
+					if ( ! $ftp_upload ) {
+						error_log( sprintf( esc_html__( 'The file located at %s could not be uploaded via FTP.', 'simply-cdn-helper' ),  $file_path ) );
+					}
 				}
 
-				$counter++;
+				do_action( 'sch_file_transfered_to_cdn', $static_page, $destination_dir );
+
+				$static_page->last_transferred_at = Simply_Static\Util::formatted_datetime();
+				$static_page->save();
 			}
+
+			// Close connection.
+			ftp_close( $ftp_connection );
 		}
 
-		// Close connection.
-		ftp_close( $ftp_connection );
+		return array( $pages_processed, $total_pages );
+	}
 
-		$message = sprintf( __( 'Pushed %d pages/files to Simply CDN', 'simply-cdn-helper' ), $counter );
-		$this->save_status_message( $message );
-
-		// Maybe add 404.
+	public function add_404() {
 		$cdn_404_path = get_option( 'sch_404_path' );
 
 		if ( ! empty( $cdn_404_path ) && realpath( $this->temp_dir . untrailingslashit( $cdn_404_path ) . '/index.html' ) ) {
@@ -110,12 +158,6 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 			if ( $error_file_path ) {
 				$this->cdn->upload_file( $error_file_path, $error_relative_path );
 			}
-
 		}
-
-		// Clear cache.
-		Api::clear_cache();
-
-		return true;
 	}
 }
