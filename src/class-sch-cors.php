@@ -31,7 +31,7 @@ class Cors {
 	 * Constructor for Cors.
 	 */
 	public function __construct() {
-		if ( ! class_exists('\simply_static_pro\CORS' ) ) {
+		if ( ! class_exists( '\simply_static_pro\CORS' ) ) {
 			add_filter( 'allowed_http_origins', array( $this, 'add_allowed_origins' ) );
 			add_action( 'init', array( $this, 'set_cors_headers' ) );
 		}
@@ -72,14 +72,16 @@ class Cors {
 
 		if ( ! empty( $static_url ) ) {
 			if ( $origin === $static_url || false !== $temporary_url ) {
-				header( 'Access-Control-Allow-Origin: ' . $static_url );
-				header( 'Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE' );
-				header( 'Access-Control-Allow-Credentials: true' );
-				header( 'Access-Control-Allow-Headers: Origin, X-Requested-With, X-WP-Nonce, Content-Type, Accept, Authorization ' );
+				if ( ! headers_sent() ) {
+					header( 'Access-Control-Allow-Origin: ' . $static_url );
+					header( 'Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE' );
+					header( 'Access-Control-Allow-Credentials: true' );
+					header( 'Access-Control-Allow-Headers: Origin, X-Requested-With, X-WP-Nonce, Content-Type, Accept, Authorization ' );
 
-				if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
-					status_header( 200 );
-					exit();
+					if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
+						status_header( 200 );
+						exit();
+					}
 				}
 			}
 		}

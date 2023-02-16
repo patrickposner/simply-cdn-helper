@@ -41,7 +41,7 @@ class Simply_Cdn_Task extends Simply_Static\Task {
 		list( $pages_processed, $total_pages ) = $this->upload_static_files( $this->temp_dir );
 
 		if ( $pages_processed !== 0 ) {
-			$message = sprintf( __( "Uploaded %d of %d files", 'simply-static' ), $pages_processed, $total_pages );
+			$message = sprintf( __( "Uploaded %d of %d pages/files", 'simply-static' ), $pages_processed, $total_pages );
 			$this->save_status_message( $message );
 		}
 
